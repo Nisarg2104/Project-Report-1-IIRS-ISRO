@@ -6,7 +6,8 @@
 %Packages
 \usepackage{fullpage} %1-inch margins
 \usepackage{setspace} %double space
-
+\usepackage[backend=bibtex8]{biblatex}
+\addbibresource{ref.bib}
 %Change Chapter format in report class
 \usepackage{titlesec} 
 \titleformat{\chapter}[block]
@@ -163,8 +164,8 @@ Response Option Sheet}
 \textbf{Signature}\\
 \textbf{Date: }
 \newpage
-% Table of Contents
 
+% Table of Contents
 \tableofcontents
 \newpage
 
@@ -173,10 +174,34 @@ Response Option Sheet}
 \setcounter{secnumdepth}{1}
 \chapter{Introduction}
 \pagenumbering{arabic}
-\section{Background}
+\section{About IIRS}
 Blah
 \subsection{WHAT}
 It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\\
 
+\newpage
 
+% ____________________________
+
+% METHODOLOGY
+\chapter{Methodology}
+\section{Image Classification}
+\paragraph{}
+Image classification is a standard task in computer vision. In general, the image classification problem involves assigning one  label out of a given fixed set of discrete labels to the input image on the basis of its visual content. While this is a trivial task for humans, robust image classification is a big challenge for a machine. To the computer, the image is just a grid of numbers which entirely change in unreliable ways with variations in viewpoint, illumination, occlusion, etc. As a result, there is no obvious algorithm which solves this problem. However, a data driven approach of providing the machine with many examples of each class and use of machine learning techniques has shown to be useful.\cite{cs231n}\\
+There are different ways in which these techniques can be applied for classification of satellite imagery.
+\subsection{Pixel Based Approach}
+In typical satellite images, pixel sizes are generally similar in size to the objects of interest. Most of the methods for image analysis using remote sensing data work on a per-pixel basis. However, with advances in remote sensing technology, the spatial resolution has become finer than the typical objects of interest, leading to an increase in within-class variablilty.\cite{eyesky}
+\subsection{Object Based Approach}
+The term "objects" represents meaningful semantic entities or scene components that are distinguishable in an image (e.g., a house, tree or vehicle).\cite{eyesky} This approach involves the partition of the image into meaningful geographical objects that share relatively homogeneous spectral, color, etc.
+\subsection{Semantic Approach}
+This aims to label each scene image with a specific semantic class.s. Here, a scene image usually refers to a local image patch manually extracted from large scale remote sensing images that contain explicit semantic classes.\cite{eyesky}
+
+\section{Deep Learning and Neural Networks}
+Application of traditional machine learning techniques requires handcrafted features, developing which demands a considerable amount of engineering skill and domain expertise. This, however, is not true for neural networks, which automatically learn these features from data using a general-purpose learning procedure.\cite{eyesky, cs231n} Despite having been around for decades, neural networks have garnered much attention only in the last few years on account of the availability of increased computaional power and large amounts of data.
+\paragraph{}
+A neural network is a computing system made up of a number of simple, highly interconnected processing elements, which process information by their dynamic state response to external inputs.\cite{muruganandham2016semantic}
+\newpage
+
+
+\printbibliography
 \end{document}
