@@ -1,0 +1,182 @@
+%Document Props
+%FONT SIZE
+%DOC CLASS
+\documentclass[12pt, a4paper]{report}
+
+%Packages
+\usepackage{fullpage} %1-inch margins
+\usepackage{setspace} %double space
+
+%Change Chapter format in report class
+\usepackage{titlesec} 
+\titleformat{\chapter}[block]
+  {\normalfont\huge\bfseries}{\thechapter.}{1em}{\Huge}
+\titlespacing*{\chapter}{0pt}{-19pt}{0pt}
+
+%Graphics package and relative path
+\usepackage{graphics}
+\graphicspath{{images/}}
+
+% For other font sizes
+% !incompatible with fullpage
+%\usepackage{extsizes}
+
+\doublespacing
+% ----------------------------------------------------------------------------------------------
+\begin{document}
+
+% Outer Cover Page
+\pagestyle{empty}
+\begin{titlepage}
+\vspace*{0.2cm}
+\begin{center} \textbf{A REPORT\\ON} \end{center}
+\begin{center} \textbf{{\Large AUTOMATIC LAND COVER CLASSIFICATION OF MULTI-TEMPORAL SATELLITE IMAGES}} \end{center}
+\begin{center} \textbf{BY} \end{center}
+\begin{center} 
+{\Large 
+	\begin{tabular}{c c}
+	Guntaas Singh & 2018A7PS0269P\\
+	Nisarg Vora & 2018A7PS0254P
+	\end{tabular}
+}
+\end{center}
+\begin{center} \textbf{AT} \end{center}
+\begin{center} \includegraphics{iirs.png} \end{center}
+\begin{center} {\Large Indian Institute of Remote Sensing, Dehradun} \end{center}
+\begin{center} A Practice School - I station of \end{center}
+\begin{center} {\includegraphics{bits.png}} \end{center}
+\begin{center} {\Large Birla Institute of Technology and Science, Pilani} \end{center}
+\begin{center} June, 2020 \end{center}
+\end{titlepage}
+\pagebreak
+
+% Inner Cover Page
+\begin{titlepage}
+\vspace*{0.3cm}
+\begin{center} \textbf{A REPORT\\ON} \end{center}
+\begin{center} \textbf{{\Large AUTOMATIC LAND COVER CLASSIFICATION OF MULTI-TEMPORAL SATELLITE IMAGES}} \end{center}
+\begin{center} \textbf{BY} \end{center}
+\begin{center}
+	\begin{tabular}{c c c}
+		\textbf{ID Number} & \textbf{Name} & \textbf{Branch} \\
+		2018A7PS0269P & Guntaas Singh & B.E. (Hons.) Computer Science \\
+		2018A7PS0254P & Nisarg Vora  & B.E. (Hons.) Computer Science \\
+	\end{tabular} 
+\end{center}
+\begin{onehalfspace}
+\begin{center} \textbf{Prepared in the partial fulfillment of the} \end{center}
+\begin{center} Practice School - I course \end{center}
+\begin{center} \textbf{AT} \end{center}
+\begin{center} \includegraphics{iirs.png} \end{center}
+\begin{center} {\Large Indian Institute of Remote Sensing, Dehradun} \end{center}
+\begin{center} A Practice School - I station of \end{center}
+\begin{center} {\includegraphics{bits.png}} \end{center}
+\begin{center} {\Large Birla Institute of Technology and Science, Pilani} \end{center}
+\begin{center} June, 2020 \end{center}
+\end{onehalfspace}
+\end{titlepage}
+\pagebreak
+
+% Acknowledgements
+\setcounter{secnumdepth}{0}
+\section{Acknowledgements}
+\pagestyle{plain}
+\pagenumbering{roman}
+\setcounter{page}{3}
+\paragraph{}
+We would sincerely like to thank the Director of Indian Institute of Remote Sensing, Dr. Prakash Chauhan, for giving us an opportunity to work in this organization and gain a significant amount of exposure to corporate work culture, ethics, and etiquettes to be followed while working in a professional environment.
+\paragraph{}
+We would like to extend our most sincere gratitude to our project in-charge, Dr. Hari Shanker Srivastava, Head of the Programme Planning and Evaluation Group (PPEG) at IIRS, for providing us with the opportunity to work with him on this project, and his guidance and mentorship during the same.
+\paragraph{}
+We wish to extend our gratitude to the faculty in charge of the PS-I program at IIRS, Dr. Rekha A., Assistant Professor at BITS Pilani - Bangalore Center, for her guidance and advice during the PS-I program, and her helpfulness and responsiveness while addressing all the concerns we raised during the same.
+\paragraph{}
+In addition, we would also like to thank the members of the Practice School Division, who have worked very hard for operating the PS-I programme remotely to ensure that we have a seamless learning experience.
+\pagebreak
+
+% Details and abstract
+\begin{center}  
+\textbf {BIRLA INSTITUTE OF SCIENCE AND TECHNOLOGY\\
+PILANI (RAJASTHAN)\\
+Practice School Division}
+\end{center}
+\begin{onehalfspace}
+\textbf{Station:} Indian Institute of Remote Sensing \\
+\textbf{Centre:} Dehradun\\
+\textbf{Duration:} From 18th May, 2020 to 27th June, 2020 \\
+\textbf{Date of start:} 18th May, 2020 \\
+\textbf{Date of submission:} 4th June, 2020 \\
+\textbf{Title of project:} Automatic Land Cover Classification of Multi-temporal Satellite Images
+\begin{center}
+\begin{tabular}{c c c}
+\textbf{ID Number} & \textbf{Name} & \textbf{Branch} \\
+2018A7PS0269P & Guntaas Singh & B.E. (Hons.) Computer Science \\
+2018A7PS0254P & Nisarg Vora  & B.E. (Hons.) Computer Science \\
+\end{tabular} 
+\end{center}
+\textbf{Name of guide:} Dr. Hari Shanker Srivastava \\
+\textbf{Designation:} Scientist/Engineer - SG. Group Head, Programme Planning and Evaluation Group (PPEG). \\
+\textbf{Name of PS faculty:} Dr. Rekha A. 
+
+	\section{Abstract}
+	\paragraph{}
+	Blah
+\end{onehalfspace}
+\newpage
+
+%Response sheet
+\begin{center}  
+\textbf {BIRLA INSTITUTE OF SCIENCE AND TECHNOLOGY\\
+PILANI (RAJASTHAN)\\
+Practice School Division\\
+Response Option Sheet}
+\end{center}
+\begin{onehalfspace}
+\textbf{Station:} Indian Institute of Remote Sensing \\
+\textbf{Centre:} Dehradun
+\begin{center}
+\begin{tabular}{c c c}
+\textbf{ID Number} & \textbf{Name} & \textbf{Branch} \\
+2018A7PS0269P & Guntaas Singh & B.E. (Hons.) Computer Science \\
+2018A7PS0254P & Nisarg Vora  & B.E. (Hons.) Computer Science \\
+\end{tabular} 
+\end{center}
+\textbf{Title of project:} Automatic Land Cover Classification of Multi-temporal Satellite Images\\
+\begin{center}
+\begin{tabular}{|p{1cm}|p{10cm}|p{3cm}|}
+\hline
+\textbf{Code No.} & \textbf{Response Option} & \textbf{Course No.(s) and Name} \\
+\hline
+1 & A new course can be designed out of this project. & ~\\
+\hline
+2 & The project can help modification of the course content of some of the existing Courses & ~\\
+\hline
+3 & The project can be used directly in some of the existing Compulsory Discipline Courses (CDC)/ Discipline Courses Other than Compulsory (DCOC)/ Emerging Area (EA), etc. Courses & ~\\
+\hline
+4 & The project can be used in preparatory courses like Analysis and Application Oriented Courses (AAOC)/ Engineering Science (ES)/ Technical Art (TA) and Core Courses. & ~\\
+\hline
+5 & This project cannot come under any of the above mentioned options as it relates to the professional work of the host organization. &~ \\
+\hline
+\end{tabular} 
+\end{center}
+\end{onehalfspace}
+\vspace*{0.5cm}
+\textbf{Signature}\\
+\textbf{Date: }
+\newpage
+% Table of Contents
+
+\tableofcontents
+\newpage
+
+% INTRODUCTION
+\setcounter{page}{1}
+\setcounter{secnumdepth}{1}
+\chapter{Introduction}
+\pagenumbering{arabic}
+\section{Background}
+Blah
+\subsection{WHAT}
+It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).\\
+
+
+\end{document}
