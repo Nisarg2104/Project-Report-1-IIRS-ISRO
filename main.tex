@@ -15,14 +15,14 @@
 \titlespacing*{\chapter}{0pt}{-19pt}{0pt}
 
 %Graphics package and relative path
-\usepackage{graphics}
+\usepackage{graphicx}
 \graphicspath{{images/}}
 
 % For other font sizes
 % !incompatible with fullpage
 %\usepackage{extsizes}
 
-\doublespacing
+\onehalfspacing
 % ----------------------------------------------------------------------------------------------
 \begin{document}
 
@@ -186,22 +186,59 @@ It is a long established fact that a reader will be distracted by the readable c
 % METHODOLOGY
 \chapter{Methodology}
 \section{Image Classification}
+
+Image classification is a standard task in computer vision. In general, the image classification problem involves assigning one  label out of a given fixed set of discrete labels to the input image on the basis of its visual content. While this is a trivial task for humans, robust image classification is a big challenge for a machine. To the computer, the image is just a grid of numbers which entirely change in unreliable ways with variations in viewpoint, illumination, occlusion, etc. As a result, there is no obvious algorithm which solves this problem. However, a data driven approach of providing the machine with many examples of each class and use of machine learning techniques has shown to be useful.\cite{cs231n}
 \paragraph{}
-Image classification is a standard task in computer vision. In general, the image classification problem involves assigning one  label out of a given fixed set of discrete labels to the input image on the basis of its visual content. While this is a trivial task for humans, robust image classification is a big challenge for a machine. To the computer, the image is just a grid of numbers which entirely change in unreliable ways with variations in viewpoint, illumination, occlusion, etc. As a result, there is no obvious algorithm which solves this problem. However, a data driven approach of providing the machine with many examples of each class and use of machine learning techniques has shown to be useful.\cite{cs231n}\\
 There are different ways in which these techniques can be applied for classification of satellite imagery.
 \subsection{Pixel Based Approach}
 In typical satellite images, pixel sizes are generally similar in size to the objects of interest. Most of the methods for image analysis using remote sensing data work on a per-pixel basis. However, with advances in remote sensing technology, the spatial resolution has become finer than the typical objects of interest, leading to an increase in within-class variablilty.\cite{eyesky}
 \subsection{Object Based Approach}
-The term "objects" represents meaningful semantic entities or scene components that are distinguishable in an image (e.g., a house, tree or vehicle).\cite{eyesky} This approach involves the partition of the image into meaningful geographical objects that share relatively homogeneous spectral, color, etc.
+The term "objects" represents meaningful semantic entities or scene components that are distinguishable in an image.\cite{eyesky} This approach involves the partition of the image into meaningful geographical objects that share relatively homogeneous spectral, color, etc.
 \subsection{Semantic Approach}
-This aims to label each scene image with a specific semantic class.s. Here, a scene image usually refers to a local image patch manually extracted from large scale remote sensing images that contain explicit semantic classes.\cite{eyesky}
+This aims to label each scene image with a specific semantic class. Here, a scene image usually refers to a local image patch manually extracted from large scale remote sensing images that contain explicit semantic classes.\cite{eyesky}
 
 \section{Deep Learning and Neural Networks}
 Application of traditional machine learning techniques requires handcrafted features, developing which demands a considerable amount of engineering skill and domain expertise. This, however, is not true for neural networks, which automatically learn these features from data using a general-purpose learning procedure.\cite{eyesky, cs231n} Despite having been around for decades, neural networks have garnered much attention only in the last few years on account of the availability of increased computaional power and large amounts of data.
 \paragraph{}
-A neural network is a computing system made up of a number of simple, highly interconnected processing elements, which process information by their dynamic state response to external inputs.\cite{muruganandham2016semantic}
+A standard neural network consists of many simple, connected processors called neurons, each producing a sequence of real-valued activations. Input neurons get activated through sensors perceiving the environment, other neurons get activated through weighted connections from previously active neurons. \cite{schmidhuber2015deep} Each neuron can be seen as a single unit applying a non-linear activation function (such as sigmoid, tanh, ReLU) to a linear combination of the input activations to the neuron.\cite{cs229}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{nn1.png}
+\caption{A single neuron.}\cite{cs229}
+\end{figure}
+\paragraph{}
+These single neurons can be stacked so that one neuron passes its output as input into the next neuron. The resulting network of neurons can, hence, consist of several layers of neurons, each with their own learnable weights and biases. Used in conjunction with an appropriate loss function and optimization algorithm, such a network can be used to learn any complex function, if sufficient data is available for training. Forward propagation through the network yields its prediction for a given input. This prediction is compared with the actual class label, and the loss is computed. Backward Propagation is used to compute the gradients of the loss function with respect to the parameters, which are then used by the optimization algorithm to adjust the parameters and minimize the loss over a number of iterations.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{nn2.png}
+\caption{A two layer neural network with fully connected layers.}\cite{cs231n}
+\end{figure}
 \newpage
 
-
-\printbibliography
+\section{Convolutional Neural Networks}
+\paragraph{}
+Regular neural networks do not scale well to full images. If the input to the neural network is a 200x200 RGB image, the number of weights for each neuron will be 200*200*3 = 120,000 weights. For large networks, the total number of learnable parameters become very large and lead the model to potentially overfit the training data, unless the training set is adequately large.
+\paragraph{}
+A convolutional neural network (CNN) is a sequence of layers. Each layers transforms an input volume (images are represented as a three dimensional matrix) of activations to another with some differentiable function which may or may not have parameters.\cite{cs231n, dlai4} These layers are of three main types:
+\subsection{Convolutional Layer}
+This is the core building block for convolutional networks. It is based on the convolution operation on images.
+\paragraph{}
+Each convolutional layer of a CNN consists of $N$ kernels or filters of a certain volume of neurons sized $f \times f \times d$, with $f$ being the spatial dimension and $d$ being the number of feature channels of the kernel, which is same as the number of channels in the image at its input ($D_{i}$). Every one of these filters is convolved with a corresponding volume of the input image, and is slid through the entire image of size $H_{i} \times W_{i} \times D_{i}$. Convolution refers to the summation of the element-wise dot product of the neurons in each filter with the corresponding values in the input, for each position in which the filter is aligned with the image. Based on this notion, a convolution with a single filter at each layer results in a two dimensional output of a certain size. \cite{cs231n, muruganandham2016semantic, dlai4}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{cnn1.jpg}
+\caption{The convolution operation performed using a 3x3 filter on a 5x5x1 image.}\cite{fathi2018deep}
+\end{figure}
+\paragraph{}
+The intervals with which the filter moves in each spatial dimension is decided by the \textbf{stride} $s$. In order to prevent undue shrinkage of the volume along the spatial dimension, the image can be padded with pixels along the outer edges. The width of this \textbf{padding}, in pixels, is given by another hyperparameter, $p$.\cite{dlai4, muruganandham2016semantic} The convolution operation is repeated for each of the $N$ filters, and the resulting $N$ activation maps are stacked together across the third dimension giving an output volume of dimensions:\\
+\begin{displaymath}
+H_{o}=\frac{H_{i}-f+2p}{s+1}
+\end{displaymath}
+\begin{displaymath}
+W_{o}=\frac{W_{i}-f+2p}{s+1}
+\end{displaymath}
+\begin{displaymath}
+D_{o}=N
+\end{displaymath}
+\printbibliography[title={References}]
 \end{document}
