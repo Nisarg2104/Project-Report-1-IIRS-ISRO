@@ -80,12 +80,12 @@
 
 % Acknowledgements
 \setcounter{secnumdepth}{0}
-\section{Acknowledgements}
+\section{Acknowledgments}
 \pagestyle{plain}
 \pagenumbering{roman}
 \setcounter{page}{3}
 \paragraph{}
-We would sincerely like to thank the Director of Indian Institute of Remote Sensing, Dr. Prakash Chauhan, for giving us an opportunity to work in this organization and gain a significant amount of exposure to corporate work culture, ethics, and etiquettes to be followed while working in a professional environment.
+We would sincerely like to thank the Director of Indian Institute of Remote Sensing, Dr. Prakash Chauhan, for giving us an opportunity to work in this organization and gain a significant amount of exposure to corporate work culture, ethics, and etiquette to be followed while working in a professional environment.
 \paragraph{}
 We would like to extend our most sincere gratitude to our project in-charge, Dr. Hari Shanker Srivastava, Head of the Programme Planning and Evaluation Group (PPEG) at IIRS, for providing us with the opportunity to work with him on this project, and his guidance and mentorship during the same.
 \paragraph{}
@@ -192,14 +192,14 @@ Image classification is a standard task in computer vision. In general, the imag
 \paragraph{}
 There are different ways in which these techniques can be applied for classification of satellite imagery.
 \subsection{Pixel Based Approach}
-In typical satellite images, pixel sizes are generally similar in size to the objects of interest. Most of the methods for image analysis using remote sensing data work on a per-pixel basis. However, with advances in remote sensing technology, the spatial resolution has become finer than the typical objects of interest, leading to an increase in within-class variablilty.\cite{eyesky}
+In typical satellite images, pixel sizes are generally similar in size to the objects of interest. Most of the methods for image analysis using remote sensing data work on a per-pixel basis. However, with advances in remote sensing technology, the spatial resolution has become finer than the typical objects of interest, leading to an increase in within-class variability.\cite{eyesky}
 \subsection{Object Based Approach}
 The term "objects" represents meaningful semantic entities or scene components that are distinguishable in an image.\cite{eyesky} This approach involves the partition of the image into meaningful geographical objects that share relatively homogeneous spectral, color, etc.
 \subsection{Semantic Approach}
 This aims to label each scene image with a specific semantic class. Here, a scene image usually refers to a local image patch manually extracted from large scale remote sensing images that contain explicit semantic classes.\cite{eyesky}
 
 \section{Deep Learning and Neural Networks}
-Application of traditional machine learning techniques requires handcrafted features, developing which demands a considerable amount of engineering skill and domain expertise. This, however, is not true for neural networks, which automatically learn these features from data using a general-purpose learning procedure.\cite{eyesky, cs231n} Despite having been around for decades, neural networks have garnered much attention only in the last few years on account of the availability of increased computaional power and large amounts of data.
+Application of traditional machine learning techniques requires handcrafted features, developing which demands a considerable amount of engineering skill and domain expertise. This, however, is not true for neural networks, which automatically learn these features from data using a general-purpose learning procedure.\cite{eyesky, cs231n} Despite having been around for decades, neural networks have garnered much attention only in the last few years on account of the availability of increased computational power and large amounts of data.
 \paragraph{}
 A standard neural network consists of many simple, connected processors called neurons, each producing a sequence of real-valued activations. Input neurons get activated through sensors perceiving the environment, other neurons get activated through weighted connections from previously active neurons. \cite{schmidhuber2015deep} Each neuron can be seen as a single unit applying a non-linear activation function (such as sigmoid, tanh, ReLU) to a linear combination of the input activations to the neuron.\cite{cs229}
 \begin{figure}[h]
@@ -231,15 +231,35 @@ Each convolutional layer of a CNN consists of $N$ kernels or filters of a certai
 \caption{The convolution operation performed using a 3x3 filter on a 5x5x1 image.}\cite{fathi2018deep}
 \end{figure}
 \paragraph{}
-The intervals with which the filter moves in each spatial dimension is decided by the \textbf{stride} $s$. In order to prevent undue shrinkage of the volume along the spatial dimension, the image can be padded with pixels along the outer edges. The width of this \textbf{padding}, in pixels, is given by another hyperparameter, $p$.\cite{dlai4, muruganandham2016semantic} The convolution operation is repeated for each of the $N$ filters, and the resulting $N$ activation maps are stacked together across the third dimension giving an output volume of dimensions:\\
+The intervals with which the filter moves in each spatial dimension is decided by the \textbf{stride} $s$. In order to prevent undue shrinkage of the volume along the spatial dimension, the image can be padded with pixels along the outer edges. The width of this \textbf{padding}, in pixels, is given by another hyper-parameter, $p$.\cite{dlai4, muruganandham2016semantic} The convolution operation is repeated for each of the $N$ filters, and the resulting $N$ activation maps are stacked together across the third dimension giving an output volume of dimensions:\\
 \begin{displaymath}
-H_{o}=\frac{H_{i}-f+2p}{s+1}
+H_{o}=\frac{H_{i}-f+2p}{s}+1
 \end{displaymath}
 \begin{displaymath}
-W_{o}=\frac{W_{i}-f+2p}{s+1}
+W_{o}=\frac{W_{i}-f+2p}{s}+1
 \end{displaymath}
 \begin{displaymath}
 D_{o}=N
 \end{displaymath}
+\paragraph{}
+In a convolutional layer, each neuron is connected to only a local region of the input volume, called the receptive field of that neuron. The extent of connectivity is limited to the filter size along the spatial dimensions, but is full along the depth axis.\cite{cs231n} It should also be noted that all activations belonging to a particular channel in the output volume correspond to a single filter applied on the input volume, and hence depend on the same shared parameters. Local connectivity and parameter sharing not only help reduce the number of learnable parameters, but also make the CNN good at capturing \textbf{translation invariance}. This makes them an ideal choice for the image classification problem.
+\subsection{Pooling Layer}
+It is common to periodically insert a Pooling layer in-between successive convolutional layers in a CNN. Its function is to progressively reduce the spatial size of the representation to reduce the amount of parameters and computation in the network, and hence to also control overfitting.\cite{cs231n} The most common form of pooling layer in CNN architectures employs filters of size $2 \times 2$ with a stride of 2, taking a max over 4 cells of the input image. It is worth noting that while this halves the width and height of the image, the depth remains unaffected as the max operation is applied independently to each channel of the image. This down-sampling process effectively discards 75\% of the activations.
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{cnn2.jpg}
+\caption{(1) A typical max pooling layer. (2) The max pooling operation.}\cite{cs231n}
+\end{figure}
+\subsection{Fully Connected Layer}
+Once higher level features are detected from the preceding convolution and pooling layers, a fully connected layer is usually attached at the end of the network. This layer is fully connected to all activations in the previous layer, as in regular neural networks, allowing all the features learned by the network to be taken into account by the output layer. \paragraph{}
+In practice, fully connected layers have an equivalent representation as a convolutional layer having $N$ filters with dimensions equal to those of the input image. The output of this layer will thus be a volume of dimensions $1 \times 1 \times N$. This simple change allows the same CNN to be applied on images with arbitrary spatial dimensions and classify them in a single pass of forward propagation, instead of iterating on different crops of adequate size. This is the basic intuition behind \textbf{Fully Convolutional Networks}.\cite{long2015fully}
+\paragraph{}
+All of these different types of layers can be stacked together in various ways to form a CNN.
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{cnn3.jpg}
+\caption{AlexNet - the first work that popularized the use of CNNs and GPUs to accelerate deep learning.}\cite{alexnet, alexnetimg}
+\end{figure}
+\section{Semantic Segmentation}
 \printbibliography[title={References}]
 \end{document}
