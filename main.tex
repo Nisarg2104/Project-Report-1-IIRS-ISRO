@@ -186,7 +186,7 @@ Remote sensing is the acquisition of information about an object or phenomenon w
 It may be split into "active" remote sensing (when a signal is emitted by a satellite or aircraft to the object and its reflection detected by the sensor) and "passive" remote sensing (when the reflection of sunlight is detected by the sensor). Passive sensors gather radiation that is emitted or reflected by the object or surrounding areas. Reflected sunlight is the most common source of radiation measured by passive sensors. Examples of passive remote sensors include film photography, infrared, charge-coupled devices, and radiometers. Active collection, on the other hand, emits energy in order to scan objects and areas whereupon a sensor then detects and measures the radiation that is reflected or backscattered from the target. RADAR and LiDAR are examples of active remote sensing where the time delay between emission and return is measured, establishing the location, speed and direction of an object. \cite{remotesensingwiki}
 Remote sensing is the acquisition of information about an object or phenomenon without making physical contact with the object and thus in contrast to on-site observation, especially the Earth. Remote sensing is used in numerous fields, including geography, land surveying and most Earth science disciplines (for example, hydrology, ecology, meteorology, oceanography, glaciology, geology); it also has military, intelligence, commercial, economic, planning, and humanitarian applications.  It may be split into "active" remote sensing (when a signal is emitted by a satellite or aircraft to the object and its reflection detected by the sensor) and "passive" remote sensing (when the reflection of sunlight is detected by the sensor). Passive sensors gather radiation that is emitted or reflected by the object or surrounding areas. Reflected sunlight is the most common source of radiation measured by passive sensors. Examples of passive remote sensors include film photography, infrared, charge-coupled devices, and radiometers. Active collection, on the other hand, emits energy in order to scan objects and areas whereupon a sensor then detects and measures the radiation that is reflected or backscattered from the target. RADAR and LiDAR are examples of active remote sensing where the time delay between emission and return is measured, establishing the location, speed and direction of an object. \cite{remotesensingwiki}
 \section{Land Cover Classification}
-Land Cover classification generally refers to the categorization or classification of human activities and natural elements on the landscape within a specific time frame based on established scientific and statistical methods of analysis of appropriate source materials.Land cover refers to the surface cover on the ground like vegetation, urban infrastructure, water, bare soil etc. identification of land cover establishes the baseline information for activities like thematic mapping and change detection analysis'https://www.satpalda.com/blogs/significance-of-land-use-land-cover-lulc-maps''\\
+Land Cover classification generally refers to the categorization or classification of human activities and natural elements on the landscape within a specific time frame based on established scientific and statistical methods of analysis of appropriate source materials.Land cover refers to the surface cover on the ground like vegetation, urban infrastructure, water, bare soil etc. identification of land cover establishes the baseline information for activities like thematic mapping and change detection analysis'https://www.satpalda.com/blogs/significance-of-land-use-land-cover-lulc-maps''. Mainly two techniques are used for land cover classification: Field survey and Remotely sensed imagery analysis. Field survey was the primary method used for land cover classification until a few decades back however it was very inaccurate and time-consuming.With developments in technology, conventional method of field survey which is both inaccurate and time consuming has been replaced by remotely sensed imagery analysis which is highly accurate and covers wider range.ogy
 
 \begin{figure}[h]
 \centering
@@ -261,6 +261,33 @@ In typical satellite images, pixel sizes are generally similar in size to the ob
 The term "objects" represents meaningful semantic entities or scene components that are distinguishable in an image.\cite{eyesky} This approach involves the partition of the image into meaningful geographical objects that share relatively homogeneous spectral, color, etc.
 \subsection{Semantic Approach}
 This aims to label each scene image with a specific semantic class. Here, a scene image usually refers to a local image patch manually extracted from large scale remote sensing images that contain explicit semantic classes.\cite{eyesky}
+
+\section{Supervised Machine Learning}
+Supervised learning is the machine learning task of learning a function that maps an input to an output based on example input-output pairs.\cite{supervisedlearningone} Supervised learning is the machine learning task of learning a function that maps an input to an output based on example input-output pairs.\cite{supervisedlearningtwo} If enough data is available then the trained model usually identifies the underlying data patterns and is then able to make predictions on previously unknown input. The training data i.e. the set of input-output example pairs for the purpose of this project is the labelled region of Agra District, Uttar Pradesh, India obtained from Copernicus Global Landcover dataset. The model trained from these input-out put pairs is then tested on the region of Gandhinagar District, Gujarat, India. Supervise learning, however, faces the problem of overfitting when model is made very fiexible in order to fit the underlying data and underfitting when the model is to rigid to fit the underlying data.
+\section{Support Vector Machines}
+A Support Vector Machine (SVM) is a discriminative classifier formally defined by a separating hyperplane. In other words, given labeled training data (supervised learning), the algorithm outputs an optimal hyperplane which categorizes new examples. In two dimentional space this hyperplane is a line dividing a plane in two parts where in each class lay in either side.\cite{supportvectormachines}\\
+There are two kinds of support vector machines: Hard Margin Support Vector Machines and Soft Margin Support Vector Machines.
+Hard Margin Support Vector machines do not allow misclassification of data points, tend to overfit the data and are thus sensitive to outliers. Soft margin support vector machines allow slight misclassification of data points and penalize for each misclassification.
+For this project, soft margin support vector machines have been used to classify the data points.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{supportvectormachines.jpg}
+\caption{Support Vector Machine}
+\end{figure}
+
+
+The advantages of using support vector machines are:\\
+Support vectors can deal with high dimensional data easily with the help of kernel transformations.\\
+They are only dependent on some part of the training data known as the support vectors which makes them very memory efficient.\\
+Can be used for a variety of tasks due to availability of a large number of kernel functions for decision making.\\
+Fast and memory efficient implementations in various languages is available via different libraries.\\
+
+The disadvantages of using support vector machines are:\\
+They do not take the spatial orientation of the pixels into account while learning.\\
+With wrong choice of kernel, support vector machines tend to to overfit the data.\\
+Hard margin support vector machines are very sensitive to outliers and hence proper care should be taken while using them.\\
+
 
 \section{Deep Learning and Neural Networks}
 Application of traditional machine learning techniques requires handcrafted features, developing which demands a considerable amount of engineering skill and domain expertise. This, however, is not true for neural networks, which automatically learn these features from data using a general-purpose learning procedure.\cite{eyesky, cs231n} Despite having been around for decades, neural networks have garnered much attention only in the last few years on account of the availability of increased computational power and large amounts of data.
@@ -420,6 +447,8 @@ For training our classifiers, we will be using images of Agra, Mathura and the s
 \caption{Different views of the training location - Agra. (1) True colour satellite image (2) False colour infrared image (3) Map of NDVI values (4) Ground truth land cover. [Google Earth Engine]}
 \end{figure}
 \chapter{Conclusion}
+\paragraph{}
+Information of land cover classification is very crucial for applications like natural resource management, wildlife habitat protection, urban expansion, damage delineation, target land detection etc. With developments in technology, conventional method of field survey which is both inaccurate and time consuming has been replaced by remotely sensed imagery analysis which is highly accurate and covers wider range. Indian Space Research Organisation (ISRO) and Indian Institute of Remote Sensing (IIRS), Dehradun play an important role in providing information for these applications. Modern statistical and computing techniques like machine learning and deep learning minimize the human intervention in the task of analysis and classification, thus making the outcome very accurate and the process very agile. Support vector machines efficiently classify the pixel data however they do not take the spatial orientation of the pixels into account. Convolutional Neural Network is another efficient algorithm that can be used for classification however it fails to account for the temporal nature of the data.
 
 \printbibliography[heading=bibintoc, title={References}]
 \end{document}
