@@ -167,7 +167,7 @@ Response Option Sheet}
 
 % Table of Contents
 \tableofcontents
-\newpage
+\listoffigures
 
 % INTRODUCTION
 \setcounter{page}{1}
@@ -313,8 +313,97 @@ All of these different types of layers can be stacked together in various ways t
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{cnn3.jpg}
-\caption{AlexNet - the first work that popularized the use of CNNs and GPUs to accelerate deep learning.}\cite{alexnet, alexnetimg}
+\caption{AlexNet - an influential NN architecture that popularized the use of CNNs and GPUs to accelerate deep learning.}\cite{alexnet, alexnetimg}
 \end{figure}
 \section{Semantic Segmentation}
-\printbibliography[title={References}]
+\paragraph{}
+Typical CNNs used for image classification take fixed-size inputs and produce non-spatial outputs (predicted class labels). However, in case of land cover classification, the objective is not to assign a single class label to a given satellite image, but to divide the given image into segments each corresponding to one class out of a given set of land cover classes. This problem is known as semantic segmentation. There are different ways in which the existing image classification CNNs can be extended to solve this problem.
+\paragraph{}
+An obvious approach is to use a sliding window to extract small local patches or crops from the input image. These crops are then passed to an image classifier which assigns a class to the central pixel for each crop. In this way, we can classify all pixels of the original image. However, this approach is computationally very expensive as a separate forward pass (through the CNN) will be required to classify every pixel, and so it is not practically feasible. Moreover, as the local patches overlap, much of the computation is redundant.\\
+Another approach is to use fully convolutional networks with only convolutional layers. In these networks, zero padding can be used to preserve the spatial dimensions of the input image. So, the network can be trained by comparing the spatial output to the ground truth land cover data. However, the large spatial dimensions throughout the network make the model computationally infeasible. \cite{long2015fully, cs231n, unet}
+\paragraph{}
+While the problem requires the CNN to produce a spatial output, down-sampling is essential for reducing the need for computational resources to a feasible level. As a result, the most popular approach is to design the network as a combination of an encoder(down-sampling path) and a decoder(up-sampling path).\\
+\section{FCN Architecture}
+As discussed earlier, the re-interpretation of fully connected layers as convolutional layers yields Fully Convolutional Networks. These networks can take input of any dimensions and output classification maps. For up-sampling these classification maps, \textit{Long et al.}\cite{long2015fully} propose the use of transpose convolution. 
+\subsection{Transpose Convolution}
+Ordinary convolution involves taking a dot product between the filter and the input for every receptive field at a stride of s in the input, and storing the result at a stride of 1 in the output. The resulting output image gets down-sampled by a factor of s. In transpose convolution, we use the values at a stride of 1 in the input and take their scalar product with the filter, storing the resulting matrix at a stride of s in the output. As a result the image gets up-sampled by a factor of s. Any overlapping values in the output are summed together.\cite{long2015fully, cs231n}
+A stack of layers performing transpose convolution with an appropriate activation function can be used to learn a non-linear up-sampling.\cite{long2015fully}\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{fcn.jpg}
+\caption{A $3 \times 3$ transpose convolution with stride 2 and padding 1. The output gets up-sampled by a factor of 2.}
+\cite{cs231n}
+\end{figure}
+\subsection{Skip Connections}
+Semantic segmentation faces an inherent tension between semantics and location. Deep layers capture local information and resolve the semantic information that the image contains. Global information available to shallower layers can be used to capture the location. This motivates the idea of adding skip connections from shallow layers to the final prediction layer. Combining the information captured by shallow and deep layers at the time of up-sampling lets the model make local predictions that take into account global structure and semantics. To combine activations with different spatial dimensions, they are first up-sampled individually as required using transpose convolutions and then summed up. The result is then up-sampled by a final layer, so that the output spatial dimensions match those of the input image.\cite{long2015fully}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{fcn2.jpg}
+\caption{The different variants of the FCN architecture defined in \cite{long2015fully}, with different skip connections added to the base network.}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{fcn3.jpg}
+\caption{The addition of skip connections produced finer and more detailed segmentation map. Addition of more such connections gave diminishing returns.}
+\cite{long2015fully}
+\end{figure}
+\section{U-Net Architecture}
+Proposed by \textit{Ronneberger et al.} \cite{unet}, the U-Net architecture builds upon and extends the FCN architecture for more precise segmentation using a smaller training dataset. While the architecture was designed particularly for bio-medical segmentation applications, it has shown to work well for other domains too. %cite
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{unet1.jpg}
+\caption{The U-Net architecture.}
+\cite{unet}
+\end{figure}
+\subsection{Components}
+The U-Net architecture can be divided into three major parts:
+\begin{enumerate}
+	\item The down-sampling path
+	\item The bottleneck
+	\item The up-sampling path
+\end{enumerate}
+\subsubsection{Down-sampling Path}
+It is made up of four identical blocks. Each block encloses the following sequence of layers:
+\begin{enumerate}
+	\item Convolutional layer ($f=3, s=1, p=0$)
+	\item Convolutional layer ($f=3, s=1, p=0$)
+	\item Max Pooling layer ($f=2, s=2$)
+\end{enumerate}
+At each down-sampling step (max-pooling), the number of channels is doubled, starting with 64 channels in the first block. The down-sampling path captures not only features relevant to classification, but also contextual information about the location of different segments.
+\subsubsection{Bottleneck}
+It is made up of 2 layers:
+\begin{enumerate}
+	\item Convolutional layer ($f=3, s=1, p=0$)
+	\item Convolutional layer ($f=3, s=1, p=0$)
+%dropout
+\end{enumerate}
+\subsubsection{Up-sampling Path}
+It is made up of four identical blocks. Each block encloses the following sequence of layers:
+\begin{enumerate}
+	\item Up-sampling transpose convolution layer ($f=2, s=2$)
+	\item Concatenation with appropriately cropped feature map from down-sampling path
+	\item Convolutional layer ($f=3, s=1, p=0$)
+	\item Convolutional layer ($f=3, s=1, p=0$)
+\end{enumerate}
+At each up-sampling step (transpose convolution), the number of channels is halved. The output volume after up-sampling is concatenated with the corresponding volume from the down-sampling path after adequate cropping. The introduction of these skip connections allows the propagation of context information about the localization from the down-sampling path to the up-sampling path which already carries semantic information. This helps the network to spread out activations correctly when up-sampling and lends the network its U-shape.
+\subsection{Advantages}
+The U-Net architecture presented above has several features which lend it better performance than the FCN architecture.
+\paragraph{}
+In the FCN architecture, the single up-sampling layer is added at the end of the CNN and has limited number of channels (equal to the number of class labels). The U-Net architecture makes use of multiple up-sampling layers (each with multiple feature channels) in the up-sampling path, interspersed with blocks of convolutional layers. This provides for the opportunity to add more skip connections and so, to fuse contextual and semantic information better, at the time of up-sampling. 
+\paragraph{}
+Concatenation is used for combining information from skip connections, as opposed to the summing operation used in the FCN architecture. This helps to retain more information from both sets of activations, without polluting either.
+\paragraph{}
+The U-Net architecture is also particularly well suited to applications where labelled training data is not available in abundance. This makes it more attractive for our project on account of the limited computational resources and time available for training the network. We, hence, propose to use this CNN architecture for the problem of land cover classification.
+% IMPLEMENTATION
+\chapter{Implementation}
+\section{Data Collection}
+\subsection{Google Earth Engine}
+Google Earth Engine is a computing platform that allows users to run geo-spatial analysis on Google's cloud infrastructure. It provides several ways to interact with the platform. The Code Editor is a web-based Integrated Development Environment (IDE) for writing and running scripts. The Explorer is a lightweight web app for exploring the data catalog and running simple analyses. The client libraries provide Python and JavaScript wrappers around the web Application Programming Interface (API). The platform provides easy to use tools for handling, visualizing, and extracting large amounts of remote sensing data.\cite{gee1}
+\subsection{Landsat 8}
+
+\subsection{Copernicus Global Land Cover dataset}
+\section{Intersection over Union (IoU)}
+
+\chapter{Conclusion}
+
+\printbibliography[heading=bibintoc, title={References}]
 \end{document}
