@@ -254,7 +254,31 @@ The term "objects" represents meaningful semantic entities or scene components t
 This aims to label each scene image with a specific semantic class. Here, a scene image usually refers to a local image patch manually extracted from large scale remote sensing images that contain explicit semantic classes.\cite{eyesky}
 
 \section{Supervised Machine Learning}
-Supervised learning is the machine learning task of learning a function that maps an input to an output based on example input-output pairs.\cite{supervisedlearningone} Supervised learning is the machine learning task of learning a function that maps an input to an output based on example input-output pairs.\cite{supervisedlearningtwo} The training data i.e. the set of input-output example pairs for the purpose of this project is the labelled region of Agra District, Uttar Pradesh, India obtained from Copernicus Global Landcover dataset. The model trained from these input-out put pairs is then tested on the region of Gandhinagar District, Gujarat, India.
+Supervised learning is the machine learning task of learning a function that maps an input to an output based on example input-output pairs.\cite{supervisedlearningone} Supervised learning is the machine learning task of learning a function that maps an input to an output based on example input-output pairs.\cite{supervisedlearningtwo} If enough data is available then the trained model usually identifies the underlying data patterns and is then able to make predictions on previously unknown input. The training data i.e. the set of input-output example pairs for the purpose of this project is the labelled region of Agra District, Uttar Pradesh, India obtained from Copernicus Global Landcover dataset. The model trained from these input-out put pairs is then tested on the region of Gandhinagar District, Gujarat, India. Supervise learning, however, faces the problem of overfitting when model is made very fiexible in order to fit the underlying data and underfitting when the model is to rigid to fit the underlying data.
+\section{Support Vector Machines}
+A Support Vector Machine (SVM) is a discriminative classifier formally defined by a separating hyperplane. In other words, given labeled training data (supervised learning), the algorithm outputs an optimal hyperplane which categorizes new examples. In two dimentional space this hyperplane is a line dividing a plane in two parts where in each class lay in either side.\cite{supportvectormachines}\\
+There are two kinds of support vector machines: Hard Margin Support Vector Machines and Soft Margin Support Vector Machines.
+Hard Margin Support Vector machines do not allow misclassification of data points, tend to overfit the data and are thus sensitive to outliers. Soft margin support vector machines allow slight misclassification of data points and penalize for each misclassification.
+For this project, soft margin support vector machines have been used to classify the data points.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{supportvectormachines.jpg}
+\caption{Support Vector Machine}
+\end{figure}
+
+
+The advantages of using support vector machines are:\\
+Support vectors can deal with high dimensional data easily with the help of kernel transformations.\\
+They are only dependent on some part of the training data known as the support vectors which makes them very memory efficient.\\
+Can be used for a variety of tasks due to availability of a large number of kernel functions for decision making.\\
+Fast and memory efficient implementations in various languages is available via different libraries.\\
+
+The disadvantages of using support vector machines are:\\
+They do not take the spatial orientation of the pixels into account while learning.\\
+With wrong choice of kernel, support vector machines tend to to overfit the data.\\
+Hard margin support vector machines are very sensitive to outliers and hence proper care should be taken while using them.\\
+
 
 \section{Deep Learning and Neural Networks}
 Application of traditional machine learning techniques requires handcrafted features, developing which demands a considerable amount of engineering skill and domain expertise. This, however, is not true for neural networks, which automatically learn these features from data using a general-purpose learning procedure.\cite{eyesky, cs231n} Despite having been around for decades, neural networks have garnered much attention only in the last few years on account of the availability of increased computational power and large amounts of data.
