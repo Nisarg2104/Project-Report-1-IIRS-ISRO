@@ -21,6 +21,7 @@
 % For other font sizes
 % !incompatible with fullpage
 %\usepackage{extsizes}
+\usepackage[hidelinks]{hyperref}
 
 \onehalfspacing
 % ----------------------------------------------------------------------------------------------
@@ -301,7 +302,7 @@ The disadvantages of using support vector machines are:
 Application of traditional machine learning techniques requires handcrafted features, developing which demands a considerable amount of engineering skill and domain expertise. This, however, is not true for neural networks, which automatically learn these features from data using a general-purpose learning procedure.\cite{eyesky, cs231n} 
 %Despite having been around for decades, neural networks have garnered much attention only in the last few years on account of the availability of increased computational power and large amounts of data.
 \paragraph{}
-A standard neural network consists of many simple, connected processors called neurons, each producing a sequence of real-valued activations. Input neurons get activated through sensors perceiving the environment, other neurons get activated through weighted connections from previously active neurons. \cite{schmidhuber2015deep} Each neuron can be seen as a single unit applying a non-linear activation function (such as sigmoid, tanh, ReLU) to a linear combination of the input activations to the neuron.\cite{cs229}
+A standard neural network consists of many simple, connected processors called neurons, each producing a sequence of real-valued activations. Input neurons get activated through data applied at the input of he network. Other neurons get activated through weighted connections from previously active neurons. \cite{schmidhuber2015deep} Each neuron can be seen as a single unit applying a non-linear activation function (such as sigmoid, tanh, ReLU) to a linear combination of the input activations to the neuron.\cite{cs229}
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.5\textwidth]{nn1.png}
