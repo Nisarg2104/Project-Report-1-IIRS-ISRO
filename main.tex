@@ -230,7 +230,7 @@ This aims to label each scene image with a specific semantic class. Here, a scen
 Satellite data has become a  very important parameter for judging crop progress, land cover classification etc.However, satellite data can not directly report crop health or classify land cover into different classes. 
 NDVI which is calculated by measuring the reflectance of near-infrared and red light is probably the most important and accurate parameter for farmers to know crop health.  NDVI values are so accurate that they can in fact, inform farmers about upcoming drought 2 weeks in advance. Farmers can then make corresponding decisions to  increase irrigation and other crop supplements.
 \paragraph{}
-NDVI values can provide really useful and accurate information about crop health to the concerned authorities and can also help in making predictions of upcoming drought. Another type of satellite data, called evapotranspiration (ET), also sends early-warning signals about plants, based on measures of moisture evaporation and transpiration. But ET is available only on a monthly basis, much less frequent than the eight-day reports on NDVI.\cite{ndvione}
+NDVI values can provide really useful and accurate information about crop health to the concerned authorities and can also help in making predictions of upcoming drought. Evapotranspiration (ET) is another satellite data that can used however, it suffers from one drawback as compared to NDVI values. NDVI values are available on a monthly basis whereas evapotranspiration values are only available monthly, making NDVI measurements more accurate. 
 \subsection{What is NDVI?}
 \paragraph{}
 Light from the sun falls on Earth in three major light bands: Ultraviolet, infrared and red. Most of the ultraviolet is reflected back by the atmosphere. Healthy green plants absorb most of the visible light for photosynthesis however, to prevent over-heating and dehydration the light in red band and near-infrared band is reflected back by the plants. The red light is visible to human and not the infrared. The NDVI values are calculated using the reflectance in red and near-infrared regions.
@@ -244,8 +244,8 @@ where,\\
 $NIR=$ reflection in the near-infrared spectrum\\
 $RED=$ reflection in the red range of the spectrum.
 \paragraph{}
-According to this formula, the density of vegetation (NDVI) at a certain point of the image is equal to the difference in the intensities of reflected light in the red and infrared range divided by the sum of these intensities.\\
-NDVI values range from -1.0 to 1.0, the positive values are usually for plants and vegetation where as the negative values usually indicate presence of snow, water or cloud cover. Very small values (0.1 or less) of the NDVI function correspond to empty areas of rocks, sand or snow. Moderate values (from 0.2 to 0.3) represents shrubs and meadows, while large values (from 0.6 to 0.8) indicate temperate and tropical forests. Crop Monitoring successfully utilizes this scale to show farmers which parts of their fields have dense, moderate, or sparse vegetation at any given moment.
+As per the formula in the figure above, the density of vegetation (NDVI) at a certain point of the image is equal to the difference in the intensities of reflected light in the red and infrared range divided by the sum of these intensities.\\
+NDVI values range from -1.0 to 1.0, the positive values are usually for plants and vegetation where as the negative values usually indicate presence of snow, water or cloud cover. Values very close to 0 and less than 0.1 are due to presence of urban built ups rocks etc. Moderate values between 0.2 and 0.3 are due to shrubs and crops whereas large values close to 1.0 represent temperate and tropical forests. 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{ndviillustration.jpg}
@@ -253,7 +253,7 @@ NDVI values range from -1.0 to 1.0, the positive values are usually for plants a
 \end{figure}
 \subsection{Correlation with plant health}
 \paragraph{}
-Chlorophyll (a health indicator) strongly absorbs visible light, and the cellular structure of the leaves strongly reflect near-infrared light. When the plant becomes dehydrated, sick, afflicted with disease, etc., the spongy layer deteriorates, and the plant absorbs more of the near-infrared light, rather than reflecting it. Thus, observing how NIR changes compared to red light provides an accurate indication of the presence of chlorophyll, which correlates with plant health.\cite{ndvione}
+The amount of chlorophyll acts as an health indicator for the plants. Chlorophyll strongly absorbs visible light and the cell structure reflects near-infrared light. When chlorophyll levels are low, the cell structure gets destroyed and starts absorbing near-infrared light instead of reflecting it. Thus value of NIR without vegetation decrease and hence the NDVI value becomes smaller.
 %\begin{figure}[h]
 %\centering
 %\includegraphics[width=0.8\textwidth]{}
