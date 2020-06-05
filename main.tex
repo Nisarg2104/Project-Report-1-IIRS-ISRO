@@ -180,37 +180,61 @@ Formerly known as Indian Photo-interpretation Institute (IPI), the Institute was
 \section{Remote Sensing}
 \paragraph{}
 Remote sensing is the acquisition of information about an object or phenomenon without making physical contact with the object and thus in contrast to on-site observation, especially the Earth. Remote sensing is used in numerous fields, including geography, land surveying and most Earth science disciplines (for example, hydrology, ecology, meteorology, oceanography, glaciology, geology); it also has military, intelligence, commercial, economic, planning, and humanitarian applications.  It may be split into "active" remote sensing (when a signal is emitted by a satellite or aircraft to the object and its reflection detected by the sensor) and "passive" remote sensing (when the reflection of sunlight is detected by the sensor). Passive sensors gather radiation that is emitted or reflected by the object or surrounding areas. Reflected sunlight is the most common source of radiation measured by passive sensors. Examples of passive remote sensors include film photography, infrared, charge-coupled devices, and radiometers. Active collection, on the other hand, emits energy in order to scan objects and areas whereupon a sensor then detects and measures the radiation that is reflected or backscattered from the target. RADAR and LiDAR are examples of active remote sensing where the time delay between emission and return is measured, establishing the location, speed and direction of an object. \cite{remotesensingwiki}
+\section{Land Cover Classification}
+Land Cover classification generally refers to the categorization or classification of human activities and natural elements on the landscape within a specific time frame based on established scientific and statistical methods of analysis of appropriate source materials.Land cover refers to the surface cover on the ground like vegetation, urban infrastructure, water, bare soil etc. identification of land cover establishes the baseline information for activities like thematic mapping and change detection analysis'https://www.satpalda.com/blogs/significance-of-land-use-land-cover-lulc-maps''\\
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{landcover.png}
+\end{figure}
+Land cover classification data is of great importance in the following applications:\\
+Natural Resource Management: Land cover classification can help policy makers decide how to best manage all the available resources by looking at different terrains. For example government can decide which area requires irrigation facilities the most using land cover classification.  \\
+Wildlife habitat protection: With shrinking habitats of wild animals land cover classification can provide important data for helping in wildlife preservation and protection.\\
+ Urban Expansion/ encroachment: Proper planning is required for expansion of urban area and different land cover features need to be studied to minimize the time and economic cost required for tackling natural obstacles to urban expansion.\\
+ Damage delineation.(Tornadoes, flooding, fire, volcanic): Live land cover data can provide us information about where a certain natural disaster like flood has occurred/can occur and where has it cause damages.\\
+ Target Detection - identification of land strips for use: Using land cover data, identification of ideal locations for different urban construction becomes easy. For example one can decide where exactly it is possible to build an airport or bridge etc.\\
+
+
 \section{Normalized Difference Vegetation Index(NDVI)}
 \paragraph{}
 Satellite data has become an integral part of modern agricultural management to keep track of crop progress. Some satellite data, however, also can foretell how a crop will perform in the future, offering valuable insights to a wide range of industry players.
-NDVI is probably the most important of the satellite data. By reading infrared light waves reflected from plants, NDVI can signal stresses to plant health, such as oncoming drought, as much as two weeks before problems are visible to the naked eye. Many agricultural industry participants can benefit from such advance alerts. Farmers can increase irrigation or add crop protection to forestall a pest infestation. And physical traders, processors, and food and beverage companies could seek out alternative supplies, or hedge their positions.\\cite{ndvione}
+NDVI is probably the most important of the satellite data. By reading infrared light waves reflected from plants, NDVI can signal stresses to plant health, such as oncoming drought, as much as two weeks before problems are visible to the naked eye. Many agricultural industry participants can benefit from such advance alerts. Farmers can increase irrigation or add crop protection to forestall a pest infestation. And physical traders, processors, and food and beverage companies could seek out alternative supplies, or hedge their positions.\cite{ndvione}
 \paragraph{}
-NDVI also can reveal positive indications about a crop, providing a heads-up to market participants, logistics companies, and others to prepare for a big harvest. Another type of satellite data, called evapotranspiration (ET), also sends early-warning signals about plants, based on measures of moisture evaporation and transpiration. But ET is available only on a monthly basis, much less frequent than the eight-day reports on NDVI.\\cite{ndvione}
+NDVI also can reveal positive indications about a crop, providing a heads-up to market participants, logistics companies, and others to prepare for a big harvest. Another type of satellite data, called evapotranspiration (ET), also sends early-warning signals about plants, based on measures of moisture evaporation and transpiration. But ET is available only on a monthly basis, much less frequent than the eight-day reports on NDVIhttps://gro-intelligence.com/insights/articles/ndvi-the-indispensable-data-to-forecast-crop-yields.\cite{ndvione}
 \subsection{What is NDVI?}
 \paragraph{}
-Early space exploration quickly led to atmospheric and meteorological studies. NASA in 1972 launched the Earth Resources Technology Satellite, the forerunner to Landsat, the world’s longest-running satellite imagery program. This first satellite was able to distinguish between visible red and near-infrared reflectance bands, which allowed it to identify vegetation, soil, water, and other features.\\cite{ndvione}
+Early space exploration quickly led to atmospheric and meteorological studies. NASA in 1972 launched the Earth Resources Technology Satellite, the forerunner to Landsat, the world’s longest-running satellite imagery program. This first satellite was able to distinguish between visible red and near-infrared reflectance bands, which allowed it to identify vegetation, soil, water, and other features.\cite{ndvione}
 \paragraph{}
-Light from the sun is present as visible light (reds, greens, and blues) and light not visible to our eyes (infrared and ultraviolet). These can be absorbed, transmitted, or reflected by an object. In healthy plants, most of the visible light is absorbed for use in photosynthesis, and much of the near-infrared radiation (NIR) is reflected. However, if the plant is stressed, because of dehydration, for instance, it reflects less NIR and absorbs less light in the visible spectrum, specifically in the red portion, since the plant is not using photosynthesis as efficiently.\\cite{ndvione}
+Light from the sun is present as visible light (reds, greens, and blues) and light not visible to our eyes (infrared and ultraviolet). These can be absorbed, transmitted, or reflected by an object. In healthy plants, most of the visible light is absorbed for use in photosynthesis, and much of the near-infrared radiation (NIR) is reflected. However, if the plant is stressed, because of dehydration, for instance, it reflects less NIR and absorbs less light in the visible spectrum, specifically in the red portion, since the plant is not using photosynthesis as efficiently.\cite{ndvione}
 \subsection{Formula}
 NDVI is calculated in accordance with the formula:
-\begin{center} \includegraphics{ndviformula.png} \end{center}
+\begin{displaymath}
+NDVI=\frac{NIR-RED}{NIR+RED}
+\end{displaymath}
 where,\\
-NIR - reflection in the near-infrared spectrum
-RED - reflection in the red range of the spectrum
+$NIR=$ reflection in the near-infrared spectrum\\
+$RED=$ reflection in the red range of the spectrum.
 \paragraph{}
 According to this formula, the density of vegetation (NDVI) at a certain point of the image is equal to the difference in the intensities of reflected light in the red and infrared range divided by the sum of these intensities.\\
 This index defines values from -1.0 to 1.0, basically, representing greens, where negative values are mainly formed from clouds, water and snow, and values close to zero are primarily formed from rocks and bare soil. Very small values (0.1 or less) of the NDVI
 function correspond to empty areas of rocks, sand or snow. Moderate values (from 0.2 to 0.3) represents shrubs and meadows, while large values (from 0.6 to 0.8) indicate temperate and tropical forests. Crop Monitoring successfully utilizes this scale to show farmers which parts of their fields have dense, moderate, or sparse vegetation at any given moment. Put simply, NDVI is a measure of the state of plant health based on how the plant reflects light at certain frequencies (some waves are absorbed and others are reflected).
-\begin{center} \includegraphics{ndviillustration.jpg} \end{center}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{ndviillustration.jpg}
+\end{figure}
 \subsection{Illustration}
 \paragraph{}
-Chlorophyll (a health indicator) strongly absorbs visible light, and the cellular structure of the leaves strongly reflect near-infrared light. When the plant becomes dehydrated, sick, afflicted with disease, etc., the spongy layer deteriorates, and the plant absorbs more of the near-infrared light, rather than reflecting it. Thus, observing how NIR changes compared to red light provides an accurate indication of the presence of chlorophyll, which correlates with plant health.
-\begin{center} \includegraphics{ndvisampleone.jpg} \end{center}
-\begin{center} \textbf{Without NDVI} \end{center}
-\begin{center}\includegraphics{ndvisampletwo.jpg} \end{center}
-\begin{center} \textbf{With NDVI} \end{center}
-
-
+Chlorophyll (a health indicator) strongly absorbs visible light, and the cellular structure of the leaves strongly reflect near-infrared light. When the plant becomes dehydrated, sick, afflicted with disease, etc., the spongy layer deteriorates, and the plant absorbs more of the near-infrared light, rather than reflecting it. Thus, observing how NIR changes compared to red light provides an accurate indication of the presence of chlorophyll, which correlates with plant health.https://eos.com/ndvi/
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{ndvisampleone.jpg}
+\caption{Without NDVI}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{ndvisampletwo.jpg}
+\caption{With NDVI}
+\end{figure}
 \newpage
 
 % ____________________________
