@@ -55,7 +55,7 @@
 \begin{titlepage}
 \vspace*{0.3cm}
 \begin{center} \textbf{A REPORT\\ON} \end{center}
-\begin{center} \textbf{{\Large AUTOMATIC LAND COVER CLASSIFICATION OF MULTI-TEMPORAL SATELLITE IMAGES}} \end{center}
+\begin{center} \textbf{{\Large AUTOMATIC LAND COVER CLASSIFICATION OF TEMPORAL SATELLITE IMAGES}} \end{center}
 \begin{center} \textbf{BY} \end{center}
 \begin{center}
 	\begin{tabular}{c c c}
@@ -90,7 +90,11 @@ We would like to extend our most sincere gratitude to our project in-charge, Dr.
 \paragraph{}
 We wish to extend our gratitude to the faculty in charge of the PS-I program at IIRS, Rekha A., Assistant Professor at BITS Pilani - Bangalore Center, for her guidance and advice during the PS-I program, and her helpfulness and responsiveness while addressing all the concerns we raised during the same.
 \paragraph{}
-In addition, we would also like to thank the members of the Practice School Division, who have worked very hard for operating the PS-I programme remotely to ensure that we have a seamless learning experience.
+In addition, we would also like to thank the members of the Practice School Division, who worked very hard for operating the PS-I programme remotely to ensure that we have a seamless learning experience.
+\begin{flushright}
+Guntaas Singh\\
+Nisarg Vora
+\end{flushright}
 \pagebreak
 
 % Details and abstract
@@ -105,7 +109,7 @@ Practice School Division}
 \textbf{Duration:} 3 weeks\\
 \textbf{Date of start:} 18th May, 2020 \\
 \textbf{Date of submission:} 5th June, 2020 \\
-\textbf{Title of project:} Automatic Land Cover Classification of Multi-temporal Satellite Images
+\textbf{Title of project:} Automatic Land Cover Classification of Temporal Satellite Images
 \begin{center}
 \begin{tabular}{c c c}
 \textbf{ID Number} & \textbf{Name} & \textbf{Branch} \\
@@ -141,7 +145,7 @@ Response Option Sheet}
 2018A7PS0254P & Nisarg Vora  & B.E. (Hons.) Computer Science \\
 \end{tabular} 
 \end{center}
-\textbf{Title of project:} Automatic Land Cover Classification of Multi-temporal Satellite Images\\
+\textbf{Title of project:} Automatic Land Cover Classification of Temporal Satellite Images\\
 \begin{center}
 \begin{tabular}{|p{1cm}|p{10cm}|p{3cm}|}
 \hline
@@ -181,34 +185,40 @@ Since its establishment in 1966, IIRS is a key player for training and capacity 
 \cite{iirs.about.history, iirs.about.instiprof}
 \section{Remote Sensing}
 Remote sensing is the acquisition of information about an object or phenomenon without making physical contact with the object and thus in contrast to on-site observation, especially the Earth. Remote sensing is used in numerous fields, including geography, land surveying and most Earth science disciplines (for example, hydrology, ecology, meteorology, oceanography, glaciology, geology); it also has military, intelligence, commercial, economic, planning, and humanitarian applications.
-\paragraph{}
+\subsection{Active and passive remote sensing}
 It may be split into "active" remote sensing (when a signal is emitted by a satellite or aircraft to the object and its reflection detected by the sensor) and "passive" remote sensing (when the reflection of sunlight is detected by the sensor). Passive sensors gather radiation that is emitted or reflected by the object or surrounding areas. Reflected sunlight is the most common source of radiation measured by passive sensors. Examples of passive remote sensors include film photography, infrared, charge-coupled devices, and radiometers. Active collection, on the other hand, emits energy in order to scan objects and areas whereupon a sensor then detects and measures the radiation that is reflected or backscattered from the target. RADAR and LiDAR are examples of active remote sensing where the time delay between emission and return is measured, establishing the location, speed and direction of an object. \cite{remotesensingwiki}
+<<<<<<< HEAD
 Remote sensing is the acquisition of information about an object or phenomenon without making physical contact with the object and thus in contrast to on-site observation, especially the Earth. Remote sensing is used in numerous fields, including geography, land surveying and most Earth science disciplines (for example, hydrology, ecology, meteorology, oceanography, glaciology, geology); it also has military, intelligence, commercial, economic, planning, and humanitarian applications.  It may be split into "active" remote sensing (when a signal is emitted by a satellite or aircraft to the object and its reflection detected by the sensor) and "passive" remote sensing (when the reflection of sunlight is detected by the sensor). Passive sensors gather radiation that is emitted or reflected by the object or surrounding areas. Reflected sunlight is the most common source of radiation measured by passive sensors. Examples of passive remote sensors include film photography, infrared, charge-coupled devices, and radiometers. Active collection, on the other hand, emits energy in order to scan objects and areas whereupon a sensor then detects and measures the radiation that is reflected or backscattered from the target. RADAR and LiDAR are examples of active remote sensing where the time delay between emission and return is measured, establishing the location, speed and direction of an object. \cite{remotesensingwiki}
+
 \section{Objective: Land Cover Classification}
-Land Cover classification generally refers to the categorization or classification of human activities and natural elements on the landscape within a specific time frame based on established scientific and statistical methods of analysis of appropriate source materials.Land cover refers to the surface cover on the ground like vegetation, urban infrastructure, water, bare soil etc. identification of land cover establishes the baseline information for activities like thematic mapping and change detection analysis'https://www.satpalda.com/blogs/significance-of-land-use-land-cover-lulc-maps''. Mainly two techniques are used for land cover classification: Field survey and Remotely sensed imagery analysis. Field survey was the primary method used for land cover classification until a few decades back however it was very inaccurate and time-consuming.With developments in technology, conventional method of field survey which is both inaccurate and time consuming has been replaced by remotely sensed imagery analysis which is highly accurate and covers wider range.ogy
+Land Cover classification generally refers to the categorization or classification of human activities and natural elements on the landscape within a specific time frame based on established scientific and statistical methods of analysis of appropriate source materials.Land cover refers to the surface cover on the ground like vegetation, urban infrastructure, water, bare soil etc. identification of land cover establishes the baseline information for activities like thematic mapping and change detection analysis.\cite{landcoversig}
+\subsection{Techniques}
+Mainly two techniques are used for land cover classification: Field survey and Remotely sensed imagery analysis. Field survey was the primary method used for land cover classification until a few decades back however it was very inaccurate and time-consuming.With developments in technology, conventional method of field survey which is both inaccurate and time consuming has been replaced by remotely sensed imagery analysis which is highly accurate and covers wider range.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{landcover.png}
 \end{figure}
-Land cover classification data is of great importance in the following applications:\\
-Natural Resource Management: Land cover classification can help policy makers decide how to best manage all the available resources by looking at different terrains. For example government can decide which area requires irrigation facilities the most using land cover classification.  \\
-Wildlife habitat protection: With shrinking habitats of wild animals land cover classification can provide important data for helping in wildlife preservation and protection.\\
- Urban Expansion/ encroachment: Proper planning is required for expansion of urban area and different land cover features need to be studied to minimize the time and economic cost required for tackling natural obstacles to urban expansion.\\
- Damage delineation.(Tornadoes, flooding, fire, volcanic): Live land cover data can provide us information about where a certain natural disaster like flood has occurred/can occur and where has it cause damages.\\
- Target Detection - identification of land strips for use: Using land cover data, identification of ideal locations for different urban construction becomes easy. For example one can decide where exactly it is possible to build an airport or bridge etc.\\
-
-
+\subsection{Significance}
+Land cover classification data is of great importance in the following applications:
+\begin{itemize}
+\item \textbf{Natural Resource Management:} Land cover classification can help policy makers decide how to best manage all the available resources by looking at different terrains. For example government can decide which area requires irrigation facilities the most using land cover classification. 
+\item \textbf{Wildlife habitat protection:} With shrinking habitats of wild animals land cover classification can provide important data for helping in wildlife preservation and protection.
+ \item \textbf{Urban Expansion/encroachment:} Proper planning is required for expansion of urban area and different land cover features need to be studied to minimize the time and economic cost required for tackling natural obstacles to urban expansion.
+ \item \textbf{Damage delineation (Tornadoes, flooding, fire, volcanic):} Live land cover data can provide us information about where a certain natural disaster like flood has occurred/can occur and where has it cause damages.
+ \item \textbf{Target Detection - identification of land strips for use:} Using land cover data, identification of ideal locations for different urban construction becomes easy. For example one can decide where exactly it is possible to build an airport or bridge etc.
+\end{itemize}
 \section{Normalized Difference Vegetation Index(NDVI)}
 Satellite data has become an integral part of modern agricultural management to keep track of crop progress. Some satellite data, however, also can foretell how a crop will perform in the future, offering valuable insights to a wide range of industry players.
 NDVI is probably the most important of the satellite data. By reading infrared light waves reflected from plants, NDVI can signal stresses to plant health, such as oncoming drought, as much as two weeks before problems are visible to the naked eye. Many agricultural industry participants can benefit from such advance alerts. Farmers can increase irrigation or add crop protection to forestall a pest infestation. And physical traders, processors, and food and beverage companies could seek out alternative supplies, or hedge their positions.\cite{ndvione}
 \paragraph{}
-NDVI also can reveal positive indications about a crop, providing a heads-up to market participants, logistics companies, and others to prepare for a big harvest. Another type of satellite data, called evapotranspiration (ET), also sends early-warning signals about plants, based on measures of moisture evaporation and transpiration. But ET is available only on a monthly basis, much less frequent than the eight-day reports on NDVIhttps://gro-intelligence.com/insights/articles/ndvi-the-indispensable-data-to-forecast-crop-yields.\cite{ndvione}
+NDVI also can reveal positive indications about a crop, providing a heads-up to market participants, logistics companies, and others to prepare for a big harvest. Another type of satellite data, called evapotranspiration (ET), also sends early-warning signals about plants, based on measures of moisture evaporation and transpiration. But ET is available only on a monthly basis, much less frequent than the eight-day reports on NDVI.\cite{ndvione}
 \subsection{What is NDVI?}
 Early space exploration quickly led to atmospheric and meteorological studies. NASA in 1972 launched the Earth Resources Technology Satellite, the forerunner to Landsat, the world’s longest-running satellite imagery program. This first satellite was able to distinguish between visible red and near-infrared reflectance bands, which allowed it to identify vegetation, soil, water, and other features.\cite{ndvione}
 \paragraph{}
 Light from the sun is present as visible light (reds, greens, and blues) and light not visible to our eyes (infrared and ultraviolet). These can be absorbed, transmitted, or reflected by an object. In healthy plants, most of the visible light is absorbed for use in photosynthesis, and much of the near-infrared radiation (NIR) is reflected. However, if the plant is stressed, because of dehydration, for instance, it reflects less NIR and absorbs less light in the visible spectrum, specifically in the red portion, since the plant is not using photosynthesis as efficiently.\cite{ndvione}
 \subsection{Formula}
+
 NDVI is calculated in accordance with the formula:
 \begin{displaymath}
 NDVI=\frac{NIR-RED}{NIR+RED}
@@ -262,34 +272,37 @@ The term "objects" represents meaningful semantic entities or scene components t
 This aims to label each scene image with a specific semantic class. Here, a scene image usually refers to a local image patch manually extracted from large scale remote sensing images that contain explicit semantic classes.\cite{eyesky}
 
 \section{Supervised Machine Learning}
-Supervised learning is the machine learning task of learning a function that maps an input to an output based on example input-output pairs.\cite{supervisedlearningone} Supervised learning is the machine learning task of learning a function that maps an input to an output based on example input-output pairs.\cite{supervisedlearningtwo} If enough data is available then the trained model usually identifies the underlying data patterns and is then able to make predictions on previously unknown input. The training data i.e. the set of input-output example pairs for the purpose of this project is the labelled region of Agra District, Uttar Pradesh, India obtained from Copernicus Global Landcover dataset. The model trained from these input-out put pairs is then tested on the region of Gandhinagar District, Gujarat, India. Supervise learning, however, faces the problem of overfitting when model is made very fiexible in order to fit the underlying data and underfitting when the model is to rigid to fit the underlying data.
+Supervised learning is the machine learning task of learning a function that maps an input to an output based on example input-output pairs.\cite{supervisedlearningone} Supervised learning is the machine learning task of learning a function that maps an input to an output based on example input-output pairs.\cite{supervisedlearningtwo} If enough data is available then the trained model usually identifies the underlying data patterns and is then able to make predictions on previously unknown input. The training data is the set of input-output example pairs used to train the classifier. Supervised learning, however, faces the problem of overfitting when model is made very flexible in order to fit the underlying data and underfitting when the model is to rigid to fit the underlying data.
 \section{Support Vector Machines}
-A Support Vector Machine (SVM) is a discriminative classifier formally defined by a separating hyperplane. In other words, given labeled training data (supervised learning), the algorithm outputs an optimal hyperplane which categorizes new examples. In two dimentional space this hyperplane is a line dividing a plane in two parts where in each class lay in either side.\cite{supportvectormachines}\\
+A Support Vector Machine (SVM) is a discriminative classifier formally defined by a separating hyperplane. In other words, given labeled training data (supervised learning), the algorithm outputs an optimal hyperplane which categorizes new examples. In two dimentional space this hyperplane is a line dividing a plane in two parts where in each class lay in either side.\cite{supportvectormachines}
+\subsection{Types of SVMs}
 There are two kinds of support vector machines: Hard Margin Support Vector Machines and Soft Margin Support Vector Machines.
 Hard Margin Support Vector machines do not allow misclassification of data points, tend to overfit the data and are thus sensitive to outliers. Soft margin support vector machines allow slight misclassification of data points and penalize for each misclassification.
 For this project, soft margin support vector machines have been used to classify the data points.
-
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.7\textwidth]{supportvectormachines.jpg}
 \caption{Support Vector Machine}
 \end{figure}
-
-
-The advantages of using support vector machines are:\\
-Support vectors can deal with high dimensional data easily with the help of kernel transformations.\\
-They are only dependent on some part of the training data known as the support vectors which makes them very memory efficient.\\
-Can be used for a variety of tasks due to availability of a large number of kernel functions for decision making.\\
-Fast and memory efficient implementations in various languages is available via different libraries.\\
-
-The disadvantages of using support vector machines are:\\
-They do not take the spatial orientation of the pixels into account while learning.\\
-With wrong choice of kernel, support vector machines tend to to overfit the data.\\
-Hard margin support vector machines are very sensitive to outliers and hence proper care should be taken while using them.\\
-
+\subsection{Advantages}
+The advantages of using support vector machines are:
+\begin{itemize}
+\item Support vectors can deal with high dimensional data easily with the help of kernel transformations.
+\item They are only dependent on some part of the training data known as the support vectors which makes them very memory efficient.
+\item Can be used for a variety of tasks due to availability of a large number of kernel functions for decision making.
+\item Fast and memory efficient implementations in various languages is available via different libraries.
+\end{itemize}
+\subsection{Disadvantages}
+The disadvantages of using support vector machines are:
+\begin{itemize}
+\item They do not take the spatial orientation of the pixels into account while learning.
+\item With wrong choice of kernel, support vector machines tend to to overfit the data.
+\item Hard margin support vector machines are very sensitive to outliers and hence proper care should be taken while using them.
+\end{itemize}
 
 \section{Deep Learning and Neural Networks}
-Application of traditional machine learning techniques requires handcrafted features, developing which demands a considerable amount of engineering skill and domain expertise. This, however, is not true for neural networks, which automatically learn these features from data using a general-purpose learning procedure.\cite{eyesky, cs231n} Despite having been around for decades, neural networks have garnered much attention only in the last few years on account of the availability of increased computational power and large amounts of data.
+Application of traditional machine learning techniques requires handcrafted features, developing which demands a considerable amount of engineering skill and domain expertise. This, however, is not true for neural networks, which automatically learn these features from data using a general-purpose learning procedure.\cite{eyesky, cs231n} 
+%Despite having been around for decades, neural networks have garnered much attention only in the last few years on account of the availability of increased computational power and large amounts of data.
 \paragraph{}
 A standard neural network consists of many simple, connected processors called neurons, each producing a sequence of real-valued activations. Input neurons get activated through sensors perceiving the environment, other neurons get activated through weighted connections from previously active neurons. \cite{schmidhuber2015deep} Each neuron can be seen as a single unit applying a non-linear activation function (such as sigmoid, tanh, ReLU) to a linear combination of the input activations to the neuron.\cite{cs229}
 \begin{figure}[h]
@@ -313,7 +326,7 @@ A convolutional neural network (CNN) is a sequence of layers. Each layers transf
 \subsection{Convolutional Layer}
 This is the core building block for convolutional networks. It is based on the convolution operation on images.
 \paragraph{}
-Each convolutional layer of a CNN consists of $N$ kernels or filters of a certain volume of neurons sized $f \times f \times d$, with $f$ being the spatial dimension and $d$ being the number of feature channels of the kernel, which is same as the number of channels in the image at its input ($D_{i}$). Every one of these filters is convolved with a corresponding volume of the input image, and is slid through the entire image of size $H_{i} \times W_{i} \times D_{i}$. Convolution refers to the summation of the element-wise dot product of the neurons in each filter with the corresponding values in the input, for each position in which the filter is aligned with the image. Based on this notion, a convolution with a single filter at each layer results in a two dimensional output of a certain size. \cite{cs231n, muruganandham2016semantic, dlai4}
+Each convolutional layer of a CNN consists of $N$ kernels or filters of a certain volume of neurons sized $f \times f \times d$, with $f$ being the spatial dimension and $d$ being the number of feature channels of the kernel, which is same as the number of channels in the image at its input ($D_{i}$). Every one of these filters is slid through the entire image of size $H_{i} \times W_{i} \times D_{i}$. Convolution refers to the summation of the element-wise dot product of the neurons in each filter with the corresponding values in the input, for each position in which the filter is aligned with the image. Based on this notion, a convolution with a single filter at each layer results in a two dimensional output of a certain size. \cite{cs231n, muruganandham2016semantic, dlai4}
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{cnn1.jpg}
@@ -340,8 +353,7 @@ It is common to periodically insert a Pooling layer in-between successive convol
 \caption{(1) A typical max pooling layer. (2) The max pooling operation.}\cite{cs231n}
 \end{figure}
 \subsection{Fully Connected Layer}
-Once higher level features are detected from the preceding convolution and pooling layers, a fully connected layer is usually attached at the end of the network. This layer is fully connected to all activations in the previous layer, as in regular neural networks, allowing all the features learned by the network to be taken into account by the output layer. \paragraph{}
-In practice, fully connected layers have an equivalent representation as a convolutional layer having $N$ filters with dimensions equal to those of the input image. The output of this layer will thus be a volume of dimensions $1 \times 1 \times N$. This simple change allows the same CNN to be applied on images with arbitrary spatial dimensions and classify them in a single pass of forward propagation, instead of iterating on different crops of adequate size. This is the basic intuition behind \textbf{Fully Convolutional Networks}.\cite{long2015fully}
+Once higher level features are detected from the preceding convolution and pooling layers, a fully connected layer is usually attached at the end of the network. This layer is fully connected to all activations in the previous layer, as in regular neural networks, allowing all the features learned by the network to be taken into account by the output layer.
 \paragraph{}
 All of these different types of layers can be stacked together in various ways to form a CNN.
 \begin{figure}[h]
@@ -352,12 +364,11 @@ All of these different types of layers can be stacked together in various ways t
 \section{Semantic Segmentation}
 Typical CNNs used for image classification take fixed-size inputs and produce non-spatial outputs (predicted class labels). However, in case of land cover classification, the objective is not to assign a single class label to a given satellite image, but to divide the given image into segments each corresponding to one class out of a given set of land cover classes. This problem is known as semantic segmentation. There are different ways in which the existing image classification CNNs can be extended to solve this problem.
 \paragraph{}
-An obvious approach is to use a sliding window to extract small local patches or crops from the input image. These crops are then passed to an image classifier which assigns a class to the central pixel for each crop. In this way, we can classify all pixels of the original image. However, this approach is computationally very expensive as a separate forward pass (through the CNN) will be required to classify every pixel, and so it is not practically feasible. Moreover, as the local patches overlap, much of the computation is redundant.\\
-Another approach is to use fully convolutional networks with only convolutional layers. In these networks, zero padding can be used to preserve the spatial dimensions of the input image. So, the network can be trained by comparing the spatial output to the ground truth land cover data. However, the large spatial dimensions throughout the network make the model computationally infeasible. \cite{long2015fully, cs231n, unet}
+One approach is to use networks with only convolutional layers. In these networks, zero padding can be used to preserve the spatial dimensions of the input image. However, the large spatial dimensions throughout the network make the model computationally infeasible. \cite{long2015fully, cs231n, unet}
 \paragraph{}
 While the problem requires the CNN to produce a spatial output, down-sampling is essential for reducing the need for computational resources to a feasible level. As a result, the most popular approach is to design the network as a combination of an encoder(down-sampling path) and a decoder(up-sampling path).\\
 \section{FCN Architecture}
-As discussed earlier, the re-interpretation of fully connected layers as convolutional layers yields Fully Convolutional Networks. These networks can take input of any dimensions and output classification maps. For up-sampling these classification maps, \textit{Long et al.}\cite{long2015fully} propose the use of transpose convolution. 
+Fully connected layers have an equivalent representation as a convolutional layer having $N$ filters with dimensions equal to those of the input image. The output of this layer will thus be a volume of dimensions $1 \times 1 \times N$. This simple change allows the same CNN to be applied on images with arbitrary spatial dimensions and classify them in a single pass of forward propagation. This is far more efficient than iterating on different crops and classifying one pixel at a time. This is the basic intuition behind \textbf{Fully Convolutional Networks}.\cite{long2015fully} For up-sampling the classification maps produced by a FCN, \textit{Long et al.}\cite{long2015fully} propose the use of transpose convolution. 
 \subsection{Transpose Convolution}
 Ordinary convolution involves taking a dot product between the filter and the input for every receptive field at a stride of s in the input, and storing the result at a stride of 1 in the output. The resulting output image gets down-sampled by a factor of s. In transpose convolution, we use the values at a stride of 1 in the input and take their scalar product with the filter, storing the resulting matrix at a stride of s in the output. As a result the image gets up-sampled by a factor of s. Any overlapping values in the output are summed together.\cite{long2015fully, cs231n}
 A stack of layers performing transpose convolution with an appropriate activation function can be used to learn a non-linear up-sampling.\cite{long2015fully}\begin{figure}[h]
@@ -367,7 +378,7 @@ A stack of layers performing transpose convolution with an appropriate activatio
 \cite{cs231n}
 \end{figure}
 \subsection{Skip Connections}
-Semantic segmentation faces an inherent tension between semantics and location. Deep layers capture local information and resolve the semantic information that the image contains. Global information available to shallower layers can be used to capture the location. This motivates the idea of adding skip connections from shallow layers to the final prediction layer. Combining the information captured by shallow and deep layers at the time of up-sampling lets the model make local predictions that take into account global structure and semantics. To combine activations with different spatial dimensions, they are first up-sampled individually as required using transpose convolutions and then summed up. The result is then up-sampled by a final layer, so that the output spatial dimensions match those of the input image. The addition of skip connections produced finer and more detailed segmentation map. Addition of more such connections gave diminishing returns.\cite{long2015fully}
+Semantic segmentation faces an inherent tension between semantics and location. Deep layers capture local information and resolve the semantic information that the image contains. Global information available to shallower layers can be used to capture the location. This motivates the idea of adding skip connections from shallow layers to the final prediction layer. Combining the information captured by shallow and deep layers at the time of up-sampling lets the model make local predictions that take into account global structure and semantics. To combine activations with different spatial dimensions, they are first up-sampled individually as required using transpose convolutions and then summed up. The result is then up-sampled by a final layer, so that the output spatial dimensions match those of the input image. The addition of skip connections produces a finer and more detailed segmentation map.\cite{long2015fully}
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{fcn2.jpg}
@@ -379,6 +390,7 @@ Semantic segmentation faces an inherent tension between semantics and location. 
 \caption{Different networks based on the FCN architecture.}
 \cite{long2015fully}
 \end{figure}
+\newpage
 \section{U-Net Architecture}
 Proposed by \textit{Ronneberger et al.}\cite{unet}, the U-Net architecture builds upon and extends the FCN architecture for more precise segmentation using a smaller training dataset. While the architecture was designed particularly for bio-medical segmentation applications, it has shown to work well for other domains too.
 \begin{figure}[h]
@@ -422,12 +434,19 @@ It is made up of four identical blocks. Each block encloses the following sequen
 At each up-sampling step (transpose convolution), the number of channels is halved. The output volume after up-sampling is concatenated with the corresponding volume from the down-sampling path after adequate cropping. The introduction of these skip connections allows the propagation of context information about the localization from the down-sampling path to the up-sampling path which already carries semantic information. This helps the network to spread out activations correctly when up-sampling and lends the network its U-shape.
 \subsection{Advantages}
 The U-Net architecture presented above has several features which lend it better performance than the FCN architecture.
-\paragraph{}
+\begin{itemize}
+\item
 In the FCN architecture, the single up-sampling layer is added at the end of the CNN and has limited number of channels (equal to the number of class labels). The U-Net architecture makes use of multiple up-sampling layers (each with multiple feature channels) in the up-sampling path, interspersed with blocks of convolutional layers. This provides for the opportunity to add more skip connections and so, to fuse contextual and semantic information better, at the time of up-sampling. 
-\paragraph{}
+\item
 Concatenation is used for combining information from skip connections, as opposed to the summing operation used in the FCN architecture. This helps to retain more information from both sets of activations, without polluting either.
-\paragraph{}
+\item
 The U-Net architecture is also particularly well suited to applications where labelled training data is not available in abundance. This makes it more attractive for our project on account of the limited computational resources and time available for training the network. We, hence, propose to use this CNN architecture for the problem of land cover classification.
+\end{itemize}
+\subsection{Disadvantages}
+\begin{itemize}
+\item Convolutional neural networks do not take temporal variations directly into account. However, it is hoped that providing the network with training data from different time periods should allow it to capture some of the temporal trends.
+\item The performance of a deep neural network greatly depends on the amount of training data available. We propose using techniques like data augmentation and transfer learning so as to get better results even with our small training set.
+\end{itemize}
 % IMPLEMENTATION
 \chapter{Implementation}
 \section{Data Collection}
@@ -447,7 +466,8 @@ For training our classifiers, we will be using images of Agra, Mathura and the s
 \end{figure}
 \chapter{Conclusion}
 \paragraph{}
-Information of land cover classification is very crucial for applications like natural resource management, wildlife habitat protection, urban expansion, damage delineation, target land detection etc. With developments in technology, conventional method of field survey which is both inaccurate and time consuming has been replaced by remotely sensed imagery analysis which is highly accurate and covers wider range. Indian Space Research Organisation (ISRO) and Indian Institute of Remote Sensing (IIRS), Dehradun play an important role in providing information for these applications. Modern statistical and computing techniques like machine learning and deep learning minimize the human intervention in the task of analysis and classification, thus making the outcome very accurate and the process very agile. Support vector machines efficiently classify the pixel data however they do not take the spatial orientation of the pixels into account. Convolutional Neural Network is another efficient algorithm that can be used for classification however it fails to account for the temporal nature of the data.
-
+Information of land cover classification is very crucial for applications like natural resource management, wildlife habitat protection, urban expansion, damage delineation, target land detection etc. With developments in technology, conventional method of field survey which is both inaccurate and time consuming has been replaced by remotely sensed imagery analysis which is highly accurate and covers wider range. Indian Space Research Organisation (ISRO) and Indian Institute of Remote Sensing (IIRS), Dehradun play an important role in providing information for these applications. Modern statistical and computing techniques like machine learning and deep learning minimize the human intervention in the task of analysis and classification, thus making the outcome very accurate and the process very agile.
+\paragraph{}
+The project seeks to compare the applicability of machine learning and deep learning techniques to the problem of land cover classification. Support Vector Machines are traditional machine learning models that provide a method for pixel-wise classification based on learning from the temporal variations in the NDVI time series. On the other hand, Convolutional Neural Networks - a class of deep neural networks, use the spatial variations in the infrared and visible bands of the satellite image for segmentation. The two, hence represent very different approaches for solving the problem. However, the project is still at a very nascent stage, and any comment regarding the comparative performance of these two approaches cannot be made yet.
 \printbibliography[heading=bibintoc, title={References}]
 \end{document}
