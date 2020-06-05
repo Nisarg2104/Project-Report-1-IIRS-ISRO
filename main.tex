@@ -31,7 +31,7 @@
 \begin{titlepage}
 \vspace*{0.2cm}
 \begin{center} \textbf{A REPORT\\ON} \end{center}
-\begin{center} \textbf{{\Large AUTOMATIC LAND COVER CLASSIFICATION OF MULTI-TEMPORAL SATELLITE IMAGES}} \end{center}
+\begin{center} \textbf{{\Large AUTOMATIC LAND COVER CLASSIFICATION OF TEMPORAL SATELLITE IMAGES}} \end{center}
 \begin{center} \textbf{BY} \end{center}
 \begin{center} 
 {\Large 
@@ -84,12 +84,11 @@
 \pagestyle{plain}
 \pagenumbering{roman}
 \setcounter{page}{3}
-\paragraph{}
-We would sincerely like to thank the Director of Indian Institute of Remote Sensing, Dr. Prakash Chauhan, for giving us an opportunity to work in this organization and gain a significant amount of exposure to corporate work culture, ethics, and etiquette to be followed while working in a professional environment.
+We would sincerely like to thank the Director of Indian Institute of Remote Sensing, Dr. Prakash Chauhan, for giving us an opportunity to work in this organization and gain exposure to corporate work culture, ethics, and etiquette to be followed while working in a professional environment.
 \paragraph{}
 We would like to extend our most sincere gratitude to our project in-charge, Dr. Hari Shanker Srivastava, Head of the Programme Planning and Evaluation Group (PPEG) at IIRS, for providing us with the opportunity to work with him on this project, and his guidance and mentorship during the same.
 \paragraph{}
-We wish to extend our gratitude to the faculty in charge of the PS-I program at IIRS, Dr. Rekha A., Assistant Professor at BITS Pilani - Bangalore Center, for her guidance and advice during the PS-I program, and her helpfulness and responsiveness while addressing all the concerns we raised during the same.
+We wish to extend our gratitude to the faculty in charge of the PS-I program at IIRS, Rekha A., Assistant Professor at BITS Pilani - Bangalore Center, for her guidance and advice during the PS-I program, and her helpfulness and responsiveness while addressing all the concerns we raised during the same.
 \paragraph{}
 In addition, we would also like to thank the members of the Practice School Division, who have worked very hard for operating the PS-I programme remotely to ensure that we have a seamless learning experience.
 \pagebreak
@@ -103,9 +102,9 @@ Practice School Division}
 \begin{onehalfspace}
 \textbf{Station:} Indian Institute of Remote Sensing \\
 \textbf{Centre:} Dehradun\\
-\textbf{Duration:} From 18th May, 2020 to 27th June, 2020 \\
+\textbf{Duration:} 3 weeks\\
 \textbf{Date of start:} 18th May, 2020 \\
-\textbf{Date of submission:} 4th June, 2020 \\
+\textbf{Date of submission:} 5th June, 2020 \\
 \textbf{Title of project:} Automatic Land Cover Classification of Multi-temporal Satellite Images
 \begin{center}
 \begin{tabular}{c c c}
@@ -116,11 +115,12 @@ Practice School Division}
 \end{center}
 \textbf{Name of guide:} Dr. Hari Shanker Srivastava \\
 \textbf{Designation:} Scientist/Engineer - SG. Group Head, Programme Planning and Evaluation Group (PPEG). \\
-\textbf{Name of PS faculty:} Dr. Rekha A. 
-
-	\section{Abstract}
-	\paragraph{}
-	Blah
+\textbf{Name of PS faculty:} Rekha A. \\
+\textbf{Key Words:} Semantic Segmentation, Support Vector Machines, Convolutional Neural Networks, U-Net Architecture\\
+\textbf{Project Areas:} Remote Sensing, Machine Learning, Deep Learning
+\section{Abstract}
+\paragraph{}
+Blah
 \end{onehalfspace}
 \newpage
 
@@ -171,23 +171,25 @@ Response Option Sheet}
 
 % INTRODUCTION
 \setcounter{page}{1}
-\setcounter{secnumdepth}{1}
+\setcounter{secnumdepth}{2}
 \chapter{Introduction}
 \pagenumbering{arabic}
 \section{About IIRS}
+Formerly known as Indian Photo-interpretation Institute (IPI), the Institute was founded on 21st April 1966 under the aegis of Survey of India (SOI). It was established with the collaboration of the Government of The Netherlands on the pattern of Faculty of Geo-Information Science and Earth Observation (ITC) of the University of Twente, The Netherlands. The original idea of setting the Institute came from India's first Prime Minister Pandit Jawahar Lal Nehru during his visit to The Netherlands in 1957. 
 \paragraph{}
-Formerly known as Indian Photo-interpretation Institute (IPI), the Institute was founded on 21st April 1966 under the aegis of Survey of India (SOI). It was established with the collaboration of the Government of The Netherlands on the pattern of Faculty of Geo-Information Science and Earth Observation (ITC) of the University of Twente, The Netherlands. The original idea of setting the Institute came from India's first Prime Minister Pandit Jawahar Lal Nehru during his visit to The Netherlands in 1957. Since its establishment in 1966, IIRS is a key player for training and capacity building in geospatial technology and its applications through training, education and research in Southeast Asia. The training, education and capacity building programmes of the Institute are designed to meet the requirements of Professionals at working levels, fresh graduates, researchers, academia, and decision makers. IIRS is also one of the most sought after Institute for conducting specially designed courses for the officers from Central and State Government Ministries and stakeholder departments for the effective utilization of Earth Observation (EO) data. Keeping pace with the technological advances, the Institute has enhanced its capability with time, to fulfill the increased responsibility and demand from Indian and international community. Today, it has programmes for all levels of users, i.e. mid-career professionals, researchers, academia, fresh graduates and policy makers. The sustained efforts by its dedicated faculty and the management have made the institute remain in the forefront throughout its journey of about four and a half decades from a photo-interpretation institute to an institute of an international stature in the field of remote sensing and geo-information science.\cite{iirs.about.history}\cite{iirs.about.instiprof}
+Since its establishment in 1966, IIRS is a key player for training and capacity building in geospatial technology and its applications through training, education and research in Southeast Asia. The training, education and capacity building programmes of the Institute are designed to meet the requirements of professionals at working levels, fresh graduates, researchers, academia, and decision makers. IIRS is also one of the most sought after institute for conducting specially designed courses for the officers from Central and State Government Ministries and stakeholder departments for the effective utilization of Earth Observation (EO) data. 
+\paragraph{}
+Keeping pace with the technological advances, the institute has enhanced its capability with time, to fulfill the increased responsibility and demand from indian and international community. Today, it has programmes for all levels of users, i.e. mid-career professionals, researchers, academia, fresh graduates and policy makers. The sustained efforts by its dedicated faculty and the management have made the institute remain in the forefront throughout its journey of about four and a half decades from a photo-interpretation institute to an institute of an international stature in the field of remote sensing and geo-information science.\cite{iirs.about.history, iirs.about.instiprof}
 \section{Remote Sensing}
+Remote sensing is the acquisition of information about an object or phenomenon without making physical contact with the object and thus in contrast to on-site observation, especially the Earth. Remote sensing is used in numerous fields, including geography, land surveying and most Earth science disciplines (for example, hydrology, ecology, meteorology, oceanography, glaciology, geology); it also has military, intelligence, commercial, economic, planning, and humanitarian applications.
 \paragraph{}
-Remote sensing is the acquisition of information about an object or phenomenon without making physical contact with the object and thus in contrast to on-site observation, especially the Earth. Remote sensing is used in numerous fields, including geography, land surveying and most Earth science disciplines (for example, hydrology, ecology, meteorology, oceanography, glaciology, geology); it also has military, intelligence, commercial, economic, planning, and humanitarian applications.  It may be split into "active" remote sensing (when a signal is emitted by a satellite or aircraft to the object and its reflection detected by the sensor) and "passive" remote sensing (when the reflection of sunlight is detected by the sensor). Passive sensors gather radiation that is emitted or reflected by the object or surrounding areas. Reflected sunlight is the most common source of radiation measured by passive sensors. Examples of passive remote sensors include film photography, infrared, charge-coupled devices, and radiometers. Active collection, on the other hand, emits energy in order to scan objects and areas whereupon a sensor then detects and measures the radiation that is reflected or backscattered from the target. RADAR and LiDAR are examples of active remote sensing where the time delay between emission and return is measured, establishing the location, speed and direction of an object. \cite{remotesensingwiki}
+It may be split into "active" remote sensing (when a signal is emitted by a satellite or aircraft to the object and its reflection detected by the sensor) and "passive" remote sensing (when the reflection of sunlight is detected by the sensor). Passive sensors gather radiation that is emitted or reflected by the object or surrounding areas. Reflected sunlight is the most common source of radiation measured by passive sensors. Examples of passive remote sensors include film photography, infrared, charge-coupled devices, and radiometers. Active collection, on the other hand, emits energy in order to scan objects and areas whereupon a sensor then detects and measures the radiation that is reflected or backscattered from the target. RADAR and LiDAR are examples of active remote sensing where the time delay between emission and return is measured, establishing the location, speed and direction of an object. \cite{remotesensingwiki}
 \section{Normalized Difference Vegetation Index(NDVI)}
-\paragraph{}
 Satellite data has become an integral part of modern agricultural management to keep track of crop progress. Some satellite data, however, also can foretell how a crop will perform in the future, offering valuable insights to a wide range of industry players.
 NDVI is probably the most important of the satellite data. By reading infrared light waves reflected from plants, NDVI can signal stresses to plant health, such as oncoming drought, as much as two weeks before problems are visible to the naked eye. Many agricultural industry participants can benefit from such advance alerts. Farmers can increase irrigation or add crop protection to forestall a pest infestation. And physical traders, processors, and food and beverage companies could seek out alternative supplies, or hedge their positions.\cite{ndvione}
 \paragraph{}
 NDVI also can reveal positive indications about a crop, providing a heads-up to market participants, logistics companies, and others to prepare for a big harvest. Another type of satellite data, called evapotranspiration (ET), also sends early-warning signals about plants, based on measures of moisture evaporation and transpiration. But ET is available only on a monthly basis, much less frequent than the eight-day reports on NDVI.\cite{ndvione}
 \subsection{What is NDVI?}
-\paragraph{}
 Early space exploration quickly led to atmospheric and meteorological studies. NASA in 1972 launched the Earth Resources Technology Satellite, the forerunner to Landsat, the world’s longest-running satellite imagery program. This first satellite was able to distinguish between visible red and near-infrared reflectance bands, which allowed it to identify vegetation, soil, water, and other features.\cite{ndvione}
 \paragraph{}
 Light from the sun is present as visible light (reds, greens, and blues) and light not visible to our eyes (infrared and ultraviolet). These can be absorbed, transmitted, or reflected by an object. In healthy plants, most of the visible light is absorbed for use in photosynthesis, and much of the near-infrared radiation (NIR) is reflected. However, if the plant is stressed, because of dehydration, for instance, it reflects less NIR and absorbs less light in the visible spectrum, specifically in the red portion, since the plant is not using photosynthesis as efficiently.\cite{ndvione}
@@ -206,19 +208,25 @@ function correspond to empty areas of rocks, sand or snow. Moderate values (from
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{ndviillustration.jpg}
+\caption{Plant health directly affects reflectance in NIR and RED bands.}
 \end{figure}
-\subsection{Illustration}
+\subsection{Correlation with plant health}
 \paragraph{}
 Chlorophyll (a health indicator) strongly absorbs visible light, and the cellular structure of the leaves strongly reflect near-infrared light. When the plant becomes dehydrated, sick, afflicted with disease, etc., the spongy layer deteriorates, and the plant absorbs more of the near-infrared light, rather than reflecting it. Thus, observing how NIR changes compared to red light provides an accurate indication of the presence of chlorophyll, which correlates with plant health.
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.8\textwidth]{ndvisampleone.jpg}
-\caption{Without NDVI}
-\end{figure}
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.8\textwidth]{ndvisampletwo.jpg}
-\caption{With NDVI}
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width=0.8\textwidth]{}
+%\caption{Without NDVI}
+%\end{figure}
+%\begin{figure}[h]
+%\centering
+%\includegraphics[width=0.8\textwidth]{}
+%\caption{With NDVI}
+%\end{figure}
+\begin{figure}[ht!]
+\includegraphics[width=.45\textwidth]{ndvisampleone.jpg}\hfill
+\includegraphics[width=.45\textwidth]{ndvisampletwo.jpg}
+\caption{(1) Without NDVI. (2) With NDVI.}
 \end{figure}
 \newpage
 
@@ -257,7 +265,6 @@ These single neurons can be stacked so that one neuron passes its output as inpu
 \newpage
 
 \section{Convolutional Neural Networks}
-\paragraph{}
 Regular neural networks do not scale well to full images. If the input to the neural network is a 200x200 RGB image, the number of weights for each neuron will be 200*200*3 = 120,000 weights. For large networks, the total number of learnable parameters become very large and lead the model to potentially overfit the training data, unless the training set is adequately large.
 \paragraph{}
 A convolutional neural network (CNN) is a sequence of layers. Each layers transforms an input volume (images are represented as a three dimensional matrix) of activations to another with some differentiable function which may or may not have parameters.\cite{cs231n, dlai4} These layers are of three main types:
@@ -301,7 +308,6 @@ All of these different types of layers can be stacked together in various ways t
 \caption{AlexNet - an influential NN architecture that popularized the use of CNNs and GPUs to accelerate deep learning.}\cite{alexnet, alexnetimg}
 \end{figure}
 \section{Semantic Segmentation}
-\paragraph{}
 Typical CNNs used for image classification take fixed-size inputs and produce non-spatial outputs (predicted class labels). However, in case of land cover classification, the objective is not to assign a single class label to a given satellite image, but to divide the given image into segments each corresponding to one class out of a given set of land cover classes. This problem is known as semantic segmentation. There are different ways in which the existing image classification CNNs can be extended to solve this problem.
 \paragraph{}
 An obvious approach is to use a sliding window to extract small local patches or crops from the input image. These crops are then passed to an image classifier which assigns a class to the central pixel for each crop. In this way, we can classify all pixels of the original image. However, this approach is computationally very expensive as a separate forward pass (through the CNN) will be required to classify every pixel, and so it is not practically feasible. Moreover, as the local patches overlap, much of the computation is redundant.\\
@@ -319,7 +325,7 @@ A stack of layers performing transpose convolution with an appropriate activatio
 \cite{cs231n}
 \end{figure}
 \subsection{Skip Connections}
-Semantic segmentation faces an inherent tension between semantics and location. Deep layers capture local information and resolve the semantic information that the image contains. Global information available to shallower layers can be used to capture the location. This motivates the idea of adding skip connections from shallow layers to the final prediction layer. Combining the information captured by shallow and deep layers at the time of up-sampling lets the model make local predictions that take into account global structure and semantics. To combine activations with different spatial dimensions, they are first up-sampled individually as required using transpose convolutions and then summed up. The result is then up-sampled by a final layer, so that the output spatial dimensions match those of the input image.\cite{long2015fully}
+Semantic segmentation faces an inherent tension between semantics and location. Deep layers capture local information and resolve the semantic information that the image contains. Global information available to shallower layers can be used to capture the location. This motivates the idea of adding skip connections from shallow layers to the final prediction layer. Combining the information captured by shallow and deep layers at the time of up-sampling lets the model make local predictions that take into account global structure and semantics. To combine activations with different spatial dimensions, they are first up-sampled individually as required using transpose convolutions and then summed up. The result is then up-sampled by a final layer, so that the output spatial dimensions match those of the input image. The addition of skip connections produced finer and more detailed segmentation map. Addition of more such connections gave diminishing returns.\cite{long2015fully}
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{fcn2.jpg}
@@ -327,12 +333,12 @@ Semantic segmentation faces an inherent tension between semantics and location. 
 \end{figure}
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.7\textwidth]{fcn3.jpg}
-\caption{The addition of skip connections produced finer and more detailed segmentation map. Addition of more such connections gave diminishing returns.}
+\includegraphics[width=0.6\textwidth]{fcn3.jpg}
+\caption{Different networks based on the FCN architecture.}
 \cite{long2015fully}
 \end{figure}
 \section{U-Net Architecture}
-Proposed by \textit{Ronneberger et al.} \cite{unet}, the U-Net architecture builds upon and extends the FCN architecture for more precise segmentation using a smaller training dataset. While the architecture was designed particularly for bio-medical segmentation applications, it has shown to work well for other domains too. %cite
+Proposed by \textit{Ronneberger et al.}\cite{unet}, the U-Net architecture builds upon and extends the FCN architecture for more precise segmentation using a smaller training dataset. While the architecture was designed particularly for bio-medical segmentation applications, it has shown to work well for other domains too.
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{unet1.jpg}
@@ -353,6 +359,7 @@ It is made up of four identical blocks. Each block encloses the following sequen
 	\item Convolutional layer ($f=3, s=1, p=0$)
 	\item Max Pooling layer ($f=2, s=2$)
 \end{enumerate}
+\paragraph{}
 At each down-sampling step (max-pooling), the number of channels is doubled, starting with 64 channels in the first block. The down-sampling path captures not only features relevant to classification, but also contextual information about the location of different segments.
 \subsubsection{Bottleneck}
 It is made up of 2 layers:
@@ -369,6 +376,7 @@ It is made up of four identical blocks. Each block encloses the following sequen
 	\item Convolutional layer ($f=3, s=1, p=0$)
 	\item Convolutional layer ($f=3, s=1, p=0$)
 \end{enumerate}
+\paragraph{}
 At each up-sampling step (transpose convolution), the number of channels is halved. The output volume after up-sampling is concatenated with the corresponding volume from the down-sampling path after adequate cropping. The introduction of these skip connections allows the propagation of context information about the localization from the down-sampling path to the up-sampling path which already carries semantic information. This helps the network to spread out activations correctly when up-sampling and lends the network its U-shape.
 \subsection{Advantages}
 The U-Net architecture presented above has several features which lend it better performance than the FCN architecture.
@@ -383,11 +391,18 @@ The U-Net architecture is also particularly well suited to applications where la
 \section{Data Collection}
 \subsection{Google Earth Engine}
 Google Earth Engine is a computing platform that allows users to run geo-spatial analysis on Google's cloud infrastructure. It provides several ways to interact with the platform. The Code Editor is a web-based Integrated Development Environment (IDE) for writing and running scripts. The Explorer is a lightweight web app for exploring the data catalog and running simple analyses. The client libraries provide Python and JavaScript wrappers around the web Application Programming Interface (API). The platform provides easy to use tools for handling, visualizing, and extracting large amounts of remote sensing data.\cite{gee1}
-\subsection{Landsat 8}
-
-\subsection{Copernicus Global Land Cover dataset}
-\section{Intersection over Union (IoU)}
-
+\subsection{Datasets}
+\subsubsection{Landsat 8}
+We are using satellite imagery from the \textit{Landsat 8 - Surface Reflectance - Tier 1} product. The data is collected by Landsat 8 - an American Earth Observation satellite launched in 2013 under Landsat, a joint program of the United States Geological Survey (USGS) and National Aeronautics and Space Administration (NASA). The satellite images the entire Earth's surface at a spatial resolution of 30m, once every two weeks and records multi-spectral and thermal data. The Operational Land Imager (OLI) collects passive remote sensing data from nine spectral bands including the Near Infrared and Visible bands which we intend to use for the project. The data has been atmospherically corrected in addition to standard geometric adjustments and geo-referencing. Information from the thermal infrared sensor is also used to mask clouds. The imagery, hence, provides a clear view of land. The high temporal resolution also helps to factor in temporal variations in land cover. This makes the dataset suitable for the purpose of our project.\cite{geel8, l8}
+\subsubsection{Copernicus Global Land Cover dataset}
+The \textit{Copernicus Global Land Service (CGLS) - LC100 collection 2} is earmarked as a component of the Land service to operate a multi-purpose service component that provides a series of bio-geophysical products on the status and evolution of land surface at global scale. Derived from the PROBA-V 100m time series data for the year of 2015, this dynamic land cover map at 100 m spatial resolution provides a primary land cover scheme. Next to these discrete classes, the product also includes continuous field layers for all basic land cover classes that provide proportional estimates for vegetation/ground cover for the land cover types.\cite{geecglc}
+\subsection{Location}
+For training our classifiers, we will be using images of Agra, Mathura and the surrounding region, Uttar Pradesh. This location was chosen as it has a relatively even distribution of different land cover classes. Additionally, first-hand knowledge of the land cover of the region has been provided by the mentor which should help us refine the data. For testing, we will use images of Gandhinagar, Gujarat because of similar reasons.
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{agra.jpg}
+\caption{Different views of the training location - Agra. (1) True colour satellite image (2) False colour infrared image (3) Map of NDVI values (4) Ground truth land cover. [Google Earth Engine]}
+\end{figure}
 \chapter{Conclusion}
 
 \printbibliography[heading=bibintoc, title={References}]
