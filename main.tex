@@ -6,8 +6,12 @@
 %Packages
 \usepackage{fullpage} %1-inch margins
 \usepackage{setspace} %double space
+
+% BibLaTeX
+%style=ieee looks ugly
 \usepackage[backend=bibtex8]{biblatex}
 \addbibresource{ref.bib}
+
 %Change Chapter format in report class
 \usepackage{titlesec} 
 \titleformat{\chapter}[block]
@@ -21,6 +25,11 @@
 % For other font sizes
 % !incompatible with fullpage
 %\usepackage{extsizes}
+
+% comments
+\usepackage{verbatim}
+
+% Hyperlinks package
 \usepackage[hidelinks]{hyperref}
 
 \onehalfspacing
@@ -125,50 +134,54 @@ Practice School Division}
 \textbf{Project Areas:} Remote Sensing, Machine Learning, Deep Learning
 \section{Abstract}
 \paragraph{}
-This project attempts automatic land cover classification of different parts of India into urban, agricultural, forest, water bodies etc which can be used for various applications like natural resource management, urban expansion etc.  Data from Agra district, Uttar Pradesh has been used to train Support Vector Machines and Convolutional Neural Networks which are then tested on Gandhinagar district, Gujarat. Google Earth Engine has been used to obtain data from Landsat 8 satellite images. For the purpose of classification Normalized Difference Vegetation Index (NDVI) values are calculated by masking all other light bands except near-infrared and red light bands. Temporal images with ndvi labellings are fed as an input to the models and the subsequent accuracy of the models is then reported.
+This project attempts automatic land cover classification of different parts of India into urban, agricultural, forest, water bodies etc which can be used for various applications like natural resource management, urban expansion etc.  Data from Agra district, Uttar Pradesh has been used to train Support Vector Machines and Convolutional Neural Networks which are then tested on Gandhinagar district, Gujarat. Google Earth Engine has been used to obtain data from Landsat 8 satellite images. For the purpose of classification Normalized Difference Vegetation Index (NDVI) values are calculated by masking all other light bands except near-infrared and red light bands. Temporal images with NDVI labellings are fed as an input to the models and the subsequent accuracy of the models is then reported.
 \end{onehalfspace}
 \newpage
 
 %Response sheet
-\begin{center}  
-\textbf {BIRLA INSTITUTE OF SCIENCE AND TECHNOLOGY\\
-PILANI (RAJASTHAN)\\
-Practice School Division\\
-Response Option Sheet}
-\end{center}
-\begin{onehalfspace}
-\textbf{Station:} Indian Institute of Remote Sensing \\
-\textbf{Centre:} Dehradun
-\begin{center}
-\begin{tabular}{c c c}
-\textbf{ID Number} & \textbf{Name} & \textbf{Branch} \\
-2018A7PS0269P & Guntaas Singh & B.E. (Hons.) Computer Science \\
-2018A7PS0254P & Nisarg Vora  & B.E. (Hons.) Computer Science \\
-\end{tabular} 
-\end{center}
-\textbf{Title of project:} Automatic Land Cover Classification of Temporal Satellite Images\\
-\begin{center}
-\begin{tabular}{|p{1cm}|p{10cm}|p{3cm}|}
-\hline
-\textbf{Code No.} & \textbf{Response Option} & \textbf{Course No.(s) and Name} \\
-\hline
-1 & A new course can be designed out of this project. & ~\\
-\hline
-2 & The project can help modification of the course content of some of the existing Courses & ~\\
-\hline
-3 & The project can be used directly in some of the existing Compulsory Discipline Courses (CDC)/ Discipline Courses Other than Compulsory (DCOC)/ Emerging Area (EA), etc. Courses & ~\\
-\hline
-4 & The project can be used in preparatory courses like Analysis and Application Oriented Courses (AAOC)/ Engineering Science (ES)/ Technical Art (TA) and Core Courses. & ~\\
-\hline
-5 & This project cannot come under any of the above mentioned options as it relates to the professional work of the host organization. &~ \\
-\hline
-\end{tabular} 
-\end{center}
-\end{onehalfspace}
-\vspace*{0.5cm}
-\textbf{Signature}\\
-\textbf{Date: }
-\newpage
+\begin{comment}
+	\begin{center}  
+	\textbf {BIRLA INSTITUTE OF SCIENCE AND TECHNOLOGY\\
+	PILANI (RAJASTHAN)\\
+	Practice School Division\\
+	Response Option Sheet}
+	\end{center}
+	\begin{onehalfspace}
+	\textbf{Station:} Indian Institute of Remote Sensing \\
+	\textbf{Centre:} Dehradun
+	\begin{center}
+	\begin{tabular}{c c c}
+	\textbf{ID Number} & \textbf{Name} & \textbf{Branch} \\
+	2018A7PS0269P & Guntaas Singh & B.E. (Hons.) Computer Science \\
+	2018A7PS0254P & Nisarg Vora  & B.E. (Hons.) Computer Science \\
+	\end{tabular} 
+	\end{center}
+	\textbf{Title of project:} Automatic Land Cover Classification of Temporal Satellite Images\\''
+	\vspace*{1cm}
+	Usefulness of the project to the on-campus courses of study in various disciplines. Project should be scrutinized keeping in view the following response options. Write Course No. and Course Name against the option under which the project comes.\\
+	\begin{center}
+	\begin{tabular}{|p{1cm}|p{10cm}|p{3cm}|}
+	\hline
+	\textbf{Code No.} & \textbf{Response Option} & \textbf{Course No.(s) and Name} \\
+	\hline
+	1 & A new course can be designed out of this project. & ~\\
+	\hline
+	2 & The project can help modification of the course content of some of the existing Courses & ~\\
+	\hline
+	3 & The project can be used directly in some of the existing Compulsory Discipline Courses (CDC)/ Discipline Courses Other than Compulsory (DCOC)/ Emerging Area (EA), etc. Courses & ~\\
+	\hline
+	4 & The project can be used in preparatory courses like Analysis and Application Oriented Courses (AAOC)/ Engineering Science (ES)/ Technical Art (TA) and Core Courses. & ~\\
+	\hline
+	5 & This project cannot come under any of the above mentioned options as it relates to the professional work of the host organization. &~ \\
+	\hline
+	\end{tabular} 
+	\end{center}
+	\end{onehalfspace}
+	\vspace*{0.5cm}
+	\textbf{Signature}\\
+	\textbf{Date: }
+	\newpage
+\end{comment}
 
 % Table of Contents
 \tableofcontents
@@ -196,6 +209,8 @@ Mainly two techniques are used for land cover classification: Field survey and R
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{landcover.png}
+\caption{NDVI distribution in 2000 and 2015 in Kathmandu valley, Nepal, derived from MODIS data.}
+\cite{lcimg}
 \end{figure}
 \subsection{Significance}
 Land cover classification data is of great importance in the following applications:
@@ -213,8 +228,38 @@ Land cover classification data is of great importance in the following applicati
 
 % METHODOLOGY
 \chapter{Methodology}
-\section{Image Classification}
 
+\section{Normalized Difference Vegetation Index(NDVI)}
+Satellite data has become a  very important parameter for judging crop progress, land cover classification etc. However, satellite data can not directly report crop health or classify land cover into different classes. NDVI which is calculated by measuring the reflectance of near-infrared and red light is probably the most important and accurate parameter for farmers to know crop health. NDVI values are so accurate that they can in fact, inform farmers about upcoming drought 2 weeks in advance. Farmers can then make corresponding decisions to increase irrigation and other crop supplements.
+\paragraph{}
+NDVI values can provide really useful and accurate information about crop health to the concerned authorities and can also help in making predictions of upcoming drought. Evapotranspiration (ET) is another satellite data that can used however, it suffers from one drawback as compared to NDVI values. NDVI values are available on a monthly basis whereas evapotranspiration values are only available monthly, making NDVI measurements more accurate. 
+\subsection{What is NDVI?}
+Light from the sun falls on Earth in three major light bands: Ultraviolet, infrared and red. Most of the ultraviolet is reflected back by the atmosphere. Healthy green plants absorb most of the visible light for photosynthesis however, to prevent over-heating and dehydration the light in red band and near-infrared band is reflected back by the plants. The red light is visible to human and not the infrared. The NDVI values are calculated using the reflectance in red and near-infrared regions.
+\subsection{Formula}
+NDVI is calculated in accordance with the formula:
+\begin{displaymath}
+NDVI=\frac{NIR-RED}{NIR+RED}
+\end{displaymath}
+where,\\
+$NIR=$ reflection in the near-infrared spectrum\\
+$RED=$ reflection in the red range of the spectrum.
+\paragraph{}
+As per the formula above, the density of vegetation (NDVI) at a certain point of the image is equal to the difference in the intensities of reflected light in the red and infrared range divided by the sum of these intensities.\\
+NDVI values range from -1.0 to 1.0, the positive values are usually for plants and vegetation where as the negative values usually indicate presence of snow, water or cloud cover. Values very close to 0 and less than 0.1 are due to presence of urban built ups rocks etc. Moderate values between 0.2 and 0.3 are due to shrubs and crops whereas large values close to 1.0 represent temperate and tropical forests. 
+\begin{figure}[ht!]
+\includegraphics[width=.45\textwidth]{ndvisampleone.jpg}\hfill
+\includegraphics[width=.45\textwidth]{ndvisampletwo.jpg}
+\caption{(1) Without NDVI. (2) With NDVI.}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{ndviillustration.jpg}
+\caption{Plant health directly affects reflectance in NIR and RED bands.}
+\end{figure}
+\subsection{Correlation with plant health}
+The amount of chlorophyll acts as an health indicator for the plants. Chlorophyll strongly absorbs visible light and the cell structure reflects near-infrared light. When chlorophyll levels are low, the cell structure gets destroyed and starts absorbing near-infrared light instead of reflecting it. Thus value of NIR without vegetation decrease and hence the NDVI value becomes smaller.
+
+\section{Image Classification}
 Image classification is a standard task in computer vision. In general, the image classification problem involves assigning one  label out of a given fixed set of discrete labels to the input image on the basis of its visual content. While this is a trivial task for humans, robust image classification is a big challenge for a machine. To the computer, the image is just a grid of numbers which entirely change in unreliable ways with variations in viewpoint, illumination, occlusion, etc. As a result, there is no obvious algorithm which solves this problem. However, a data driven approach of providing the machine with many examples of each class and use of machine learning techniques has shown to be useful.\cite{cs231n}
 \paragraph{}
 There are different ways in which these techniques can be applied for classification of satellite imagery.
@@ -225,50 +270,6 @@ The term "objects" represents meaningful semantic entities or scene components t
 \subsection{Semantic Approach}
 This aims to label each scene image with a specific semantic class. Here, a scene image usually refers to a local image patch manually extracted from large scale remote sensing images that contain explicit semantic classes.\cite{eyesky}
 
-
-\section{Normalized Difference Vegetation Index(NDVI)}
-Satellite data has become a  very important parameter for judging crop progress, land cover classification etc.However, satellite data can not directly report crop health or classify land cover into different classes. 
-NDVI which is calculated by measuring the reflectance of near-infrared and red light is probably the most important and accurate parameter for farmers to know crop health.  NDVI values are so accurate that they can in fact, inform farmers about upcoming drought 2 weeks in advance. Farmers can then make corresponding decisions to  increase irrigation and other crop supplements.
-\paragraph{}
-NDVI values can provide really useful and accurate information about crop health to the concerned authorities and can also help in making predictions of upcoming drought. Evapotranspiration (ET) is another satellite data that can used however, it suffers from one drawback as compared to NDVI values. NDVI values are available on a monthly basis whereas evapotranspiration values are only available monthly, making NDVI measurements more accurate. 
-\subsection{What is NDVI?}
-\paragraph{}
-Light from the sun falls on Earth in three major light bands: Ultraviolet, infrared and red. Most of the ultraviolet is reflected back by the atmosphere. Healthy green plants absorb most of the visible light for photosynthesis however, to prevent over-heating and dehydration the light in red band and near-infrared band is reflected back by the plants. The red light is visible to human and not the infrared. The NDVI values are calculated using the reflectance in red and near-infrared regions.
-\subsection{Formula}
-
-NDVI is calculated in accordance with the formula:
-\begin{displaymath}
-NDVI=\frac{NIR-RED}{NIR+RED}
-\end{displaymath}
-where,\\
-$NIR=$ reflection in the near-infrared spectrum\\
-$RED=$ reflection in the red range of the spectrum.
-\paragraph{}
-As per the formula in the figure above, the density of vegetation (NDVI) at a certain point of the image is equal to the difference in the intensities of reflected light in the red and infrared range divided by the sum of these intensities.\\
-NDVI values range from -1.0 to 1.0, the positive values are usually for plants and vegetation where as the negative values usually indicate presence of snow, water or cloud cover. Values very close to 0 and less than 0.1 are due to presence of urban built ups rocks etc. Moderate values between 0.2 and 0.3 are due to shrubs and crops whereas large values close to 1.0 represent temperate and tropical forests. 
-\begin{figure}[h]
-\centering
-\includegraphics[width=\textwidth]{ndviillustration.jpg}
-\caption{Plant health directly affects reflectance in NIR and RED bands.}
-\end{figure}
-\subsection{Correlation with plant health}
-\paragraph{}
-The amount of chlorophyll acts as an health indicator for the plants. Chlorophyll strongly absorbs visible light and the cell structure reflects near-infrared light. When chlorophyll levels are low, the cell structure gets destroyed and starts absorbing near-infrared light instead of reflecting it. Thus value of NIR without vegetation decrease and hence the NDVI value becomes smaller.
-%\begin{figure}[h]
-%\centering
-%\includegraphics[width=0.8\textwidth]{}
-%\caption{Without NDVI}
-%\end{figure}
-%\begin{figure}[h]
-%\centering
-%\includegraphics[width=0.8\textwidth]{}
-%\caption{With NDVI}
-%\end{figure}
-\begin{figure}[ht!]
-\includegraphics[width=.45\textwidth]{ndvisampleone.jpg}\hfill
-\includegraphics[width=.45\textwidth]{ndvisampletwo.jpg}
-\caption{(1) Without NDVI. (2) With NDVI.}
-\end{figure}
 \section{Supervised Machine Learning}
 Supervised learning is the machine learning task of learning a function that maps an input to an output based on example input-output pairs.\cite{supervisedlearningone} Supervised learning is the machine learning task of learning a function that maps an input to an output based on example input-output pairs.\cite{supervisedlearningtwo} If enough data is available then the trained model usually identifies the underlying data patterns and is then able to make predictions on previously unknown input. The training data is the set of input-output example pairs used to train the classifier. Supervised learning, however, faces the problem of overfitting when model is made very flexible in order to fit the underlying data and underfitting when the model is to rigid to fit the underlying data.
 \section{Support Vector Machines}
@@ -298,6 +299,7 @@ The disadvantages of using support vector machines are:
 \item Hard margin support vector machines are very sensitive to outliers and hence proper care should be taken while using them.
 \end{itemize}
 
+\newpage
 \section{Deep Learning and Neural Networks}
 Application of traditional machine learning techniques requires handcrafted features, developing which demands a considerable amount of engineering skill and domain expertise. This, however, is not true for neural networks, which automatically learn these features from data using a general-purpose learning procedure.\cite{eyesky, cs231n} 
 %Despite having been around for decades, neural networks have garnered much attention only in the last few years on account of the availability of increased computational power and large amounts of data.
@@ -359,12 +361,14 @@ All of these different types of layers can be stacked together in various ways t
 \includegraphics[width=\textwidth]{cnn3.jpg}
 \caption{AlexNet - an influential NN architecture that popularized the use of CNNs and GPUs to accelerate deep learning.}\cite{alexnet, alexnetimg}
 \end{figure}
+
 \section{Semantic Segmentation}
 Typical CNNs used for image classification take fixed-size inputs and produce non-spatial outputs (predicted class labels). However, in case of land cover classification, the objective is not to assign a single class label to a given satellite image, but to divide the given image into segments each corresponding to one class out of a given set of land cover classes. This problem is known as semantic segmentation. There are different ways in which the existing image classification CNNs can be extended to solve this problem.
 \paragraph{}
 One approach is to use networks with only convolutional layers. In these networks, zero padding can be used to preserve the spatial dimensions of the input image. However, the large spatial dimensions throughout the network make the model computationally infeasible. \cite{long2015fully, cs231n, unet}
 \paragraph{}
 While the problem requires the CNN to produce a spatial output, down-sampling is essential for reducing the need for computational resources to a feasible level. As a result, the most popular approach is to design the network as a combination of an encoder(down-sampling path) and a decoder(up-sampling path).\\
+
 \section{FCN Architecture}
 Fully connected layers have an equivalent representation as a convolutional layer having $N$ filters with dimensions equal to those of the input image. The output of this layer will thus be a volume of dimensions $1 \times 1 \times N$. This simple change allows the same CNN to be applied on images with arbitrary spatial dimensions and classify them in a single pass of forward propagation. This is far more efficient than iterating on different crops and classifying one pixel at a time. This is the basic intuition behind \textbf{Fully Convolutional Networks}.\cite{long2015fully} For up-sampling the classification maps produced by a FCN, \textit{Long et al.}\cite{long2015fully} propose the use of transpose convolution. 
 \subsection{Transpose Convolution}
@@ -389,6 +393,7 @@ Semantic segmentation faces an inherent tension between semantics and location. 
 \cite{long2015fully}
 \end{figure}
 \newpage
+
 \section{U-Net Architecture}
 Proposed by \textit{Ronneberger et al.}\cite{unet}, the U-Net architecture builds upon and extends the FCN architecture for more precise segmentation using a smaller training dataset. While the architecture was designed particularly for bio-medical segmentation applications, it has shown to work well for other domains too.
 \begin{figure}[h]
@@ -445,8 +450,12 @@ The U-Net architecture is also particularly well suited to applications where la
 \item Convolutional neural networks do not take temporal variations directly into account. However, it is hoped that providing the network with training data from different time periods should allow it to capture some of the temporal trends.
 \item The performance of a deep neural network greatly depends on the amount of training data available. We propose using techniques like data augmentation and transfer learning so as to get better results even with our small training set.
 \end{itemize}
+
+% ----------------------------------
+
 % IMPLEMENTATION
 \chapter{Implementation}
+
 \section{Data Collection}
 \subsection{Google Earth Engine}
 Google Earth Engine is a computing platform that allows users to run geo-spatial analysis on Google's cloud infrastructure. It provides several ways to interact with the platform. The Code Editor is a web-based Integrated Development Environment (IDE) for writing and running scripts. The Explorer is a lightweight web app for exploring the data catalog and running simple analyses. The client libraries provide Python and JavaScript wrappers around the web Application Programming Interface (API). The platform provides easy to use tools for handling, visualizing, and extracting large amounts of remote sensing data.\cite{gee1}
@@ -462,10 +471,20 @@ For training our classifiers, we will be using images of Agra, Mathura and the s
 \includegraphics[width=\textwidth]{agra.jpg}
 \caption{Different views of the training location - Agra. (1) True colour satellite image (2) False colour infrared image (3) Map of NDVI values (4) Ground truth land cover. [Google Earth Engine]}
 \end{figure}
+
+% --------------------------------------
+
+% CONCLUSION
 \chapter{Conclusion}
+
 \paragraph{}
 Information of land cover classification is very crucial for applications like natural resource management, wildlife habitat protection, urban expansion, damage delineation, target land detection etc. With developments in technology, conventional method of field survey which is both inaccurate and time consuming has been replaced by remotely sensed imagery analysis which is highly accurate and covers wider range. Indian Space Research Organisation (ISRO) and Indian Institute of Remote Sensing (IIRS), Dehradun play an important role in providing information for these applications. Modern statistical and computing techniques like machine learning and deep learning minimize the human intervention in the task of analysis and classification, thus making the outcome very accurate and the process very agile.
 \paragraph{}
 The project seeks to compare the applicability of machine learning and deep learning techniques to the problem of land cover classification. Support Vector Machines are traditional machine learning models that provide a method for pixel-wise classification based on learning from the temporal variations in the NDVI time series. On the other hand, Convolutional Neural Networks - a class of deep neural networks, use the spatial variations in the infrared and visible bands of the satellite image for segmentation. The two, hence represent very different approaches for solving the problem. However, the project is still at a very nascent stage, and any comment regarding the comparative performance of these two approaches cannot be made yet.
+
+% ---------------------------------------
+
+% REFERENCES
 \printbibliography[heading=bibintoc, title={References}]
+
 \end{document}
