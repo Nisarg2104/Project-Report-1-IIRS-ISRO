@@ -185,9 +185,7 @@ Since its establishment in 1966, IIRS is a key player for training and capacity 
 \cite{iirs.about.history, iirs.about.instiprof}
 \section{Remote Sensing}
 Remote sensing is the acquisition of information about an object or phenomenon without making physical contact with the object and thus in contrast to on-site observation, especially the Earth. Remote sensing is used in numerous fields, including geography, land surveying and most Earth science disciplines (for example, hydrology, ecology, meteorology, oceanography, glaciology, geology); it also has military, intelligence, commercial, economic, planning, and humanitarian applications.
-\subsection{Active and passive remote sensing}
-It may be split into "active" remote sensing (when a signal is emitted by a satellite or aircraft to the object and its reflection detected by the sensor) and "passive" remote sensing (when the reflection of sunlight is detected by the sensor). Passive sensors gather radiation that is emitted or reflected by the object or surrounding areas. Reflected sunlight is the most common source of radiation measured by passive sensors. Examples of passive remote sensors include film photography, infrared, charge-coupled devices, and radiometers. Active collection, on the other hand, emits energy in order to scan objects and areas whereupon a sensor then detects and measures the radiation that is reflected or backscattered from the target. RADAR and LiDAR are examples of active remote sensing where the time delay between emission and return is measured, establishing the location, speed and direction of an object. \cite{remotesensingwiki}
-Remote sensing is the acquisition of information about an object or phenomenon without making physical contact with the object and thus in contrast to on-site observation, especially the Earth. Remote sensing is used in numerous fields, including geography, land surveying and most Earth science disciplines (for example, hydrology, ecology, meteorology, oceanography, glaciology, geology); it also has military, intelligence, commercial, economic, planning, and humanitarian applications.  It may be split into "active" remote sensing (when a signal is emitted by a satellite or aircraft to the object and its reflection detected by the sensor) and "passive" remote sensing (when the reflection of sunlight is detected by the sensor). Passive sensors gather radiation that is emitted or reflected by the object or surrounding areas. Reflected sunlight is the most common source of radiation measured by passive sensors. Examples of passive remote sensors include film photography, infrared, charge-coupled devices, and radiometers. Active collection, on the other hand, emits energy in order to scan objects and areas whereupon a sensor then detects and measures the radiation that is reflected or backscattered from the target. RADAR and LiDAR are examples of active remote sensing where the time delay between emission and return is measured, establishing the location, speed and direction of an object. \cite{remotesensingwiki}
+It may be split into "active" remote sensing (when a signal is emitted by a satellite or aircraft to the object and its reflection detected by the sensor) and "passive" remote sensing (when the reflection of sunlight is detected by the sensor).\cite{remotesensingwiki}
 
 \section{Objective: Land Cover Classification}
 Land Cover classification generally refers to the categorization or classification of human activities and natural elements on the landscape within a specific time frame based on established scientific and statistical methods of analysis of appropriate source materials.Land cover refers to the surface cover on the ground like vegetation, urban infrastructure, water, bare soil etc. identification of land cover establishes the baseline information for activities like thematic mapping and change detection analysis.\cite{landcoversig}
@@ -207,13 +205,32 @@ Land cover classification data is of great importance in the following applicati
  \item \textbf{Damage delineation (Tornadoes, flooding, fire, volcanic):} Live land cover data can provide us information about where a certain natural disaster like flood has occurred/can occur and where has it cause damages.
  \item \textbf{Target Detection - identification of land strips for use:} Using land cover data, identification of ideal locations for different urban construction becomes easy. For example one can decide where exactly it is possible to build an airport or bridge etc.
 \end{itemize}
+
+\newpage
+
+% ____________________________
+
+% METHODOLOGY
+\chapter{Methodology}
+\section{Image Classification}
+
+Image classification is a standard task in computer vision. In general, the image classification problem involves assigning one  label out of a given fixed set of discrete labels to the input image on the basis of its visual content. While this is a trivial task for humans, robust image classification is a big challenge for a machine. To the computer, the image is just a grid of numbers which entirely change in unreliable ways with variations in viewpoint, illumination, occlusion, etc. As a result, there is no obvious algorithm which solves this problem. However, a data driven approach of providing the machine with many examples of each class and use of machine learning techniques has shown to be useful.\cite{cs231n}
+\paragraph{}
+There are different ways in which these techniques can be applied for classification of satellite imagery.
+\subsection{Pixel Based Approach}
+In typical satellite images, pixel sizes are generally similar in size to the objects of interest. Most of the methods for image analysis using remote sensing data work on a per-pixel basis. However, with advances in remote sensing technology, the spatial resolution has become finer than the typical objects of interest, leading to an increase in within-class variability.\cite{eyesky}
+\subsection{Object Based Approach}
+The term "objects" represents meaningful semantic entities or scene components that are distinguishable in an image.\cite{eyesky} This approach involves the partition of the image into meaningful geographical objects that share relatively homogeneous spectral, color, etc.
+\subsection{Semantic Approach}
+This aims to label each scene image with a specific semantic class. Here, a scene image usually refers to a local image patch manually extracted from large scale remote sensing images that contain explicit semantic classes.\cite{eyesky}
+
+
 \section{Normalized Difference Vegetation Index(NDVI)}
 Satellite data has become an integral part of modern agricultural management to keep track of crop progress. Some satellite data, however, also can foretell how a crop will perform in the future, offering valuable insights to a wide range of industry players.
 NDVI is probably the most important of the satellite data. By reading infrared light waves reflected from plants, NDVI can signal stresses to plant health, such as oncoming drought, as much as two weeks before problems are visible to the naked eye. Many agricultural industry participants can benefit from such advance alerts. Farmers can increase irrigation or add crop protection to forestall a pest infestation. And physical traders, processors, and food and beverage companies could seek out alternative supplies, or hedge their positions.\cite{ndvione}
 \paragraph{}
 NDVI also can reveal positive indications about a crop, providing a heads-up to market participants, logistics companies, and others to prepare for a big harvest. Another type of satellite data, called evapotranspiration (ET), also sends early-warning signals about plants, based on measures of moisture evaporation and transpiration. But ET is available only on a monthly basis, much less frequent than the eight-day reports on NDVI.\cite{ndvione}
 \subsection{What is NDVI?}
-Early space exploration quickly led to atmospheric and meteorological studies. NASA in 1972 launched the Earth Resources Technology Satellite, the forerunner to Landsat, the world’s longest-running satellite imagery program. This first satellite was able to distinguish between visible red and near-infrared reflectance bands, which allowed it to identify vegetation, soil, water, and other features.\cite{ndvione}
 \paragraph{}
 Light from the sun is present as visible light (reds, greens, and blues) and light not visible to our eyes (infrared and ultraviolet). These can be absorbed, transmitted, or reflected by an object. In healthy plants, most of the visible light is absorbed for use in photosynthesis, and much of the near-infrared radiation (NIR) is reflected. However, if the plant is stressed, because of dehydration, for instance, it reflects less NIR and absorbs less light in the visible spectrum, specifically in the red portion, since the plant is not using photosynthesis as efficiently.\cite{ndvione}
 \subsection{Formula}
@@ -252,24 +269,6 @@ Chlorophyll (a health indicator) strongly absorbs visible light, and the cellula
 \includegraphics[width=.45\textwidth]{ndvisampletwo.jpg}
 \caption{(1) Without NDVI. (2) With NDVI.}
 \end{figure}
-\newpage
-
-% ____________________________
-
-% METHODOLOGY
-\chapter{Methodology}
-\section{Image Classification}
-
-Image classification is a standard task in computer vision. In general, the image classification problem involves assigning one  label out of a given fixed set of discrete labels to the input image on the basis of its visual content. While this is a trivial task for humans, robust image classification is a big challenge for a machine. To the computer, the image is just a grid of numbers which entirely change in unreliable ways with variations in viewpoint, illumination, occlusion, etc. As a result, there is no obvious algorithm which solves this problem. However, a data driven approach of providing the machine with many examples of each class and use of machine learning techniques has shown to be useful.\cite{cs231n}
-\paragraph{}
-There are different ways in which these techniques can be applied for classification of satellite imagery.
-\subsection{Pixel Based Approach}
-In typical satellite images, pixel sizes are generally similar in size to the objects of interest. Most of the methods for image analysis using remote sensing data work on a per-pixel basis. However, with advances in remote sensing technology, the spatial resolution has become finer than the typical objects of interest, leading to an increase in within-class variability.\cite{eyesky}
-\subsection{Object Based Approach}
-The term "objects" represents meaningful semantic entities or scene components that are distinguishable in an image.\cite{eyesky} This approach involves the partition of the image into meaningful geographical objects that share relatively homogeneous spectral, color, etc.
-\subsection{Semantic Approach}
-This aims to label each scene image with a specific semantic class. Here, a scene image usually refers to a local image patch manually extracted from large scale remote sensing images that contain explicit semantic classes.\cite{eyesky}
-
 \section{Supervised Machine Learning}
 Supervised learning is the machine learning task of learning a function that maps an input to an output based on example input-output pairs.\cite{supervisedlearningone} Supervised learning is the machine learning task of learning a function that maps an input to an output based on example input-output pairs.\cite{supervisedlearningtwo} If enough data is available then the trained model usually identifies the underlying data patterns and is then able to make predictions on previously unknown input. The training data is the set of input-output example pairs used to train the classifier. Supervised learning, however, faces the problem of overfitting when model is made very flexible in order to fit the underlying data and underfitting when the model is to rigid to fit the underlying data.
 \section{Support Vector Machines}
