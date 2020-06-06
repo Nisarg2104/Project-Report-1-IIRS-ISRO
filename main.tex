@@ -100,7 +100,7 @@ We would like to extend our most sincere gratitude to our project in-charge, Dr.
 \paragraph{}
 We wish to extend our gratitude to the faculty in charge of the PS-I program at IIRS, Rekha A., Assistant Professor at BITS Pilani - Bangalore Center, for her guidance and advice during the PS-I program, and her helpfulness and responsiveness while addressing all the concerns we raised during the same.
 \paragraph{}
-In addition, we would also like to thank the members of the Practice School Division, who worked very hard for operating the PS-I programme remotely to ensure that we have a seamless learning experience.
+In addition, we would also like to thank the members of the Practice School Division, for their hard work and dedication in operating the PS-I programme remotely to ensure that we have a seamless learning experience.
 \begin{flushright}
 Guntaas Singh\\
 Nisarg Vora
@@ -118,7 +118,7 @@ Practice School Division}
 \textbf{Centre:} Dehradun\\
 \textbf{Duration:} 3 weeks\\
 \textbf{Date of start:} 18th May, 2020 \\
-\textbf{Date of submission:} 5th June, 2020 \\
+\textbf{Date of submission:} 6th June, 2020 \\
 \textbf{Title of project:} Automatic Land Cover Classification of Temporal Satellite Images
 \begin{center}
 \begin{tabular}{c c c}
@@ -134,7 +134,7 @@ Practice School Division}
 \textbf{Project Areas:} Remote Sensing, Machine Learning, Deep Learning
 \section{Abstract}
 \paragraph{}
-This project attempts automatic land cover classification of different parts of India into urban, agricultural, forest, water bodies etc which can be used for various applications like natural resource management, urban expansion etc.  Data from Agra district, Uttar Pradesh has been used to train Support Vector Machines and Convolutional Neural Networks which are then tested on Gandhinagar district, Gujarat. Google Earth Engine has been used to obtain data from Landsat 8 satellite images. For the purpose of classification Normalized Difference Vegetation Index (NDVI) values are calculated by masking all other light bands except near-infrared and red light bands. Temporal images with NDVI labellings are fed as an input to the models and the subsequent accuracy of the models is then reported.
+This project attempts automatic land cover classification of different parts of India into forest, urban, agricultural land and water bodies which can be used for various applications like natural resource management, urban expansion etc.  Data from Agra district, Uttar Pradesh has been used to train Support Vector Machines and Convolutional Neural Networks which are then tested on Gandhinagar district, Gujarat. Google Earth Engine has been used to obtain data from Landsat 8 satellite images. For the purpose of classification Normalized Difference Vegetation Index (NDVI) values are calculated by masking all other light bands except near-infrared and red light bands. Temporal images with NDVI labels are fed as input to the models and subsequently, the accuracy of these models is reported.
 \end{onehalfspace}
 \newpage
 
@@ -193,33 +193,33 @@ This project attempts automatic land cover classification of different parts of 
 \chapter{Introduction}
 \pagenumbering{arabic}
 \section{About IIRS}
-Formerly known as Indian Photo-interpretation Institute (IPI), the Institute was founded on 21st April 1966 under the aegis of Survey of India (SOI). It was established with the collaboration of the Government of The Netherlands on the pattern of Faculty of Geo-Information Science and Earth Observation (ITC) of the University of Twente, The Netherlands. The original idea of setting the Institute came from India's first Prime Minister Pandit Jawahar Lal Nehru during his visit to The Netherlands in 1957. 
+Formerly known as Indian Photo-interpretation Institute (IPI), the institute was founded on 21st April, 1966 under the aegis of Survey of India (SOI). It was established in collaboration with the Government of The Netherlands on the pattern of Faculty of Geo-Information Science and Earth Observation (ITC) of the University of Twente, The Netherlands. The original idea of setting up the institute came from India's first Prime Minister - Pandit Jawahar Lal Nehru during his visit to The Netherlands in 1957. 
 \paragraph{}
-Since its establishment in 1966, IIRS is a key player for training and capacity building in geospatial technology and its applications through training, education and research in Southeast Asia. The training, education and capacity building programmes of the Institute are designed to meet the requirements of professionals at working levels, fresh graduates, researchers, academia, and decision makers.
+Since its establishment in 1966, IIRS is a key player for training and capacity building in geo-spatial technology and its applications through training, education and research in Southeast Asia. The training, education and capacity building programmes of the institute are designed to meet the requirements of professionals at working levels, fresh graduates, researchers, academia, and decision makers.
 \cite{iirs.about.history, iirs.about.instiprof}
 \section{Remote Sensing}
 Remote sensing is the method of getting information about Earth and its surface without making any physical contact, primarily using satellites. Remote sensing is used in numerous fields, including geography, land surveying and most Earth science disciplines (for example, hydrology, ecology, meteorology, oceanography, glaciology, geology); it also has military, intelligence, commercial, economic, planning, and humanitarian applications.\cite{remotesensingwiki}
-It may be split into "active" remote sensing and "passive" remote sensing. In active remote sensing method, sensors are used to capture the reflection of the signals emitted by the satellite on different objects. In passive remote sensing, the reflection captured by the sensors is mainly due to sunlight. In this project, we are using passive remote sensing by Landsat 8 satellite.
+It may be split into "active" remote sensing and "passive" remote sensing. In active remote sensing method, sensors are used to capture the reflection of the signals emitted by the satellite on different objects. In passive remote sensing, the reflection captured by the sensors is mainly due to sunlight. In this project, we are using passive remote sensing data collected by Landsat 8 satellite.
 
 \section{Objective: Land Cover Classification}
-Land Cover classification generally refers to the categorization or classification of human activities and natural elements on the landscape within a specific time frame based on established scientific and statistical methods of analysis of appropriate source materials.Land cover refers to the surface cover on the ground like vegetation, urban infrastructure, water, bare soil etc. identification of land cover establishes the baseline information for activities like thematic mapping and change detection analysis.\cite{landcoversig}
+Land Cover classification generally refers to the categorization or classification of human activities and natural elements on the landscape within a specific time frame based on established scientific and statistical methods of analysis of appropriate source materials. Land cover refers to the surface cover on the ground like vegetation, urban infrastructure, water, bare soil etc. Identification of land cover establishes the baseline information for activities like thematic mapping and change detection analysis.\cite{landcoversig}
 \subsection{Techniques}
-Mainly two techniques are used for land cover classification: Field survey and Remotely sensed imagery analysis. Field survey was the primary method used for land cover classification until a few decades back however it was very inaccurate and time-consuming.With developments in technology, conventional method of field survey which is both inaccurate and time consuming has been replaced by remotely sensed imagery analysis which is highly accurate and covers wider range.
+Mainly two techniques are used for land cover classification: Field survey and Remotely sensed imagery analysis. Field survey was the primary method used for land cover classification until a few decades back. However, it was very inaccurate and time-consuming. With developments in technology, the conventional method of field survey which can be inaccurate and time consuming has been replaced by remotely sensed imagery analysis which is highly accurate and covers wider range.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{landcover.png}
-\caption{NDVI distribution in 2000 and 2015 in Kathmandu valley, Nepal, derived from MODIS data.}
+\caption{NDVI distribution in 2000 and 2015 in Kathmandu valley, Nepal, derived from MODIS data. Depicts changes in land cover/land use over time.}
 \cite{lcimg}
 \end{figure}
 \subsection{Significance}
 Land cover classification data is of great importance in the following applications:
 \begin{itemize}
-\item \textbf{Natural Resource Management:} Land cover classification can help policy makers decide how to best manage all the available resources by looking at different terrains. For example government can decide which area requires irrigation facilities the most using land cover classification. 
-\item \textbf{Wildlife habitat protection:} With shrinking habitats of wild animals land cover classification can provide important data for helping in wildlife preservation and protection.
- \item \textbf{Urban Expansion/encroachment:} Proper planning is required for expansion of urban area and different land cover features need to be studied to minimize the time and economic cost required for tackling natural obstacles to urban expansion.
- \item \textbf{Damage delineation (Tornadoes, flooding, fire, volcanic):} Live land cover data can provide us information about where a certain natural disaster like flood has occurred/can occur and where has it cause damages.
- \item \textbf{Target Detection - identification of land strips for use:} Using land cover data, identification of ideal locations for different urban construction becomes easy. For example one can decide where exactly it is possible to build an airport or bridge etc.
+\item \textbf{Natural Resource Management:} Land cover classification can help policy makers decide how to best manage all the available resources by looking at different terrains. For example, the government can decide which area requires irrigation facilities the most using information about the land cover class distribution. 
+\item \textbf{Wildlife habitat protection:} With shrinking habitats of wild animals, land cover classification can provide important data for helping in wildlife preservation and protection.
+ \item \textbf{Urban Expansion/encroachment:} Proper planning is required for expansion of urban area. Different land cover features need to be studied to minimize the time and economic cost required for tackling natural obstacles to urban expansion.
+ \item \textbf{Damage delineation (Tornadoes, flooding, fire, volcanic):} Live land cover data can provide us with information about where a certain natural disaster (like flood) has occurred/can occur. This can also help us to identify the areas at maximum risk of damage.
+ \item \textbf{Target Detection - identification of land strips for use:} Using land cover data, identification of ideal locations for different urban construction becomes easy. For example, one can decide where exactly it is possible to build an airport, bridge etc.
 \end{itemize}
 
 \newpage
@@ -230,11 +230,9 @@ Land cover classification data is of great importance in the following applicati
 \chapter{Methodology}
 
 \section{Normalized Difference Vegetation Index(NDVI)}
-Satellite data has become a  very important parameter for judging crop progress, land cover classification etc. However, satellite data can not directly report crop health or classify land cover into different classes. NDVI which is calculated by measuring the reflectance of near-infrared and red light is probably the most important and accurate parameter for farmers to know crop health. NDVI values are so accurate that they can in fact, inform farmers about upcoming drought 2 weeks in advance. Farmers can then make corresponding decisions to increase irrigation and other crop supplements.
-\paragraph{}
-NDVI values can provide really useful and accurate information about crop health to the concerned authorities and can also help in making predictions of upcoming drought. Evapotranspiration (ET) is another satellite data that can used however, it suffers from one drawback as compared to NDVI values. NDVI values are available on a monthly basis whereas evapotranspiration values are only available monthly, making NDVI measurements more accurate. 
+Satellite data has become a  very important parameter for judging crop progress, land cover classification etc. However, satellite data can not directly report crop health or classify land cover into different classes. NDVI which is calculated by measuring the reflectance of near-infrared and red light is probably the most important and accurate parameter for farmers to know crop health. NDVI values are so accurate that they can in fact, inform farmers about an upcoming drought upto two weeks in advance. Farmers can then make corresponding decisions to increase irrigation and other crop supplements.
 \subsection{What is NDVI?}
-Light from the sun falls on Earth in three major light bands: Ultraviolet, infrared and red. Most of the ultraviolet is reflected back by the atmosphere. Healthy green plants absorb most of the visible light for photosynthesis however, to prevent over-heating and dehydration the light in red band and near-infrared band is reflected back by the plants. The red light is visible to human and not the infrared. The NDVI values are calculated using the reflectance in red and near-infrared regions.
+Light from the sun falls on Earth in three major light bands: ultraviolet, infrared and red. Most of the ultraviolet light is reflected back by the atmosphere. Healthy green plants absorb most of the visible light for photosynthesis. However, to prevent over-heating and dehydration the light in red band and near-infrared band is reflected back by the plants. The red light is visible to humans, while infrared is not. The NDVI values are calculated using the reflectance in red and near-infrared regions.
 \subsection{Formula}
 NDVI is calculated in accordance with the formula:
 \begin{displaymath}
@@ -244,8 +242,9 @@ where,\\
 $NIR=$ reflection in the near-infrared spectrum\\
 $RED=$ reflection in the red range of the spectrum.
 \paragraph{}
-As per the formula above, the density of vegetation (NDVI) at a certain point of the image is equal to the difference in the intensities of reflected light in the red and infrared range divided by the sum of these intensities.\\
-NDVI values range from -1.0 to 1.0, the positive values are usually for plants and vegetation where as the negative values usually indicate presence of snow, water or cloud cover. Values very close to 0 and less than 0.1 are due to presence of urban built ups rocks etc. Moderate values between 0.2 and 0.3 are due to shrubs and crops whereas large values close to 1.0 represent temperate and tropical forests. 
+As per the formula above, the density of vegetation (NDVI) at a certain point of the image is equal to the difference in the intensities of reflected light in the red and infrared range divided by the sum of these intensities.
+\paragraph{}
+NDVI values range from -1.0 to 1.0, the positive values are usually for plants and vegetation where as the negative values usually indicate presence of snow, water or cloud cover. Values very close to 0 and less than 0.1 are due to presence of urban built ups rocks etc. Moderate values between 0.2 and 0.3 are due to shrubs and crops whereas large values close to 1.0 represent temperate and tropical forests. These rough trends indicate the relevance of NDVI to the problem of land cover classification.
 \begin{figure}[ht!]
 \includegraphics[width=.45\textwidth]{ndvisampleone.jpg}\hfill
 \includegraphics[width=.45\textwidth]{ndvisampletwo.jpg}
@@ -257,7 +256,7 @@ NDVI values range from -1.0 to 1.0, the positive values are usually for plants a
 \caption{Plant health directly affects reflectance in NIR and RED bands.}
 \end{figure}
 \subsection{Correlation with plant health}
-The amount of chlorophyll acts as an health indicator for the plants. Chlorophyll strongly absorbs visible light and the cell structure reflects near-infrared light. When chlorophyll levels are low, the cell structure gets destroyed and starts absorbing near-infrared light instead of reflecting it. Thus, value of NIR without vegetation decreases and hence the NDVI value becomes smaller.
+The amount of chlorophyll acts as a health indicator for the plants. Chlorophyll strongly absorbs visible light and the cell structure reflects near-infrared light. When chlorophyll levels are low, the cell structure gets destroyed and starts absorbing near-infrared light instead of reflecting it. Thus, value of NIR without vegetation decreases and hence the NDVI value becomes smaller.
 
 \section{Image Classification}
 Image classification is a standard task in computer vision. In general, the image classification problem involves assigning one  label out of a given fixed set of discrete labels to the input image on the basis of its visual content. While this is a trivial task for humans, robust image classification is a big challenge for a machine. To the computer, the image is just a grid of numbers which entirely change in unreliable ways with variations in viewpoint, illumination, occlusion, etc. As a result, there is no obvious algorithm which solves this problem. However, a data driven approach of providing the machine with many examples of each class and use of machine learning techniques has shown to be useful.\cite{cs231n}
@@ -266,14 +265,14 @@ There are different ways in which these techniques can be applied for classifica
 \subsection{Pixel Based Approach}
 In typical satellite images, pixel sizes are generally similar in size to the objects of interest. Most of the methods for image analysis using remote sensing data work on a per-pixel basis. However, with advances in remote sensing technology, the spatial resolution has become finer than the typical objects of interest, leading to an increase in within-class variability.\cite{eyesky}
 \subsection{Object Based Approach}
-The term "objects" represents meaningful semantic entities or scene components that are distinguishable in an image.\cite{eyesky} This approach involves the partition of the image into meaningful geographical objects that share relatively homogeneous spectral, color, etc.
+The term "objects" represents meaningful semantic entities or scene components that are distinguishable in an image.\cite{eyesky} This approach involves the partition of the image into meaningful geographical objects that share relatively homogeneous color, texture, etc.
 \subsection{Semantic Approach}
-This aims to label each scene image with a specific semantic class. Here, a scene image usually refers to a local image patch manually extracted from large scale remote sensing images that contain explicit semantic classes.\cite{eyesky}
+This aims to label each scene image with a specific semantic class. Here, a scene image refers to a local image patch manually extracted from large scale remote sensing images that contain explicit semantic classes.\cite{eyesky}
 
 \section{Supervised Machine Learning}
-Supervised learning is the machine learning task of learning a function that maps an input to an output based on example input-output pairs.\cite{supervisedlearningone} Supervised learning is the machine learning task of learning a function that maps an input to an output based on example input-output pairs.\cite{supervisedlearningtwo} If enough data is available then the trained model usually identifies the underlying data patterns and is then able to make predictions on previously unknown input. The training data is the set of input-output example pairs used to train the classifier. Supervised learning, however, faces the problem of overfitting when model is made very flexible in order to fit the underlying data and underfitting when the model is to rigid to fit the underlying data.
+Supervised learning is the machine learning task of learning a function that maps an input to an output on the basis of training data.\cite{supervisedlearningone, supervisedlearningtwo} The training data is the set of input-output example pairs used to train the classifier. If enough data is available then the trained model usually identifies the underlying data patterns and is then able to make predictions on previously unknown input. Supervised learning, however, faces the problem of overfitting when model is made very flexible in order to fit the underlying data and underfitting when the model is to rigid to fit the underlying data.
 \section{Support Vector Machines}
-A Support Vector Machine (SVM) is a discriminative classifier formally defined by a separating hyperplane. In other words, given labeled training data (supervised learning), the algorithm outputs an optimal hyperplane which categorizes new examples. In two dimentional space this hyperplane is a line dividing a plane in two parts where in each class lay in either side.\cite{supportvectormachines}
+A Support Vector Machine (SVM) is a discriminative classifier formally defined by a separating hyperplane. In other words, given labeled training data (supervised learning), the algorithm outputs an optimal hyperplane which categorizes new examples. In two dimensional space, this hyperplane is a line dividing a plane into two parts where in each class lay on either side.\cite{supportvectormachines}
 \subsection{Types of SVMs}
 There are two kinds of support vector machines: Hard Margin Support Vector Machines and Soft Margin Support Vector Machines.
 Hard Margin Support Vector machines do not allow misclassification of data points, tend to overfit the data and are thus sensitive to outliers. Soft margin support vector machines allow slight misclassification of data points and penalize for each misclassification.
