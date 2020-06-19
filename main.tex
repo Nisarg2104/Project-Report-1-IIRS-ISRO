@@ -226,8 +226,8 @@ Land cover classification data is of great importance in the following applicati
 
 % ____________________________
 
-% METHODOLOGY
-\chapter{Methodology}
+% BACKGROUND	
+\chapter{Background}
 
 \section{Normalized Difference Vegetation Index(NDVI)}
 Satellite data has become a  very important parameter for judging crop progress, land cover classification etc. However, satellite data can not directly report crop health or classify land cover into different classes. NDVI which is calculated by measuring the reflectance of near-infrared and red light is probably the most important and accurate parameter for farmers to know crop health. NDVI values are so accurate that they can in fact, inform farmers about an upcoming drought upto two weeks in advance. Farmers can then make corresponding decisions to increase irrigation and other crop supplements.
@@ -271,32 +271,6 @@ This aims to label each scene image with a specific semantic class. Here, a scen
 
 \section{Supervised Machine Learning}
 Supervised learning is the machine learning task of learning a function that maps an input to an output on the basis of training data.\cite{supervisedlearningone, supervisedlearningtwo} The training data is the set of input-output example pairs used to train the classifier. If enough data is available then the trained model usually identifies the underlying data patterns and is then able to make predictions on previously unknown input. Supervised learning, however, faces the problem of overfitting when model is made very flexible in order to fit the underlying data and underfitting when the model is to rigid to fit the underlying data.
-\section{Support Vector Machines}
-A Support Vector Machine (SVM) is a discriminative classifier formally defined by a separating hyperplane. In other words, given labeled training data (supervised learning), the algorithm outputs an optimal hyperplane which categorizes new examples. In two dimensional space, this hyperplane is a line dividing a plane into two parts where in each class lay on either side.\cite{supportvectormachines}
-\subsection{Types of SVMs}
-There are two kinds of support vector machines: Hard Margin Support Vector Machines and Soft Margin Support Vector Machines.
-Hard Margin Support Vector machines do not allow misclassification of data points, tend to overfit the data and are thus sensitive to outliers. Soft margin support vector machines allow slight misclassification of data points and penalize for each misclassification.
-For this project, soft margin support vector machines have been used to classify the data points.
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.7\textwidth]{supportvectormachines.jpg}
-\caption{Support Vector Machine}
-\end{figure}
-\subsection{Advantages}
-The advantages of using support vector machines are:
-\begin{itemize}
-\item Support vectors can deal with high dimensional data easily with the help of kernel transformations.
-\item They are only dependent on some part of the training data known as the support vectors which makes them very memory efficient.
-\item Can be used for a variety of tasks due to availability of a large number of kernel functions for decision making.
-\item Fast and memory efficient implementations in various languages is available via different libraries.
-\end{itemize}
-\subsection{Disadvantages}
-The disadvantages of using support vector machines are:
-\begin{itemize}
-\item They do not take the spatial orientation of the pixels into account while learning.
-\item With wrong choice of kernel, support vector machines tend to to overfit the data.
-\item Hard margin support vector machines are very sensitive to outliers and hence proper care should be taken while using them.
-\end{itemize}
 
 \newpage
 \section{Deep Learning and Neural Networks}
@@ -316,7 +290,6 @@ These single neurons can be stacked so that one neuron passes its output as inpu
 \includegraphics[width=0.7\textwidth]{nn2.png}
 \caption{A two layer neural network with fully connected layers.}\cite{cs231n}
 \end{figure}
-\newpage
 
 \section{Convolutional Neural Networks}
 Regular neural networks do not scale well to full images. If the input to the neural network is a 200x200 RGB image, the number of weights for each neuron will be 200*200*3 = 120,000 weights. For large networks, the total number of learnable parameters become very large and lead the model to potentially overfit the training data, unless the training set is adequately large.
@@ -391,7 +364,57 @@ Semantic segmentation faces an inherent tension between semantics and location. 
 \caption{Different networks based on the FCN architecture.}
 \cite{long2015fully}
 \end{figure}
-\newpage
+% ----------------------------------
+
+% METHODOLOGY & IMPLEMENTATION
+\chapter{Methodology and Implementation}
+
+\section{Software Overview}
+\subsection{Google Earth Engine}
+Google Earth Engine is a computing platform that allows users to run geo-spatial analysis on Google's cloud infrastructure. It provides several ways to interact with the platform. The Code Editor is a web-based Integrated Development Environment (IDE) for writing and running scripts. The Explorer is a lightweight web app for exploring the data catalog and running simple analyses. The client libraries provide Python and JavaScript wrappers around the web Application Programming Interface (API). The platform provides easy to use tools for handling, visualizing, and extracting large amounts of remote sensing data.\cite{gee1}
+
+\section{Data Collection}
+\subsection{Datasets}
+\subsubsection{Landsat 8}
+We are using satellite imagery from the \textit{Landsat 8 - Surface Reflectance - Tier 1} product. The data is collected by Landsat 8 - an American Earth Observation satellite launched in 2013 under Landsat, a joint program of the United States Geological Survey (USGS) and National Aeronautics and Space Administration (NASA). The satellite images the entire Earth's surface at a spatial resolution of 30m, once every two weeks and records multi-spectral and thermal data. The Operational Land Imager (OLI) collects passive remote sensing data from nine spectral bands including the Near Infrared and Visible bands which we intend to use for the project. The data has been atmospherically corrected in addition to standard geometric adjustments and geo-referencing. Information from the thermal infrared sensor is also used to mask clouds. The imagery, hence, provides a clear view of land. The high temporal resolution also helps to factor in temporal variations in land cover. This makes the dataset suitable for the purpose of our project.\cite{geel8, l8}
+\subsubsection{Copernicus Global Land Cover dataset}
+The \textit{Copernicus Global Land Service (CGLS) - LC100 collection 2} is earmarked as a component of the Land service to operate a multi-purpose service component that provides a series of bio-geophysical products on the status and evolution of land surface at global scale. Derived from the PROBA-V 100m time series data for the year of 2015, this dynamic land cover map at 100 m spatial resolution provides a primary land cover scheme. Next to these discrete classes, the product also includes continuous field layers for all basic land cover classes that provide proportional estimates for vegetation/ground cover for the land cover types.\cite{geecglc}
+\subsection{Location}
+For training our classifiers, we will be using images of Agra, Mathura and the surrounding region, Uttar Pradesh. This location was chosen as it has a relatively even distribution of different land cover classes. Additionally, first-hand knowledge of the land cover of the region has been provided by the mentor which should help us refine the data. For testing, we will use images of Gandhinagar, Gujarat because of similar reasons.
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{agra.jpg}
+\caption{Different views of the training location - Agra. (1) True colour satellite image (2) False colour infrared image (3) Map of NDVI values (4) Ground truth land cover. [Google Earth Engine]}
+\end{figure}
+
+\section{Data Preprocessing}
+
+\section{Support Vector Machines}
+A Support Vector Machine (SVM) is a discriminative classifier formally defined by a separating hyperplane. In other words, given labeled training data (supervised learning), the algorithm outputs an optimal hyperplane which categorizes new examples. In two dimensional space, this hyperplane is a line dividing a plane into two parts where in each class lay on either side.\cite{supportvectormachines}
+\subsection{Types of SVMs}
+There are two kinds of support vector machines: Hard Margin Support Vector Machines and Soft Margin Support Vector Machines.
+Hard Margin Support Vector machines do not allow misclassification of data points, tend to overfit the data and are thus sensitive to outliers. Soft margin support vector machines allow slight misclassification of data points and penalize for each misclassification.
+For this project, soft margin support vector machines have been used to classify the data points.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{supportvectormachines.jpg}
+\caption{Support Vector Machine}
+\end{figure}
+\subsection{Advantages}
+The advantages of using support vector machines are:
+\begin{itemize}
+\item Support vectors can deal with high dimensional data easily with the help of kernel transformations.
+\item They are only dependent on some part of the training data known as the support vectors which makes them very memory efficient.
+\item Can be used for a variety of tasks due to availability of a large number of kernel functions for decision making.
+\item Fast and memory efficient implementations in various languages is available via different libraries.
+\end{itemize}
+\subsection{Disadvantages}
+The disadvantages of using support vector machines are:
+\begin{itemize}
+\item They do not take the spatial orientation of the pixels into account while learning.
+\item With wrong choice of kernel, support vector machines tend to to overfit the data.
+\item Hard margin support vector machines are very sensitive to outliers and hence proper care should be taken while using them.
+\end{itemize}
 
 \section{U-Net Architecture}
 Proposed by \textit{Ronneberger et al.}\cite{unet}, the U-Net architecture builds upon and extends the FCN architecture for more precise segmentation using a smaller training dataset. While the architecture was designed particularly for bio-medical segmentation applications, it has shown to work well for other domains too.
@@ -450,26 +473,10 @@ The U-Net architecture is also particularly well suited to applications where la
 \item The performance of a deep neural network greatly depends on the amount of training data available. We propose using techniques like data augmentation and transfer learning so as to get better results even with our small training set.
 \end{itemize}
 
-% ----------------------------------
+% --------------------------------------
 
-% IMPLEMENTATION
-\chapter{Implementation}
-
-\section{Data Collection}
-\subsection{Google Earth Engine}
-Google Earth Engine is a computing platform that allows users to run geo-spatial analysis on Google's cloud infrastructure. It provides several ways to interact with the platform. The Code Editor is a web-based Integrated Development Environment (IDE) for writing and running scripts. The Explorer is a lightweight web app for exploring the data catalog and running simple analyses. The client libraries provide Python and JavaScript wrappers around the web Application Programming Interface (API). The platform provides easy to use tools for handling, visualizing, and extracting large amounts of remote sensing data.\cite{gee1}
-\subsection{Datasets}
-\subsubsection{Landsat 8}
-We are using satellite imagery from the \textit{Landsat 8 - Surface Reflectance - Tier 1} product. The data is collected by Landsat 8 - an American Earth Observation satellite launched in 2013 under Landsat, a joint program of the United States Geological Survey (USGS) and National Aeronautics and Space Administration (NASA). The satellite images the entire Earth's surface at a spatial resolution of 30m, once every two weeks and records multi-spectral and thermal data. The Operational Land Imager (OLI) collects passive remote sensing data from nine spectral bands including the Near Infrared and Visible bands which we intend to use for the project. The data has been atmospherically corrected in addition to standard geometric adjustments and geo-referencing. Information from the thermal infrared sensor is also used to mask clouds. The imagery, hence, provides a clear view of land. The high temporal resolution also helps to factor in temporal variations in land cover. This makes the dataset suitable for the purpose of our project.\cite{geel8, l8}
-\subsubsection{Copernicus Global Land Cover dataset}
-The \textit{Copernicus Global Land Service (CGLS) - LC100 collection 2} is earmarked as a component of the Land service to operate a multi-purpose service component that provides a series of bio-geophysical products on the status and evolution of land surface at global scale. Derived from the PROBA-V 100m time series data for the year of 2015, this dynamic land cover map at 100 m spatial resolution provides a primary land cover scheme. Next to these discrete classes, the product also includes continuous field layers for all basic land cover classes that provide proportional estimates for vegetation/ground cover for the land cover types.\cite{geecglc}
-\subsection{Location}
-For training our classifiers, we will be using images of Agra, Mathura and the surrounding region, Uttar Pradesh. This location was chosen as it has a relatively even distribution of different land cover classes. Additionally, first-hand knowledge of the land cover of the region has been provided by the mentor which should help us refine the data. For testing, we will use images of Gandhinagar, Gujarat because of similar reasons.
-\begin{figure}[h]
-\centering
-\includegraphics[width=\textwidth]{agra.jpg}
-\caption{Different views of the training location - Agra. (1) True colour satellite image (2) False colour infrared image (3) Map of NDVI values (4) Ground truth land cover. [Google Earth Engine]}
-\end{figure}
+% RESULTS
+\chapter{Results}
 
 % --------------------------------------
 
@@ -481,6 +488,19 @@ Information of land cover classification is very crucial for applications like n
 \paragraph{}
 The project seeks to compare the applicability of machine learning and deep learning techniques to the problem of land cover classification. Support Vector Machines are traditional machine learning models that provide a method for pixel-wise classification based on learning from the temporal variations in the NDVI time series. On the other hand, Convolutional Neural Networks - a class of deep neural networks, use the spatial variations in the infrared and visible bands of the satellite image for segmentation. The two, hence represent very different approaches for solving the problem. However, the project is still at a very nascent stage, and any comment regarding the comparative performance of these two approaches cannot be made yet.
 
+\section{Future Scope}
+
+% ----------------------------------------
+
+% APPENDIX
+\chapter*{Appendix}
+\addcontentsline{toc}{chapter}{Appendix} 
+
+\section*{List of dependencies}
+\addcontentsline{toc}{section}{List of dependencies} 
+
+\section*{Code snippets}
+\addcontentsline{toc}{section}{Code snippets} 
 % ---------------------------------------
 
 % REFERENCES
@@ -504,6 +524,7 @@ The project seeks to compare the applicability of machine learning and deep lear
 \end{tabular}
 \vspace*{1cm}
 
+% GLOSSARY
 \section*{Glossary}
 \addcontentsline{toc}{chapter}{Glossary}  
 \vspace*{0.5cm}
@@ -514,5 +535,6 @@ The project seeks to compare the applicability of machine learning and deep lear
 \textbf{Pooling} process of extracting features from image output of a convolution layer\\
 \textbf{Semantic Segmentation} the process of associating each pixel of an image with a class label\\
 \textbf{Temporal} relating to time\\
+
 
 \end{document}
