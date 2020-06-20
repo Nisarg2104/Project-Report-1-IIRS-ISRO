@@ -372,6 +372,10 @@ Semantic segmentation faces an inherent tension between semantics and location. 
 \section{Software Overview}
 \subsection{Google Earth Engine}
 Google Earth Engine is a computing platform that allows users to run geo-spatial analysis on Google's cloud infrastructure. It provides several ways to interact with the platform. The Code Editor is a web-based Integrated Development Environment (IDE) for writing and running scripts. The Explorer is a lightweight web app for exploring the data catalog and running simple analyses. The client libraries provide Python and JavaScript wrappers around the web Application Programming Interface (API). The platform provides easy to use tools for handling, visualizing, and extracting large amounts of remote sensing data.\cite{gee1}
+\subsection{Google Colab}
+\subsection{Python}
+\subsection{Scikit-learn}
+\subsection{TensorFlow}
 
 \section{Data Collection}
 \subsection{Datasets}
@@ -379,15 +383,20 @@ Google Earth Engine is a computing platform that allows users to run geo-spatial
 We are using satellite imagery from the \textit{Landsat 8 - Surface Reflectance - Tier 1} product. The data is collected by Landsat 8 - an American Earth Observation satellite launched in 2013 under Landsat, a joint program of the United States Geological Survey (USGS) and National Aeronautics and Space Administration (NASA). The satellite images the entire Earth's surface at a spatial resolution of 30m, once every two weeks and records multi-spectral and thermal data. The Operational Land Imager (OLI) collects passive remote sensing data from nine spectral bands including the Near Infrared and Visible bands which we intend to use for the project. The data has been atmospherically corrected in addition to standard geometric adjustments and geo-referencing. Information from the thermal infrared sensor is also used to mask clouds. The imagery, hence, provides a clear view of land. The high temporal resolution also helps to factor in temporal variations in land cover. This makes the dataset suitable for the purpose of our project.\cite{geel8, l8}
 \subsubsection{Copernicus Global Land Cover dataset}
 The \textit{Copernicus Global Land Service (CGLS) - LC100 collection 2} is earmarked as a component of the Land service to operate a multi-purpose service component that provides a series of bio-geophysical products on the status and evolution of land surface at global scale. Derived from the PROBA-V 100m time series data for the year of 2015, this dynamic land cover map at 100 m spatial resolution provides a primary land cover scheme. Next to these discrete classes, the product also includes continuous field layers for all basic land cover classes that provide proportional estimates for vegetation/ground cover for the land cover types.\cite{geecglc}
-\subsection{Location}
+\subsection{Study Areas}
 For training our classifiers, we will be using images of Agra, Mathura and the surrounding region, Uttar Pradesh. This location was chosen as it has a relatively even distribution of different land cover classes. Additionally, first-hand knowledge of the land cover of the region has been provided by the mentor which should help us refine the data. For testing, we will use images of Gandhinagar, Gujarat because of similar reasons.
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{agra.jpg}
 \caption{Different views of the training location - Agra. (1) True colour satellite image (2) False colour infrared image (3) Map of NDVI values (4) Ground truth land cover. [Google Earth Engine]}
 \end{figure}
+\subsection{Data Preparation}
 
 \section{Data Preprocessing}
+
+\section(K Nearest Neighbors Classifier}
+
+\section{Decision Tree Classifier}
 
 \section{Support Vector Machines}
 A Support Vector Machine (SVM) is a discriminative classifier formally defined by a separating hyperplane. In other words, given labeled training data (supervised learning), the algorithm outputs an optimal hyperplane which categorizes new examples. In two dimensional space, this hyperplane is a line dividing a plane into two parts where in each class lay on either side.\cite{supportvectormachines}
@@ -416,7 +425,7 @@ The disadvantages of using support vector machines are:
 \item Hard margin support vector machines are very sensitive to outliers and hence proper care should be taken while using them.
 \end{itemize}
 
-\section{U-Net Architecture}
+\section{Convolutional Neural Networks: U-Net Architecture}
 Proposed by \textit{Ronneberger et al.}\cite{unet}, the U-Net architecture builds upon and extends the FCN architecture for more precise segmentation using a smaller training dataset. While the architecture was designed particularly for bio-medical segmentation applications, it has shown to work well for other domains too.
 \begin{figure}[h]
 \centering
