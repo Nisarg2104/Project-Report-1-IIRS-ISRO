@@ -32,6 +32,10 @@
 % Hyperlinks package
 \usepackage[hidelinks]{hyperref}
 
+% Syntax highlighting package
+\usepackage{minted}
+\usemintedstyle{minimal}
+
 \onehalfspacing
 % ----------------------------------------------------------------------------------------------
 \begin{document}
@@ -403,29 +407,56 @@ Google Colab is a hosted Jupyter notebook service that provides a web-based deve
 \subsection{Python}
 Python is an interpreted, high-level, general purpose programming language. It has an easy to learn syntax that emphasizes code readability. It supports multiple programming paradigms and has a comprehensive standard library. It also has a well-developed ecosystem of libraries for scientific computing and data science such as \textbf{NumPy}, \textbf{Pandas} and \textbf{Matplotlib}. These libraries provide data structures and methods for handling large amount of data efficiently and for high-performance computation. In addition to these libraries, in our project, we also used \textbf{Pillow} (Python Imaging Library) for image processing and \textbf{GDAL} (Geospatial Data Abstraction Library) for handling images in the \textbf{GeoTIFF} file format.
 \subsection{Scikit-learn and Scikit-image}
-Scikit-learn is a free software machine learning library for Python. It features various algorithms for supervised and unsupervised learning tasks such as classification, regression and clustering. It heavily depends on the NumPy library for high-performance linear algebra. In our project, it was used for implementing various models based on machine learning algorithms such as support vector machines, k-nearest neighbours and decision tree classification.  for data pre-processing and augmentation. The Scikit-image library was used for augmentation of training data.
+Scikit-learn is a free software machine learning library for Python. It features various algorithms for supervised and unsupervised learning tasks such as classification, regression and clustering. It heavily depends on the NumPy library for high-performance linear algebra. In our project, it was used for implementing various models based on machine learning algorithms such as support vector machines, k-nearest neighbours and decision tree classification.  for data pre-processing and augmentation. The Scikit-image library was used for augmentation of training data.\cite{scikit}
 \subsection{TensorFlow}
-
+TensorFlow is an end-to-end open source platform for deep learning. It provides high-level APIs based on the Keras API standard which enable quick and easy implementation of deep neural networks. It also provides a library of different optimizers, losses and metrics for training the network. Modules for handling and pre-processing different types of data are also available. It can also be used to implement complex networks with non-linear topology. We implemented such a network based on the U-Net Architecture using the \textbf{Keras Functional API}.\cite{tensorflow}
 \section{Data Collection}
 \subsection{Datasets}
 \subsubsection{Landsat 8}
-We are using satellite imagery from the \textit{Landsat 8 - Surface Reflectance - Tier 1} product. The data is collected by Landsat 8 - an American Earth Observation satellite launched in 2013 under Landsat, a joint program of the United States Geological Survey (USGS) and National Aeronautics and Space Administration (NASA). The satellite images the entire Earth's surface at a spatial resolution of 30m, once every two weeks and records multi-spectral and thermal data. The Operational Land Imager (OLI) collects passive remote sensing data from nine spectral bands including the Near Infrared and Visible bands which we intend to use for the project. The data has been atmospherically corrected in addition to standard geometric adjustments and geo-referencing. Information from the thermal infrared sensor is also used to mask clouds. The imagery, hence, provides a clear view of land. The high temporal resolution also helps to factor in temporal variations in land cover. This makes the dataset suitable for the purpose of our project.\cite{geel8, l8}
+Time series data for NDVI was collected from the \textit{Landsat 8 Collection 1 Tier 1 8-Day NDVI Composite} product. The data is collected by Landsat 8 - an American Earth Observation satellite launched in 2013 under Landsat, a joint program of the United States Geological Survey (USGS) and National Aeronautics and Space Administration (NASA). The satellite images the entire Earth's surface at a spatial resolution of 30m, once every two weeks and records multi-spectral and thermal data. The Operational Land Imager (OLI) collects passive remote sensing data from nine spectral bands including the Near Infrared and Visible bands which we intend to use for the project. The data has been atmospherically corrected in addition to standard geometric adjustments and geo-referencing. Information from the thermal infrared sensor is also used to mask clouds. The imagery, hence, provides a clear view of land. The high temporal resolution of 8 days makes the dataset suitable for the purpose of our project.\cite{geel8, l8}
 \subsubsection{Copernicus Global Land Cover dataset}
 The \textit{Copernicus Global Land Service (CGLS) - LC100 collection 2} is earmarked as a component of the Land service to operate a multi-purpose service component that provides a series of bio-geophysical products on the status and evolution of land surface at global scale. Derived from the PROBA-V 100m time series data for the year of 2015, this dynamic land cover map at 100 m spatial resolution provides a primary land cover scheme. Next to these discrete classes, the product also includes continuous field layers for all basic land cover classes that provide proportional estimates for vegetation/ground cover for the land cover types.\cite{geecglc}
-\subsection{Location}
-For training our classifiers, we will be using images of Agra, Mathura and the surrounding region, Uttar Pradesh. This location was chosen as it has a relatively even distribution of different land cover classes. Additionally, first-hand knowledge of the land cover of the region has been provided by the mentor which should help us refine the data. For testing, we will use images of Gandhinagar, Gujarat because of similar reasons.
+\subsection{Study Areas}
+For training our classifiers, we used images of Agra, Mathura and the surrounding region, Uttar Pradesh. This location was chosen as it has a relatively even distribution of different land cover classes. Additionally, first-hand knowledge of the land cover of the region was provided by the mentor which helped us refine the data. For testing, images of Ahmedabad and Gandhinagar, Gujarat were used because of similar reasons.
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{agra.jpg}
 \caption{Different views of the training location - Agra. (1) True colour satellite image (2) False colour infrared image (3) Map of NDVI values (4) Ground truth land cover. [Google Earth Engine]}
 \end{figure}
-
+\newpage
+\subsection{Data Preparation}
+All the data required was collected and prepared using Google Earth Engine Javascript API.
+\subsubsection{NDVI time series data}
+The Landsat 8 NDVI Composite product was first imported as an ImageCollection (a class defined in the API, representing a set of images). The extents of the images were constrained to the required region - Agra and Mathura. The collection was then filtered for bimonthly periods (January to February, March to April, and so on). While a higher temporal resolution is desirable, it would not be possible to mask all cloudy regions using the limited number of images in a smaller duration. After filtering, the median NDVI value was computed for every pixel in each bimonthly period. The six images thus achieved were stacked together, producing a single six-band image.
+\subsubsection{Ground truth land cover data}
+The Copernicus Global Land Cover dataset has different "coverfraction" bands which provide proportional estimates for different land cover classes classes. Appropriate thresholds were estimated for each of these bands through an iterative process of comparison with land cover maps available via ISRO's Bhuvan platform. The masks obtained by applying these thresholds were concatenated to arrive at a mutually exclusive and exhaustive classification of the study area. The maps obtained were found to be have satisfactory accuracy but suffered from the low spatial resolution of the original dataset - 100m. The project aims to produce finer land cover maps by operating on satellite imagery with a spatial resolution of 30m.
+The land cover classes used are:
+\begin{enumerate}
+\item Built-up land, including urban and rural areas
+\item Cultivated and managed vegetation
+\item Water bodies
+\item Forest land
+\end{enumerate}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{lcbands.jpg}
+\caption{Masks for different land cover classes for Agra and Mathura region.}
+\end{figure}
 \section{Data Preprocessing}
 \subsection{Linear Discriminant Analysis}
 \paragraph{}
  During the sowing season the agricultural land is mostly barren. Therefore, the classifier may tend to classify it as wasteland if the classification is made solely based on NDVI values. Similarly, in dry seasons, dry rivers might get classified as barren land too. To prevent this, we use a data preprocessing method- Linear Discriminant Analysis.
 \paragraph{}
-Linear discriminant analysis also worked as a dimensionality reduction technique for this project which drastically reduced the processing time and made results more accurate. The accuracy of the results increased from 78 per cent without LDA to almost 97 per cent after preprocessing with LDA method. Since NDVI values were calculated bi-monthly, the data initially had 6 features i.e. 6 dimensional. As the data points were classified into 4 different classes, LDA reduced the number of features to 3 i.e. dimensional.
+Linear discriminant analysis also worked as a dimensionality reduction technique for this project which drastically reduced the processing time and made results more accurate. The accuracy of the results increased from 78 per cent without LDA to almost 97 per cent after preprocessing with LDA method. Since NDVI values were calculated bi-monthly, the data initially had 6 features i.e. 6 dimensional. As the data points were classified into 4 different classes, LDA reduced the number of features to 3 i.e. 3 dimensional.
+\subsection{Patch generation}
+Since, the neural network we implemented expects inputs to have dimensions of $256 \times 256$, the satellite images extracted cannot be used directly. To this end, a patch generation system was implemented. The system takes images of any width and height as input and produces cropped image patches of the required dimensions using a given stride. The patches obtained cover the input image completely, irrespective of its dimensions. A stride smaller than the size can also be used to produce overlapping patches. A reconstruction system was also implemented to restitch the patches produces as output by the neural network, with a provision for handling overlapping patches.
+\subsection{Data Augmentation}
+Deep neural networks typically require a large amount of training data. It may not be possible for the network to perform well unless the training data provides a representative sample of the distribution of different types of land cover in different areas. Therefore, to augment the size of the training dataset, every patch was rotated by $90\circ$ thrice. This allowed us to train the network on four times as much data. It is expected to have helped the network to deal with spatial variations better. Since, machine learning algorithms do not require as much data and consume flattened data in a tabular format, this augmentation was not done for those models.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{dataaug.jpg}
+\caption{Patch generation and data augmentation.}
+\end{figure}
 \section{Machine Learning Techniques}
 The project aims to achieve automatic land cover classification. To do so, it becomes extremely important to compare accuracy of different models and  consider the best out of them.
 \subsection{Support Vector Machines}
@@ -540,12 +571,123 @@ The project seeks to compare the applicability of machine learning and deep lear
 % APPENDIX
 \chapter*{Appendix}
 \addcontentsline{toc}{chapter}{Appendix} 
-
 \section*{List of dependencies}
 \addcontentsline{toc}{section}{List of dependencies} 
-
+\begin{tabular}{p{0.3\textwidth} p{0.7\textwidth}}
+\textbf{Package} & \textbf{Version}\\
+python & 3.6.9\\
+numpy & 1.18.5\\
+pandas & 1.0.4\\
+matplotlib & 3.2.1\\
+pillow & 7.0.0\\
+gdal & 2.2.2\\
+scikit-image & 0.16.2\\
+scikit-learn & 0.22.2.post1\\
+tensorflow & 2.2.0\\
+\end{tabular}
 \section*{Code snippets}
 \addcontentsline{toc}{section}{Code snippets} 
+\subsection*{Data Preparation}
+\subsubsection*{NDVI time series data}
+\begin{minted}[breaklines=true]{js}
+// Bounds of training and testing locations, marked using GEE Explorer
+var agraReg = ee.Geometry.Polygon(
+	[[[77.59987614966131, 27.551723242916378],
+          [77.59987614966131, 27.092973428952195],
+          [78.11760686255194, 27.092973428952195],
+          [78.11760686255194, 27.551723242916378]]], null, false);
+var ahmeda = ee.Geometry.Polygon(
+        [[[72.35056899794004, 23.29854363055665],
+          [72.35056899794004, 22.801931268739057],
+          [72.81062148817442, 22.801931268739057],
+          [72.81062148817442, 23.29854363055665]]], null, false);
+
+// Import dataset, filter by region
+var dataset = ee.ImageCollection('LANDSAT/LC08/C01/T1_8DAY_NDVI')
+              .filterBounds(agraReg);
+// Initialize image as single band, add bands corresponding to other periods
+var image = dataset
+            .filterDate('2015-01-01', '2015-02-28')
+            .median().rename('n1');
+image = image.addBands(dataset.filterDate('2015-03-01', '2015-04-30').median().rename('n2'))
+             .addBands(dataset.filterDate('2015-05-01', '2015-06-30').median().rename('n3'))
+             .addBands(dataset.filterDate('2015-08-01', '2015-10-31').median().rename('n4'))
+             .addBands(dataset.filterDate('2015-09-01', '2015-10-31').median().rename('n5'))
+             .addBands(dataset.filterDate('2015-11-01', '2015-12-31').median().rename('n6'));
+
+// Visualize image by displaying on map
+Map.addLayer(image, {min:0.0, max:1.0}, 'NDVI');
+
+// Export image to Google Drive
+Export.image.toDrive({
+  image:image,
+  description:"NDVI_agra",
+  region:agraReg,
+  crs:"EPSG:4326",
+  scale:30
+});
+\end{minted}
+
+\subsubsection*{Ground truth land cover data}
+\begin{minted}[breaklines=true]{js}
+function genClasses(image) {
+  // select relevant bands
+  var dc = image.select('discrete_classification');
+  var tc = image.select('tree-coverfraction');
+  var uc = image.select('urban-coverfraction');
+  // water, if seasonal coverfraction > 25 or permanent coverfraction > 0
+  var water = (image.select('water-seasonal-coverfraction').gt(25))
+              .or(image.select('water-permanent-coverfraction').gt(0))
+              .rename('water');
+  // forest, if tree-coverfraction > 30 and not water
+  var forest = tc.gt(30).and(water.not()).rename('forest');
+  // builtup land, if urban-coverfraction > 40
+  var built = uc.gt(40).and(water.not()).and(forest.not()).rename('urban');
+  // agricultural land, if none of the above
+  var agro = built.not().and(water.not()).and(forest.not()).rename('crop');
+  // create band with labels for every class
+  var classes = built.multiply(1)
+			.add(agro.multiply(2))
+			.add(water.multiply(3))
+			.add(forest.multiply(4))
+			.rename('classes');
+  // add all bands to image
+  return image.addBands(built)
+              .addBands(agro)
+              .addBands(water)
+              .addBands(forest)
+              .addBands(classes);
+}
+
+// Import dataset, filter by region
+var lc = ee.ImageCollection("COPERNICUS/Landcover/100m/Proba-V/Global")
+           .filterBounds(agraReg)
+           .first();
+
+// Generate classes
+lc = genClasses(lc);
+
+// Visualize image by displaying on map
+var visParams = {min:0, max:4, bands:['classes'], palette:['white', 'red', 'lawngreen', 'blue', 'black']};
+Map.addLayer(lc, visParams, "LC");
+
+// Export one hot encoded image to Google Drive
+Export.image.toDrive({
+  image:lc.select(['urban', 'crop', 'water', 'forest']),
+  description:"LC_agra",
+  region:agraReg,
+  crs:"EPSG:4326",
+  scale:30
+});
+// Export labelled image to Google Drive
+Export.image.toDrive({
+  image:lc.select(['classes']),
+  description:"LC_agra_labels",
+  region:agraReg,
+  crs:"EPSG:4326",
+  scale:30
+});
+\end{minted}
 % ---------------------------------------
 
 % REFERENCES
