@@ -585,9 +585,11 @@ scikit-image & 0.16.2\\
 scikit-learn & 0.22.2.post1\\
 tensorflow & 2.2.0\\
 \end{tabular}
+
 \section*{Code snippets}
 \addcontentsline{toc}{section}{Code snippets} 
-\subsection*{Preparing NDVI time series data}
+\subsection*{Data Preparation}
+\subsubsection*{Preparing NDVI time series data}
 \begin{minted}[breaklines=true]{js}
 // Bounds of training and testing locations, marked using GEE Explorer
 var agraReg = ee.Geometry.Polygon(
@@ -627,7 +629,7 @@ Export.image.toDrive({
 });
 \end{minted}
 
-\subsubsection*{Ground truth land cover data}
+\subsubsection*{NDVI time series data}
 \begin{minted}[breaklines=true]{js}
 function genClasses(image) {
   // select relevant bands
@@ -672,7 +674,7 @@ Map.addLayer(lc, visParams, "LC");
 
 // Export one hot encoded image to Google Drive
 Export.image.toDrive({
-  image:lc.select(['urban', 'crop', 'water', 'forest']),
+  image:lc.select(['built', 'agro', 'water', 'forest']),
   description:"LC_agra",
   region:agraReg,
   crs:"EPSG:4326",
@@ -687,6 +689,378 @@ Export.image.toDrive({
   scale:30
 });
 \end{minted}
+
+\subsection*{Convolutional Neural Network: U-Net Architecture}
+\subsubsection*{Import statements}
+\begin{minted}[breaklines=true]{python}
+import numpy as np
+import gdal
+from google.colab import files
+from matplotlib import pyplot as plt
+from PIL import Image
+import skimage.transform as skt
+import tensorflow as tf
+from tensorflow.keras.layers import (
+    Input, 
+    Conv2D,
+    MaxPool2D,
+    BatchNormalization,
+    Dropout,
+    Conv2DTranspose,
+    Cropping2D,
+    Concatenate
+)
+from tensorflow.keras.backend import int_shape
+\end{minted}
+
+\subsubsection*{Patch generation and reconstruction}
+\begin{minted}[breaklines=true]{python}
+def get_patches(img_arr, size=256, stride=256, full_coverage=True):
+    # check parameters
+    if size % stride != 0:
+        raise ValueError("size % stride must be equal to 0.")
+    if img_arr.ndim != 3:
+        raise ValueError("img_arr must be a 3 dimensional array with shape (height, width, depth).")
+
+    # number of patches to be created
+    i_max = (img_arr.shape[0] - size) // stride + 1
+    j_max = (img_arr.shape[1] - size) // stride + 1
+    # extra patches created to completely cover image
+    extra_0 = int((img_arr.shape[0] - size) % stride != 0)
+    extra_1 = int((img_arr.shape[1] - size) % stride != 0)
+    if(not full_coverage):
+        extra_0 = 0
+        extra_1 = 0
+    patches_list = []
+
+    for i in range(i_max):
+        for j in range(j_max):
+            patches_list.append(
+                img_arr[
+                    i * stride : i * stride + size,
+                    j * stride : j * stride + size
+                ]
+            )
+        if(extra_1):
+            patches_list.append(
+                img_arr[
+                    i * stride : i * stride + size,
+                    img_arr.shape[1] - size : img_arr.shape[1]
+                ]
+            )
+    if(extra_0):
+        for j in range(j_max):
+            patches_list.append(
+                img_arr[
+                    img_arr.shape[0] - size : img_arr.shape[0],
+                    j * stride : j * stride + size
+                ]
+            )
+        if(extra_1):
+            patches_list.append(
+                img_arr[
+                    img_arr.shape[0] - size : img_arr.shape[0],
+                    img_arr.shape[1] - size : img_arr.shape[1]
+                ]
+            )
+
+    return np.array(patches_list)
+
+def reconstruct_from_patches(img_arr, org_img_size, size, stride, full_coverage=True):
+    # check parameters
+    if type(org_img_size) is not tuple:
+        raise ValueError("org_image_size must be a tuple - (height, width).")
+
+    if img_arr.ndim != 4:
+        raise ValueError("img_arr must be a 4 dimensional array of shape (num_patches, size, size, depth).")
+    
+    # number of patches along each dimension
+    num_patches = img_arr.shape[0]
+    print(num_patches)
+    print(img_arr.shape)
+    depth = img_arr.shape[3]
+    i_max = (org_img_size[0] - size) // stride + 1
+    j_max = (org_img_size[1] - size) // stride + 1
+    # extra patches created for full coverage
+    extra_0 = int((org_img_size[0] - size) % stride != 0)
+    extra_1 = int((org_img_size[1] - size) % stride != 0)
+    if(not full_coverage):
+        extra_0 = 0
+        extra_1 = 0
+
+    # initialize image with zeros
+    image = np.zeros(
+        (org_img_size[0], org_img_size[1], depth), dtype=img_arr[0].dtype
+    )
+    patch_no = 0
+
+    for i in range(i_max):
+        for j in range(j_max):
+            image[
+                i * stride : i * stride + size,
+                j * stride : j * stride + size,
+            ] = img_arr[patch_no, :, :]
+            patch_no += 1
+        if(extra_1):
+            image[
+                i * stride : i * stride + size,
+                org_img_size[1] - size : org_img_size[1]
+            ] = img_arr[patch_no, :, :]
+            patch_no += 1
+    if(extra_0):
+        for j in range(j_max):
+            image[
+                org_img_size[0] - size : org_img_size[0],
+                j * stride : j * stride + size,
+            ] = img_arr[patch_no, :, :]
+            patch_no += 1
+        if(extra_1):
+            image[
+                org_img_size[0] - size : org_img_size[0],
+                org_img_size[1] - size : org_img_size[1]
+            ] = img_arr[patch_no, :, :]
+            patch_no += 1
+
+    return image
+\end{minted}
+\subsubsection*{Setting up the model}
+\begin{minted}[breaklines=true]{python}
+# HYPERPARAMETERS
+p = {
+  'SIZE' : 256,
+  'STRIDE' : 256,
+  'FULL_COVER' : True,
+  'NUM_BANDS' : 6,
+  'NUM_CLASSES' : 4,
+  'SAME_PADDING' : True,
+  'BATCH_NORM' : True,
+  'DROPOUT' : False,
+  'DROPOUT_RATE': 0.0,
+  'EPOCHS' : 20,
+  'BATCH_SIZE' : 8,
+  'LEARNING_RATE' : 0.001,
+  'BETA_1' : 0.99,
+  'BETA_2' : 0.999,
+  'EPSILON' : 1e-07
+}
+def unet(p):
+    # Padding
+    if(p["SAME_PADDING"]):
+        pad = 'same'
+    else:
+        pad = 'valid'
+    # Batch Norm
+    batch_norm = p['BATCH_NORM']
+    # Dropout
+    dropout = p['DROPOUT']
+    drop_rate = p['DROPOUT_RATE']
+    # Input
+    input_shape = (p['SIZE'], p['SIZE'], p['NUM_BANDS'])
+    input = Input(shape=input_shape)
+    x = input
+
+    # Encoder (Down-sampling path)
+    filters = 64
+    downLayers = []
+    for i in range(4):
+        x = Conv2D(filters, (3, 3), strides=(1, 1), padding=pad, activation='relu', use_bias=not batch_norm)(x)
+        if(batch_norm):
+            x = BatchNormalization(axis=-1, momentum=0.99, epsilon=0.001)(x)
+        x = Conv2D(filters, (3, 3), strides=(1, 1), padding=pad, activation='relu', use_bias=not batch_norm)(x)
+        if(batch_norm):
+            x = BatchNormalization(axis=-1, momentum=0.99, epsilon=0.001)(x)
+        downLayers.append(x)
+        x = MaxPool2D(pool_size=(2, 2), strides=(2, 2), padding=pad)(x)
+        filters *= 2
+
+    # Bottleneck
+    x = Conv2D(filters, (3, 3), strides=(1, 1), padding=pad, activation='relu', use_bias=not batch_norm)(x)
+    if(batch_norm):
+        x = BatchNormalization(axis=-1, momentum=0.99, epsilon=0.001)(x)
+    if(dropout):
+        x = Dropout(rate=drop_rate)(x)
+    x = Conv2D(filters, (3, 3), strides=(1, 1), padding=pad, activation='relu', use_bias=not batch_norm)(x)
+    if(batch_norm):
+        x = BatchNormalization(axis=-1, momentum=0.99, epsilon=0.001)(x)
+    if(dropout):
+        x = Dropout(rate=drop_rate)(x)
+    downLayers.reverse()
+
+    # Decoder (Up-sampling path)
+    for dlayer in downLayers:
+        filters /= 2
+        x = Conv2DTranspose(filters, (2, 2), strides=(2, 2), padding=pad)(x)
+        # Skip Connection
+        cropDim = calcCropDims(int_shape(x), int_shape(dlayer))
+        if(not p['SAME_PADDING']):
+            crop = Cropping2D(cropDim)(dlayer)
+        else:
+            crop = dlayer
+        x = Concatenate(axis=-1)([x, crop])
+        x = Conv2D(filters, (3, 3), strides=(1, 1), padding=pad, activation='relu', use_bias=not batch_norm)(x)
+        if(batch_norm):
+            x = BatchNormalization(axis=-1, momentum=0.99, epsilon=0.001)(x)
+        x = Conv2D(filters, (3, 3), strides=(1, 1), padding=pad, activation='relu', use_bias=not batch_norm)(x)
+        if(batch_norm):
+            x = BatchNormalization(axis=-1, momentum=0.99, epsilon=0.001)(x)
+    # Output
+    output = Conv2D(p['NUM_CLASSES'], (1, 1), strides=(1, 1), padding=pad, activation='softmax')(x)
+
+    model = tf.keras.Model(input, output, name='unet')
+
+    return model
+
+# Create instance of model
+model = unet(p)
+
+# Compile with choice of optimizer, loss function and metrics for evaluation
+model.compile(loss=tf.keras.losses.categorical_crossentropy,
+	optimizer=tf.keras.optimizers.Adam(
+		learning_rate=p['LEARNING_RATE'], 
+		beta_1=p['BETA_1'], 
+		beta_2=p['BETA_2'], 
+		epsilon=p['EPSILON']
+	),
+	metrics=[tf.keras.metrics.CategoricalAccuracy()]
+)
+\end{minted}
+
+\subsubsection*{Loading datasets}
+\begin{minted}[breaklines=true]{python}
+# Training data
+train_x = gdal.Open('/content/drive/My Drive/PS/data/earth_ndvi_6band/NDVI_v2.tif')
+train_x = np.array(train_x.ReadAsArray())
+train_x = np.moveaxis(train_x, 0, -1)
+train_shape = train_x.shape[:2]
+train_x_img = train_x
+train_x = get_patches(train_x, p['SIZE'], p['STRIDE'], p['FULL_COVER'])
+train_y = gdal.Open('/content/drive/My Drive/PS/data/earth_landcover/LC_final_v5.tif')
+train_y = np.array(train_y.ReadAsArray())
+train_y = np.moveaxis(train_y, 0, -1)
+assert(train_y.shape[:2] == train_shape)
+train_y_img = train_y
+train_y = get_patches(train_y, p['SIZE'], p['STRIDE'], p['FULL_COVER'])
+\end{minted}
+\subsubsection*{Data Augmentation}
+\begin{minted}[breaklines=true]{python}
+train_x_aug = []
+train_y_aug = []
+for i in range(train_x.shape[0]):
+    train_x_aug.append(train_x[i])
+    train_y_aug.append(train_y[i])
+    img_x = train_x[i]
+    img_y = train_y[i]
+    for j in range(3):
+        img_x = skt.rotate(img_x, 90)
+        train_x_aug.append(img_x)
+        img_y = skt.rotate(img_y, 90)
+        train_y_aug.append(img_y)
+train_x_aug = np.array(train_x_aug)
+train_y_aug = np.array(train_y_aug)
+\end{minted}
+\subsubsection*{Training the model}
+\begin{minted}[breaklines=true]{python}
+# Train model and record history
+model_history = model.fit(train_x_aug, train_y_aug, batch_size=p['BATCH_SIZE'], epochs=p['EPOCHS'])
+
+def plotTrainingHistory(hist, EPOCHS):
+    loss = hist['loss']
+    cat_acc = hist['categorical_accuracy']
+    epochs = range(EPOCHS)
+    plt.figure()
+    plt.plot(epochs, loss, 'r', label='Loss')
+    plt.plot(epochs, cat_acc, 'b', label='Accuracy')
+    plt.legend()
+    plt.show()
+
+# Plot loss curve and accuracy against epochs
+plotTrainingHistory(model_history.history, p['EPOCHS'])
+\end{minted}
+
+\subsubsection*{Evaluting the model}
+\begin{minted}[breaklines=true]{python}
+def oneHotFromActivations(testset):
+    """
+    For vector at each pixel, sets element corresponding to predicted class to 1, rest to 0.
+    """
+    for t in range(testset.shape[0]):
+        for h in range(testset.shape[1]):
+            for w in range(testset.shape[2]):
+                maxcell = np.max(testset[t][h][w])
+                for cell in range(testset.shape[3]):
+                    if(testset[t][h][w][cell] == maxcell):
+                        testset[t][h][w][cell] = 1
+                    else:
+                        testset[t][h][w][cell] = 0
+    return testset
+
+def viewPredictions(pred, img_shape, stride, size):
+    """
+    Takes output of model.predict().
+    One hot encodes the predictions, restitches patches to get original image, returns a RGB visual representation of predictions.
+    """
+    pred = oneHotFromActivations(pred)
+    pred = np.int32(pred) * 255
+    pred = np.moveaxis(pred, -1, 0)[:3]
+    pred = np.moveaxis(pred, 0, -1)
+    return reconstruct_from_patches(pred, img_shape, stride, size)
+
+def iou(preds, labels):
+    """
+    Calculates Intersection over Union for predictions, comparing with ground truth data.
+    Returns a dict containing class-wise IoUs, mean IoU, and categorical accuracy.
+    """
+    h, w = preds.shape[1:3]
+    num_classes = preds.shape[0]
+
+    intersection = []
+    union = []
+
+    for c in range(num_classes):
+        intersection_c = np.sum((np.logical_and(preds[c] == 1, labels[c] == 1)))
+        intersection.append(intersection_c)
+
+    for c in range(num_classes):
+        union_c = np.sum((np.logical_or(preds[c] == 1, labels[c] == 1)))
+        union.append(union_c)
+
+    intersection = np.array(intersection)
+    union = np.array(union)
+    return (intersection / union, intersection.sum() / (h * w))
+
+def testPredictions(preds, labels, img_shape, size, stride):
+    """
+    preds as output by model.predict.
+    labels as output by gdal, cast to a numpy array.
+    img_shape must be a tuple - (height, width).
+    Evaluates the predictions using accuracy and IoU.
+    """
+    pred_img = oneHotFromActivations(preds)
+    pred_img = reconstruct_from_patches(pred_img, img_shape, size, stride)
+    pred_img = np.moveaxis(pred_img, -1, 0)
+    ious, accuracy = iou(pred_img, labels)
+    return {
+        'class_ious': ious,
+        'mean_iou': ious.mean(),
+        'accuracy': accuracy 
+    }
+
+# Visualize predictions
+test_pred = model.predict(test_x)
+test_pred_img = viewPredictions(test_pred, test_shape, p['SIZE'], p['STRIDE'])
+plt.imshow(test_pred_img)
+
+# Evaluate predictions
+test_y = gdal.Open('/content/drive/My Drive/PS/data/earth_landcover/LC_ahmeda.tif')
+test_y = np.array(test_y.ReadAsArray())
+print(testPredictions(test_pred, test_y, test_shape, p['SIZE'], p['STRIDE']))
+\end{minted}
+
+\subsubsection*{Sample for code}
+\begin{minted}[breaklines=true]{python}
+# CODE GOES HERE, PLS COPY AND LEAVE HERE
+\end{minted}
+
 % ---------------------------------------
 
 % REFERENCES
