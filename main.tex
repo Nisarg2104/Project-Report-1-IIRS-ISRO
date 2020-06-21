@@ -394,7 +394,7 @@ For training our classifiers, we will be using images of Agra, Mathura and the s
 
 \section{Data Preprocessing}
 
-\section(K Nearest Neighbors Classifier}
+\section{K Nearest Neighbors Classifier}
 
 \section{Decision Tree Classifier}
 
@@ -425,7 +425,7 @@ The disadvantages of using support vector machines are:
 \item Hard margin support vector machines are very sensitive to outliers and hence proper care should be taken while using them.
 \end{itemize}
 
-\section{Convolutional Neural Networks: U-Net Architecture}
+\section{U-Net Architecture}
 Proposed by \textit{Ronneberger et al.}\cite{unet}, the U-Net architecture builds upon and extends the FCN architecture for more precise segmentation using a smaller training dataset. While the architecture was designed particularly for bio-medical segmentation applications, it has shown to work well for other domains too.
 \begin{figure}[h]
 \centering
@@ -466,6 +466,12 @@ It is made up of four identical blocks. Each block encloses the following sequen
 \end{enumerate}
 \paragraph{}
 At each up-sampling step (transpose convolution), the number of channels is halved. The output volume after up-sampling is concatenated with the corresponding volume from the down-sampling path after adequate cropping. The introduction of these skip connections allows the propagation of context information about the localization from the down-sampling path to the up-sampling path which already carries semantic information. This helps the network to spread out activations correctly when up-sampling and lends the network its U-shape.
+\subsection{Implementation}
+A convolutional neural network based on the above architecture was implemented using TensorFlow in Python. However, some changes were made to enhance the performance of the model.
+\begin{enumerate}
+\item Convolutional layers down-sample the image, leading to shrinkage of the image's spatial dimensions. This is particularly troublesome for skip-connections as concatenation of volumes at the time of up-sampling requires that the width and height of the volumes match. Using \textbf{same padding} before applying the convolution operation prevents this down-sizing and solves the problem. This also enhances the symmetry in the network, with the output layer having the same spatial dimensions as the input image, reducing the overhead of image processing which would otherwise be required for training the network. 
+\item Batch Normalization
+\end{enumerate}
 \subsection{Advantages}
 The U-Net architecture presented above has several features which lend it better performance than the FCN architecture.
 \begin{itemize}
@@ -474,13 +480,15 @@ In the FCN architecture, the single up-sampling layer is added at the end of the
 \item
 Concatenation is used for combining information from skip connections, as opposed to the summing operation used in the FCN architecture. This helps to retain more information from both sets of activations, without polluting either.
 \item
-The U-Net architecture is also particularly well suited to applications where labelled training data is not available in abundance. This makes it more attractive for our project on account of the limited computational resources and time available for training the network. We, hence, propose to use this CNN architecture for the problem of land cover classification.
+The U-Net architecture is also particularly well suited to applications where labeled training data is not available in abundance. This makes it more attractive for our project on account of the limited computational resources and time available for training the network. We, hence, propose to use this CNN architecture for the problem of land cover classification.
 \end{itemize}
 \subsection{Disadvantages}
 \begin{itemize}
 \item Convolutional neural networks do not take temporal variations directly into account. However, it is hoped that providing the network with training data from different time periods should allow it to capture some of the temporal trends.
 \item The performance of a deep neural network greatly depends on the amount of training data available. We propose using techniques like data augmentation and transfer learning so as to get better results even with our small training set.
 \end{itemize}
+
+
 
 % --------------------------------------
 
