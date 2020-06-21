@@ -271,6 +271,32 @@ This aims to label each scene image with a specific semantic class. Here, a scen
 
 \section{Supervised Machine Learning}
 Supervised learning is the machine learning task of learning a function that maps an input to an output on the basis of training data.\cite{supervisedlearningone, supervisedlearningtwo} The training data is the set of input-output example pairs used to train the classifier. If enough data is available then the trained model usually identifies the underlying data patterns and is then able to make predictions on previously unknown input. Supervised learning, however, faces the problem of overfitting when model is made very flexible in order to fit the underlying data and underfitting when the model is to rigid to fit the underlying data.
+\subsection{Support Vector Machines}
+A Support Vector Machine (SVM) is a discriminative classifier formally defined by a separating hyperplane. In other words, given labeled training data (supervised learning), the algorithm outputs an optimal hyperplane which categorizes new examples. In two dimensional space, this hyperplane is a line dividing a plane into two parts where in each class lay on either side.\cite{supportvectormachines}
+\subsection{Types of SVMs}
+There are two kinds of support vector machines: Hard Margin Support Vector Machines and Soft Margin Support Vector Machines.
+Hard Margin Support Vector machines do not allow misclassification of data points, tend to overfit the data and are thus sensitive to outliers. Soft margin support vector machines allow slight misclassification of data points and penalize for each misclassification.
+For this project, soft margin support vector machines have been used to classify the data points.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{supportvectormachines.jpg}
+\caption{Support Vector Machine}
+\end{figure}
+\subsection{Advantages}
+The advantages of using support vector machines are:
+\begin{itemize}
+\item Support vectors can deal with high dimensional data easily with the help of kernel transformations.
+\item They are only dependent on some part of the training data known as the support vectors which makes them very memory efficient.
+\item Can be used for a variety of tasks due to availability of a large number of kernel functions for decision making.
+\item Fast and memory efficient implementations in various languages is available via different libraries.
+\end{itemize}
+\subsection{Disadvantages}
+The disadvantages of using support vector machines are:
+\begin{itemize}
+\item They do not take the spatial orientation of the pixels into account while learning.
+\item With wrong choice of kernel, support vector machines tend to to overfit the data.
+\item Hard margin support vector machines are very sensitive to outliers and hence proper care should be taken while using them.
+\end{itemize}
 
 \newpage
 \section{Deep Learning and Neural Networks}
@@ -386,47 +412,38 @@ Scikit-learn is a free software machine learning library for Python. It features
 We are using satellite imagery from the \textit{Landsat 8 - Surface Reflectance - Tier 1} product. The data is collected by Landsat 8 - an American Earth Observation satellite launched in 2013 under Landsat, a joint program of the United States Geological Survey (USGS) and National Aeronautics and Space Administration (NASA). The satellite images the entire Earth's surface at a spatial resolution of 30m, once every two weeks and records multi-spectral and thermal data. The Operational Land Imager (OLI) collects passive remote sensing data from nine spectral bands including the Near Infrared and Visible bands which we intend to use for the project. The data has been atmospherically corrected in addition to standard geometric adjustments and geo-referencing. Information from the thermal infrared sensor is also used to mask clouds. The imagery, hence, provides a clear view of land. The high temporal resolution also helps to factor in temporal variations in land cover. This makes the dataset suitable for the purpose of our project.\cite{geel8, l8}
 \subsubsection{Copernicus Global Land Cover dataset}
 The \textit{Copernicus Global Land Service (CGLS) - LC100 collection 2} is earmarked as a component of the Land service to operate a multi-purpose service component that provides a series of bio-geophysical products on the status and evolution of land surface at global scale. Derived from the PROBA-V 100m time series data for the year of 2015, this dynamic land cover map at 100 m spatial resolution provides a primary land cover scheme. Next to these discrete classes, the product also includes continuous field layers for all basic land cover classes that provide proportional estimates for vegetation/ground cover for the land cover types.\cite{geecglc}
-\subsection{Study Areas}
+\subsection{Location}
 For training our classifiers, we will be using images of Agra, Mathura and the surrounding region, Uttar Pradesh. This location was chosen as it has a relatively even distribution of different land cover classes. Additionally, first-hand knowledge of the land cover of the region has been provided by the mentor which should help us refine the data. For testing, we will use images of Gandhinagar, Gujarat because of similar reasons.
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{agra.jpg}
 \caption{Different views of the training location - Agra. (1) True colour satellite image (2) False colour infrared image (3) Map of NDVI values (4) Ground truth land cover. [Google Earth Engine]}
 \end{figure}
-\subsection{Data Preparation}
 
 \section{Data Preprocessing}
-
-\section{K Nearest Neighbors Classifier}
-
-\section{Decision Tree Classifier}
-
-\section{Support Vector Machines}
-A Support Vector Machine (SVM) is a discriminative classifier formally defined by a separating hyperplane. In other words, given labeled training data (supervised learning), the algorithm outputs an optimal hyperplane which categorizes new examples. In two dimensional space, this hyperplane is a line dividing a plane into two parts where in each class lay on either side.\cite{supportvectormachines}
-\subsection{Types of SVMs}
-There are two kinds of support vector machines: Hard Margin Support Vector Machines and Soft Margin Support Vector Machines.
-Hard Margin Support Vector machines do not allow misclassification of data points, tend to overfit the data and are thus sensitive to outliers. Soft margin support vector machines allow slight misclassification of data points and penalize for each misclassification.
-For this project, soft margin support vector machines have been used to classify the data points.
+\subsection{Linear Discriminant Analysis}
+\paragraph{}
+ During the sowing season the agricultural land is mostly barren. Therefore, the classifier may tend to classify it as wasteland if the classification is made solely based on NDVI values. Similarly, in dry seasons, dry rivers might get classified as barren land too. To prevent this, we use a data preprocessing method- Linear Discriminant Analysis.
+\paragraph{}
+Linear discriminant analysis also worked as a dimensionality reduction technique for this project which drastically reduced the processing time and made results more accurate. The accuracy of the results increased from 78 per cent without LDA to almost 97 per cent after preprocessing with LDA method. Since NDVI values were calculated bi-monthly, the data initially had 6 features i.e. 6 dimensional. As the data points were classified into 4 different classes, LDA reduced the number of features to 3 i.e. dimensional.
+\section{Machine Learning Techniques}
+The project aims to achieve automatic land cover classification. To do so, it becomes extremely important to compare accuracy of different models and  consider the best out of them.
+\subsection{Support Vector Machines}
+\paragraph{}
+After maximizing the separation between classes and minimizing the variance within classes, we have used support vector machines to find hyper-planes separating different classes. Soft margin support vector machines were used for this project. While finding the dividing hyper-plane, soft margin support vector machines allowed some mis-classification with penalty for each mis-classification. 
+\paragraph{}
+Class weight were balanced for each class. This means that the penalty for mis-classification of an area like river is higher because its presence is lesser. One vs One method was used for multi-class classification therefore for classifying a point all the classes were taken into account- two at a time and then the point was classified to a class getting maximum votes. Linear Kernel was preferred after trying other kernels due to its higher accuracy. For internal calculations of maxima and minima, dual was used of Lagrange's Multipliers were used. The support vector machine was implemented from sci-kit learn library.
+\subsection {Decision Trees}
+NDVI values have different ranges for different classes, however when analysis is done over a period of time, things become complex. Due to such a range wise  underlying structure it decision trees can make a good model for classification as they also have an if else type structure. The criterion used for choosing the node to split data at every subsequent path is Gini. Gini is calculated as per the given formula:
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.7\textwidth]{supportvectormachines.jpg}
-\caption{Support Vector Machine}
+\includegraphics[width=\textwidth]{giniformula.png}
 \end{figure}
-\subsection{Advantages}
-The advantages of using support vector machines are:
-\begin{itemize}
-\item Support vectors can deal with high dimensional data easily with the help of kernel transformations.
-\item They are only dependent on some part of the training data known as the support vectors which makes them very memory efficient.
-\item Can be used for a variety of tasks due to availability of a large number of kernel functions for decision making.
-\item Fast and memory efficient implementations in various languages is available via different libraries.
-\end{itemize}
-\subsection{Disadvantages}
-The disadvantages of using support vector machines are:
-\begin{itemize}
-\item They do not take the spatial orientation of the pixels into account while learning.
-\item With wrong choice of kernel, support vector machines tend to to overfit the data.
-\item Hard margin support vector machines are very sensitive to outliers and hence proper care should be taken while using them.
-\end{itemize}
+Entropy is another impurity calculation method, however Gini was used as model based on Gini calculations gave higher accuracy.
+\subsection{K-Nearest Neighbors}
+K-Nearest Neighbors  classifies a point to a class in which maximum of its closest neighbors belong to. Over a period of time, pixels belonging to the same classes tend to have similar features and hence they are closer. Thus, K-Nearest Neighbors can be a very accurate method to classify the pixels. The distance calculated here is the simple Euclidean Distance. Its formula is as follows:
+The vote of each class point has uniform weight-age.
+
 
 \section{U-Net Architecture}
 Proposed by \textit{Ronneberger et al.}\cite{unet}, the U-Net architecture builds upon and extends the FCN architecture for more precise segmentation using a smaller training dataset. While the architecture was designed particularly for bio-medical segmentation applications, it has shown to work well for other domains too.
@@ -469,22 +486,6 @@ It is made up of four identical blocks. Each block encloses the following sequen
 \end{enumerate}
 \paragraph{}
 At each up-sampling step (transpose convolution), the number of channels is halved. The output volume after up-sampling is concatenated with the corresponding volume from the down-sampling path after adequate cropping. The introduction of these skip connections allows the propagation of context information about the localization from the down-sampling path to the up-sampling path which already carries semantic information. This helps the network to spread out activations correctly when up-sampling and lends the network its U-shape.
-\subsection{Implementation}
-A convolutional neural network based on the above architecture was implemented using TensorFlow in Python. However, some changes were made to enhance the performance of the model.
-\begin{enumerate}
-\item Convolutional layers down-sample the image, leading to shrinkage of the image's spatial dimensions. This is particularly troublesome for skip-connections as concatenation of volumes at the time of up-sampling requires that the width and height of the volumes match. Using \textbf{same padding} before applying the convolution operation prevents this down-sizing and solves the problem. This also enhances the symmetry in the network, with the output layer having the same spatial dimensions as the input image, reducing the overhead of image processing which would otherwise be required for training the network. 
-\item As a neural network is trained, the distribution of each layer's inputs changes continuously, as the parameters of previous layers change. This slows down learning and necessitates careful parameter initialization. This problem of internal covariate shift can be addressed by normalizing layer inputs to a learnable mean and variance, stabilizing the distribution of the activations. \textbf{Batch Normalization} allows us to use higher learning rates and makes the network more robust to the choice of hyper-parameters. Additionally, it also has a regularizing effect and helps prevent overfitting.
-\item The shape of image accepted as input by the network was fixed to $256 \times 256$. A patch size of 256 was found to provide sufficient spatial context to the network and fit well with the computational constraints.
-\end{enumerate}
-The model implemented has 31,051,332 parameters, of which, 31,039,556 are trainable. The arrangement of different layers and shapes of output volumes can be seen in the figure below. A more detailed plot can be found in the Appendix.
-\begin{figure}[h]
-\centering
-\includegraphics[width=\textwidth]{cnn_implement.jpg}
-\end{figure}
-\subsection{Training}
-\subsubsection{Loss Function}
-\subsubsection{Optimizer}
-\subsubsection{Hyper-parameters}
 \subsection{Advantages}
 The U-Net architecture presented above has several features which lend it better performance than the FCN architecture.
 \begin{itemize}
@@ -493,15 +494,13 @@ In the FCN architecture, the single up-sampling layer is added at the end of the
 \item
 Concatenation is used for combining information from skip connections, as opposed to the summing operation used in the FCN architecture. This helps to retain more information from both sets of activations, without polluting either.
 \item
-The U-Net architecture is also particularly well suited to applications where labeled training data is not available in abundance. This makes it more attractive for our project on account of the limited computational resources and time available for training the network. We, hence, propose to use this CNN architecture for the problem of land cover classification.
+The U-Net architecture is also particularly well suited to applications where labelled training data is not available in abundance. This makes it more attractive for our project on account of the limited computational resources and time available for training the network. We, hence, propose to use this CNN architecture for the problem of land cover classification.
 \end{itemize}
 \subsection{Disadvantages}
 \begin{itemize}
 \item Convolutional neural networks do not take temporal variations directly into account. However, it is hoped that providing the network with training data from different time periods should allow it to capture some of the temporal trends.
 \item The performance of a deep neural network greatly depends on the amount of training data available. We propose using techniques like data augmentation and transfer learning so as to get better results even with our small training set.
 \end{itemize}
-
-
 
 % --------------------------------------
 
