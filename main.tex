@@ -414,7 +414,7 @@ The land cover classes used are:
 \caption{Masks for different land cover classes for Agra and Mathura region.}
 \end{figure}
 \section{Data Preprocessing}
-\section{Linear Discriminant Analysis}
+\subsection{Linear Discriminant Analysis}
 \paragraph{} Linear discriminant analysis (LDA), normal discriminant analysis (NDA), or discriminant function analysis is a generalization of Fisher's linear discriminant, a method used in statistics, pattern recognition, and machine learning to find a linear combination of features that characterizes or separates two or more classes of objects or events.
 LDA is also closely related to principal component analysis (PCA) and factor analysis in that they both look for linear combinations of variables which best explain the data. LDA explicitly attempts to model the difference between the classes of data. PCA, in contrast, does not take into account any difference in class, and factor analysis builds the feature combinations based on differences rather than similarities. Discriminant analysis is also different from factor analysis in that it is not an interdependence technique: a distinction between independent variables and dependent variables (also called criterion variables) must be made.
 
@@ -435,7 +435,7 @@ This means that the criterion of an input ${\displaystyle {\vec {x}}}{\displayst
 
 It is often useful to see this conclusion in geometrical terms: the criterion of an input$ {\displaystyle {\vec {x}}}{\displaystyle {\vec {x}}}$ being in a class ${\displaystyle y}y$ is purely a function of projection of multidimensional-space point$ {\displaystyle {\vec {x}}}{\displaystyle {\vec {x}}}$ onto vector ${\displaystyle {\vec {w}}}{\displaystyle {\vec {w}}}$ (thus, we only consider its direction). In other words, the observation belongs to ${\displaystyle y}y$ if corresponding ${\displaystyle {\vec {x}}}{\displaystyle {\vec {x}}}$ is located on a certain side of a hyperplane perpendicular to ${\displaystyle {\vec {w}}}{\displaystyle {\vec {w}}}$. The location of the plane is defined by the threshold c.
 
-\subsection{Project Specifics}
+\subsubsection{Project Specifics}
 \paragraph{}
  During the sowing season the agricultural land is mostly barren. Therefore, the classifier may tend to classify it as wasteland if the classification is made solely based on NDVI values. Similarly, in dry seasons, dry rivers might get classified as barren land too. To prevent this, we use a data preprocessing method- Linear Discriminant Analysis.
 \paragraph{}
@@ -449,12 +449,12 @@ Deep neural networks typically require a large amount of training data. It may n
 \includegraphics[width=0.7\textwidth]{dataaug.jpg}
 \caption{Patch generation and data augmentation.}
 \end{figure}
-\section{Machine Learning Techniques}
+
+
+\section{Machine Learning}
 The project aims to achieve automatic land cover classification. To do so, it becomes extremely important to compare accuracy of different models and  consider the best out of them.
-\subsection{Support Vector Machines}
-\subsection{Overview}
 Supervised learning is the machine learning task of learning a function that maps an input to an output on the basis of training data.\cite{supervisedlearningone, supervisedlearningtwo} The training data is the set of input-output example pairs used to train the classifier. If enough data is available then the trained model usually identifies the underlying data patterns and is then able to make predictions on previously unknown input. Supervised learning, however, faces the problem of overfitting when model is made very flexible in order to fit the underlying data and underfitting when the model is to rigid to fit the underlying data.
-\subsection{Support Vector Machines}
+\section{Support Vector Machines}
 A Support Vector Machine (SVM) is a discriminative classifier formally defined by a separating hyperplane. In other words, given labeled training data (supervised learning), the algorithm outputs an optimal hyperplane which categorizes new examples. In two dimensional space, this hyperplane is a line dividing a plane into two parts where in each class lay on either side.\cite{supportvectormachines}
 \subsection{Types of SVMs}
 There are two kinds of support vector machines: Hard Margin Support Vector Machines and Soft Margin Support Vector Machines.
@@ -480,12 +480,12 @@ The disadvantages of using support vector machines are:
 \item With wrong choice of kernel, support vector machines tend to to overfit the data.
 \item Hard margin support vector machines are very sensitive to outliers and hence proper care should be taken while using them.
 \end{itemize}
-\subsection{Project Specifics}
+\subsection{Implementation}
 \paragraph{}
 After maximizing the separation between classes and minimizing the variance within classes, we have used support vector machines to find hyper-planes separating different classes. Soft margin support vector machines were used for this project. While finding the dividing hyper-plane, soft margin support vector machines allowed some mis-classification with penalty for each mis-classification. 
 \paragraph{}
 Class weight were balanced for each class. This means that the penalty for mis-classification of an area like river is higher because its presence is lesser. One vs One method was used for multi-class classification therefore for classifying a point all the classes were taken into account- two at a time and then the point was classified to a class getting maximum votes. Linear Kernel was preferred after trying other kernels due to its higher accuracy. For internal calculations of maxima and minima, dual was used of Lagrange's Multipliers were used. The support vector machine was implemented from sci-kit learn library.
-\subsection {Decision Trees}
+\section{Decision Trees}
 \subsection{Overview}
 A decision tree is a decision support tool that uses a tree-like model of decisions and their possible consequences, including chance event outcomes, resource costs, and utility. It is one way to display an algorithm that only contains conditional control statements. Decision trees are commonly used in operations research, specifically in decision analysis, to help identify a strategy most likely to reach a goal, but are also a popular tool in machine learning.
 A decision tree is a flowchart-like structure in which each internal node represents a "test" on an attribute (e.g. whether a coin flip comes up heads or tails), each branch represents the outcome of the test, and each leaf node represents a class label (decision taken after computing all attributes). The paths from root to leaf represent classification rules.
@@ -513,14 +513,14 @@ Decision trees are commonly used in operations research and operations managemen
 \item They are often relatively inaccurate. Many other predictors perform better with similar data. This can be remedied by replacing a single decision tree with a random forest of decision trees, but a random forest is not as easy to interpret as a single decision tree.
 \item For data including categorical variables with different number of levels, information gain in decision trees is biased in favor of those attributes with more levels.
 \end{itemize}
-\subsection{Project Specifics}
+\subsection{Implementation}
 NDVI values have different ranges for different classes, however when analysis is done over a period of time, things become complex. Due to such a range wise  underlying structure it decision trees can make a good model for classification as they also have an if else type structure. The criterion used for choosing the node to split data at every subsequent path is Gini. Gini is calculated as per the given formula:
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{giniformula.png}
 \end{figure}
 Entropy is another impurity calculation method, however Gini was used as model based on Gini calculations gave higher accuracy.
-\subsection{K-Nearest Neighbors}
+\section{K-Nearest Neighbors}
 \subsection{Overview}
 The KNN algorithm assumes that similar things exist in close proximity. In other words, similar things are near to each other.
 \begin{figure}[h]
@@ -530,7 +530,7 @@ The KNN algorithm assumes that similar things exist in close proximity. In other
 \end{figure}
 Notice in the image above that most of the time, similar data points are close to each other. The KNN algorithm hinges on this assumption being true enough for the algorithm to be useful. KNN captures the idea of similarity (sometimes called distance, proximity, or closeness) with some mathematics we might have learned in our childhood— calculating the distance between points on a graph. There are other ways of calculating distance, and one way might be preferable depending on the problem we are solving. However, the straight-line distance (also called the Euclidean distance) is a popular and familiar choice.
 
-\subsection{Project Specifics}
+\subsection{Implementation}
 K-Nearest Neighbors  classifies a point to a class in which maximum of its closest neighbors belong to. Over a period of time, pixels belonging to the same classes tend to have similar features and hence they are closer. Thus, K-Nearest Neighbors can be a very accurate method to classify the pixels. The distance calculated here is the simple Euclidean Distance. Its formula is as follows:
 The vote of each class point has uniform weight-age.
 
