@@ -43,6 +43,7 @@
 % Outer Cover Page
 \pagestyle{empty}
 \begin{titlepage}
+\begin{doublespace}
 \vspace*{0.2cm}
 \begin{center} \textbf{A REPORT\\ON} \end{center}
 \begin{center} \textbf{{\Large AUTOMATIC LAND COVER CLASSIFICATION OF TEMPORAL SATELLITE IMAGES}} \end{center}
@@ -55,18 +56,19 @@
 	\end{tabular}
 }
 \end{center}
+\vspace{6cm}
 \begin{center} \textbf{AT} \end{center}
-\begin{center} \includegraphics{iirs.png} \end{center}
 \begin{center} {\Large Indian Institute of Remote Sensing, Dehradun} \end{center}
-\begin{center} A Practice School - I station of \end{center}
-\begin{center} {\includegraphics{bits.png}} \end{center}
-\begin{center} {\Large Birla Institute of Technology and Science, Pilani} \end{center}
-\begin{center} June, 2020 \end{center}
+\begin{center} \textbf{A Practice School - I station of} \end{center}
+\begin{center} {\textbf{BIRLA INSTITUTE OF TECHNOLOGY AND SCIENCE, PILANI}} \end{center}
+\begin{center} \textbf{June, 2020} \end{center}
+\end{doublespace}
 \end{titlepage}
 \pagebreak
 
 % Inner Cover Page
 \begin{titlepage}
+\begin{doublespace}
 \vspace*{0.3cm}
 \begin{center} \textbf{A REPORT\\ON} \end{center}
 \begin{center} \textbf{{\Large AUTOMATIC LAND COVER CLASSIFICATION OF TEMPORAL SATELLITE IMAGES}} \end{center}
@@ -78,17 +80,16 @@
 		2018A7PS0254P & Nisarg Vora  & B.E. (Hons.) Computer Science \\
 	\end{tabular} 
 \end{center}
-\begin{onehalfspace}
+\vspace{2cm}
 \begin{center} \textbf{Prepared in the partial fulfillment of the} \end{center}
 \begin{center} Practice School - I course \end{center}
+\vspace{1.5cm}
 \begin{center} \textbf{AT} \end{center}
-\begin{center} \includegraphics{iirs.png} \end{center}
 \begin{center} {\Large Indian Institute of Remote Sensing, Dehradun} \end{center}
-\begin{center} A Practice School - I station of \end{center}
-\begin{center} {\includegraphics{bits.png}} \end{center}
-\begin{center} {\Large Birla Institute of Technology and Science, Pilani} \end{center}
-\begin{center} June, 2020 \end{center}
-\end{onehalfspace}
+\begin{center} \textbf{A Practice School - I station of} \end{center}
+\begin{center} {\textbf{BIRLA INSTITUTE OF TECHNOLOGY AND SCIENCE, PILANI}} \end{center}
+\begin{center} \textbf{June, 2020} \end{center}
+\end{doublespace}
 \end{titlepage}
 \pagebreak
 
@@ -138,7 +139,7 @@ Practice School Division}
 \textbf{Project Areas:} Remote Sensing, Machine Learning, Deep Learning
 \section{Abstract}
 \paragraph{}
-This project attempts automatic land cover classification of different parts of India into forest, urban, agricultural land and water bodies which can be used for various applications like natural resource management, urban expansion etc.  Data from Agra district, Uttar Pradesh has been used to train Support Vector Machines and Convolutional Neural Networks which are then tested on Gandhinagar district, Gujarat. Google Earth Engine has been used to obtain data from Landsat 8 satellite images. For the purpose of classification Normalized Difference Vegetation Index (NDVI) values are calculated by masking all other light bands except near-infrared and red light bands. Temporal images with NDVI labels are fed as input to the models and subsequently, the accuracy of these models is reported.
+This project attempts automatic land cover classification of different parts of India into forest, built-up, agricultural land and water bodies using temporal remote sensing data. Data from Agra district, Uttar Pradesh has been used to train different models - k-nearest neighbours, decision trees, support vector machines and convolutional neural networks. These models are then tested on Ahmedabad and Gandhinagar, Gujarat. Google Earth Engine has been used to obtain data from Landsat 8 satellite images. For the purpose of classification, Normalized Difference Vegetation Index (NDVI) values are calculated by masking all other light bands except near-infrared and red light bands. Temporal images with NDVI labels are fed as input to train the models and subsequently, the performance of these models is compared. A convolutional neural network based on the U-Net architecture is found to produce the most accurate results, improving upon traditional machine learning techniques. The models implemented can be used to produce land cover maps for any region, with good accuracy. These can then be used for various applications like natural resource management, urban expansion, etc.
 \end{onehalfspace}
 \newpage
 
@@ -451,7 +452,7 @@ Deep neural networks typically require a large amount of training data. It may n
 \end{figure}
 
 
-\section{Machine Learning}
+\section{Machine Learning Techniques}
 The project aims to achieve automatic land cover classification. To do so, it becomes extremely important to compare accuracy of different models and  consider the best out of them.
 Supervised learning is the machine learning task of learning a function that maps an input to an output on the basis of training data.\cite{supervisedlearningone, supervisedlearningtwo} The training data is the set of input-output example pairs used to train the classifier. If enough data is available then the trained model usually identifies the underlying data patterns and is then able to make predictions on previously unknown input. Supervised learning, however, faces the problem of overfitting when model is made very flexible in order to fit the underlying data and underfitting when the model is to rigid to fit the underlying data.
 \section{Support Vector Machines}
@@ -577,6 +578,21 @@ It is made up of four identical blocks. Each block encloses the following sequen
 \end{enumerate}
 \paragraph{}
 At each up-sampling step (transpose convolution), the number of channels is halved. The output volume after up-sampling is concatenated with the corresponding volume from the down-sampling path after adequate cropping. The introduction of these skip connections allows the propagation of context information about the localization from the down-sampling path to the up-sampling path which already carries semantic information. This helps the network to spread out activations correctly when up-sampling and lends the network its U-shape.
+\subsection{Advantages}
+The U-Net architecture presented above has several features which lend it better performance than the FCN architecture.
+\begin{itemize}
+\item
+In the FCN architecture, the single up-sampling layer is added at the end of the CNN and has limited number of channels (equal to the number of class labels). The U-Net architecture makes use of multiple up-sampling layers (each with multiple feature channels) in the up-sampling path, interspersed with blocks of convolutional layers. This provides for the opportunity to add more skip connections and so, to fuse contextual and semantic information better, at the time of up-sampling. 
+\item
+Concatenation is used for combining information from skip connections, as opposed to the summing operation used in the FCN architecture. This helps to retain more information from both sets of activations, without polluting either.
+\item
+The U-Net architecture is also particularly well suited to applications where labelled training data is not available in abundance. This makes it more attractive for our project on account of the limited computational resources and time available for training the network.
+\end{itemize}
+\subsection{Disadvantages}
+\begin{itemize}
+\item Convolutional neural networks do not take temporal variations directly into account. However, it is hoped that providing the network with training data from different time periods should allow it to capture some of the temporal trends.
+\item The performance of a deep neural network greatly depends on the amount of training data available. Data augmentation and regularization can help in alleviating this problem.
+\end{itemize}
 \subsection{Implementation}
 A convolutional neural network based on the above architecture was implemented using TensorFlow in Python. However, some changes were made to enhance the performance of the model.
 \begin{enumerate}
@@ -616,21 +632,6 @@ We first trained the network with typical values for hyper-parameters on a small
 \includegraphics[width=0.6\textwidth]{train_history.jpg}
 \caption{Curves for loss and accuracy against number of epochs.}
 \end{figure}
-\subsection{Advantages}
-The U-Net architecture presented above has several features which lend it better performance than the FCN architecture.
-\begin{itemize}
-\item
-In the FCN architecture, the single up-sampling layer is added at the end of the CNN and has limited number of channels (equal to the number of class labels). The U-Net architecture makes use of multiple up-sampling layers (each with multiple feature channels) in the up-sampling path, interspersed with blocks of convolutional layers. This provides for the opportunity to add more skip connections and so, to fuse contextual and semantic information better, at the time of up-sampling. 
-\item
-Concatenation is used for combining information from skip connections, as opposed to the summing operation used in the FCN architecture. This helps to retain more information from both sets of activations, without polluting either.
-\item
-The U-Net architecture is also particularly well suited to applications where labelled training data is not available in abundance. This makes it more attractive for our project on account of the limited computational resources and time available for training the network. We, hence, propose to use this CNN architecture for the problem of land cover classification.
-\end{itemize}
-\subsection{Disadvantages}
-\begin{itemize}
-\item Convolutional neural networks do not take temporal variations directly into account. However, it is hoped that providing the network with training data from different time periods should allow it to capture some of the temporal trends.
-\item The performance of a deep neural network greatly depends on the amount of training data available. We propose using techniques like data augmentation and transfer learning so as to get better results even with our small training set.
-\end{itemize}
 
 % --------------------------------------
 
@@ -698,7 +699,7 @@ tensorflow & 2.2.0\\
 \addcontentsline{toc}{section}{Code snippets} 
 \subsection*{Data Preparation}
 \subsubsection*{NDVI time series data}
-\begin{minted}[breaklines=true]{js}
+\begin{minted}[breaklines=true, fontsize=\small]{js}
 // Bounds of training and testing locations, marked using GEE Explorer
 var agraReg = ee.Geometry.Polygon(
 	[[[77.59987614966131, 27.551723242916378],
@@ -735,7 +736,7 @@ Export.image.toDrive({
 \end{minted}
 
 \subsubsection*{Ground truth land cover data}
-\begin{minted}[breaklines=true]{js}
+\begin{minted}[breaklines=true, fontsize=\small]{js}
 function genClasses(image) {
   // select relevant bands
   var dc = image.select('discrete_classification');
@@ -764,59 +765,11 @@ function genClasses(image) {
               .addBands(forest)
               .addBands(classes);
 }
-
-// Import dataset, filter by region
-var lc = ee.ImageCollection("COPERNICUS/Landcover/100m/Proba-V/Global")
-           .filterBounds(agraReg)
-           .first();
-// Generate classes
-lc = genClasses(lc);
-// Visualize image by displaying on map
-var visParams = {min:0, max:4, bands:['classes'], palette:['white', 'red', 'lawngreen', 'blue', 'black']};
-Map.addLayer(lc, visParams, "LC");
-// Export one hot encoded image to Google Drive
-Export.image.toDrive({
-  image:lc.select(['built', 'agro', 'water', 'forest']),
-  description:"LC_agra",
-  region:agraReg,
-  crs:"EPSG:4326",
-  scale:30
-});
-// Export labelled image to Google Drive
-Export.image.toDrive({
-  image:lc.select(['classes']),
-  description:"LC_agra_labels",
-  region:agraReg,
-  crs:"EPSG:4326",
-  scale:30
-});
 \end{minted}
 
 \subsection*{Convolutional Neural Network: U-Net Architecture}
-\subsubsection*{Import statements}
-\begin{minted}[breaklines=true]{python}
-import numpy as np
-import gdal
-from google.colab import files
-from matplotlib import pyplot as plt
-from PIL import Image
-import skimage.transform as skt
-import tensorflow as tf
-from tensorflow.keras.layers import (
-    Input, 
-    Conv2D,
-    MaxPool2D,
-    BatchNormalization,
-    Dropout,
-    Conv2DTranspose,
-    Cropping2D,
-    Concatenate
-)
-from tensorflow.keras.backend import int_shape
-\end{minted}
-
 \subsubsection*{Patch generation and reconstruction}
-\begin{minted}[breaklines=true]{python}
+\begin{minted}[breaklines=true, fontsize=\small]{python}
 def get_patches(img_arr, size=256, stride=256, full_coverage=True):
     # check parameters
     if size % stride != 0:
@@ -838,32 +791,20 @@ def get_patches(img_arr, size=256, stride=256, full_coverage=True):
     for i in range(i_max):
         for j in range(j_max):
             patches_list.append(
-                img_arr[
-                    i * stride : i * stride + size,
-                    j * stride : j * stride + size
-                ]
+                img_arr[i * stride : i * stride + size, j * stride : j * stride + size]
             )
         if(extra_1):
             patches_list.append(
-                img_arr[
-                    i * stride : i * stride + size,
-                    img_arr.shape[1] - size : img_arr.shape[1]
-                ]
+                img_arr[i * stride : i * stride + size, img_arr.shape[1] - size : img_arr.shape[1]]
             )
     if(extra_0):
         for j in range(j_max):
             patches_list.append(
-                img_arr[
-                    img_arr.shape[0] - size : img_arr.shape[0],
-                    j * stride : j * stride + size
-                ]
+                img_arr[img_arr.shape[0] - size : img_arr.shape[0], j * stride : j * stride + size]
             )
         if(extra_1):
             patches_list.append(
-                img_arr[
-                    img_arr.shape[0] - size : img_arr.shape[0],
-                    img_arr.shape[1] - size : img_arr.shape[1]
-                ]
+                img_arr[img_arr.shape[0] - size : img_arr.shape[0], img_arr.shape[1] - size : img_arr.shape[1]]
             )
 
     return np.array(patches_list)
@@ -926,24 +867,15 @@ def reconstruct_from_patches(img_arr, org_img_size, size, stride, full_coverage=
     return image
 \end{minted}
 \subsubsection*{Setting up the model}
-\begin{minted}[breaklines=true]{python}
+\begin{minted}[breaklines=true, fontsize=\small]{python}
 # HYPERPARAMETERS
 p = {
-  'SIZE' : 256,
-  'STRIDE' : 256,
-  'FULL_COVER' : True,
-  'NUM_BANDS' : 6,
-  'NUM_CLASSES' : 4,
-  'SAME_PADDING' : True,
-  'BATCH_NORM' : True,
-  'DROPOUT' : False,
-  'DROPOUT_RATE': 0.0,
-  'EPOCHS' : 20,
-  'BATCH_SIZE' : 8,
-  'LEARNING_RATE' : 0.001,
-  'BETA_1' : 0.99,
-  'BETA_2' : 0.999,
-  'EPSILON' : 1e-07
+  'SIZE' : 256, 'STRIDE' : 256, 'FULL_COVER' : True,
+  'NUM_BANDS' : 6, 'NUM_CLASSES' : 4,
+  'SAME_PADDING' : True, 'BATCH_NORM' : True,
+  'DROPOUT' : False, 'DROPOUT_RATE': 0.0,
+  'EPOCHS' : 70, 'BATCH_SIZE' : 8, 'LEARNING_RATE' : 0.005,
+  'BETA_1' : 0.99, 'BETA_2' : 0.999, 'EPSILON' : 1e-07
 }
 def unet(p):
     # Padding
@@ -1018,33 +950,26 @@ model = unet(p)
 # Compile with choice of optimizer, loss function and metrics for evaluation
 model.compile(loss=tf.keras.losses.categorical_crossentropy,
 	optimizer=tf.keras.optimizers.Adam(
-		learning_rate=p['LEARNING_RATE'], 
-		beta_1=p['BETA_1'], 
-		beta_2=p['BETA_2'], 
-		epsilon=p['EPSILON']
-	),
-	metrics=[tf.keras.metrics.CategoricalAccuracy()]
+		learning_rate=p['LEARNING_RATE'], beta_1=p['BETA_1'], 
+		beta_2=p['BETA_2'], epsilon=p['EPSILON']
+	), metrics=[tf.keras.metrics.CategoricalAccuracy()]
 )
 \end{minted}
 
 \subsubsection*{Loading datasets}
-\begin{minted}[breaklines=true]{python}
+\begin{minted}[breaklines=true, fontsize=\small]{python}
 # Training data
 train_x = gdal.Open('/content/drive/My Drive/PS/data/earth_ndvi_6band/NDVI_v2.tif')
-train_x = np.array(train_x.ReadAsArray())
-train_x = np.moveaxis(train_x, 0, -1)
+train_x = np.array(train_x.ReadAsArray()).moveaxis(train_x, 0, -1)
 train_shape = train_x.shape[:2]
-train_x_img = train_x
 train_x = get_patches(train_x, p['SIZE'], p['STRIDE'], p['FULL_COVER'])
 train_y = gdal.Open('/content/drive/My Drive/PS/data/earth_landcover/LC_final_v5.tif')
-train_y = np.array(train_y.ReadAsArray())
-train_y = np.moveaxis(train_y, 0, -1)
+train_y = np.array(train_y.ReadAsArray()).moveaxis(train_y, 0, -1)
 assert(train_y.shape[:2] == train_shape)
-train_y_img = train_y
 train_y = get_patches(train_y, p['SIZE'], p['STRIDE'], p['FULL_COVER'])
 \end{minted}
 \subsubsection*{Data Augmentation}
-\begin{minted}[breaklines=true]{python}
+\begin{minted}[breaklines=true, fontsize=\small]{python}
 train_x_aug = []
 train_y_aug = []
 for i in range(train_x.shape[0]):
@@ -1061,7 +986,7 @@ train_x_aug = np.array(train_x_aug)
 train_y_aug = np.array(train_y_aug)
 \end{minted}
 \subsubsection*{Training the model}
-\begin{minted}[breaklines=true]{python}
+\begin{minted}[breaklines=true, fontsize=\small]{python}
 # Train model and record history
 model_history = model.fit(train_x_aug, train_y_aug, batch_size=p['BATCH_SIZE'], epochs=p['EPOCHS'])
 
@@ -1080,7 +1005,7 @@ plotTrainingHistory(model_history.history, p['EPOCHS'])
 \end{minted}
 
 \subsubsection*{Evaluting the model}
-\begin{minted}[breaklines=true]{python}
+\begin{minted}[breaklines=true, fontsize=\small]{python}
 def oneHotFromActivations(testset):
     """
     For vector at each pixel, sets element corresponding to predicted class to 1, rest to 0.
@@ -1158,7 +1083,7 @@ print(testPredictions(test_pred, test_y, test_shape, p['SIZE'], p['STRIDE']))
 \end{minted}
 
 \subsubsection*{Sample for code}
-\begin{minted}[breaklines=true]{python}
+\begin{minted}[breaklines=true, fontsize=\small]{python}
 # CODE GOES HERE, PLS COPY AND LEAVE HERE
 \end{minted}
 
