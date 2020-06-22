@@ -511,13 +511,27 @@ Gini=1-\sum_{i=1}^{C}(p_i)^2
 Entropy is another impurity calculation method, however Gini was used as model based on Gini calculations gave higher accuracy.
 \section{K-Nearest Neighbors}
 \subsection{Overview}
-The KNN algorithm assumes that similar things exist in close proximity. In other words, similar things are near to each other.
+The KNN algorithm assumes that similar things exist in close proximity. In other words, similar things are near to each other. In KNN, training examples are multi-dimensional feature vectors. Training process in KNN is very efficient as only the training points and their labels need to be stored. The number of classes K, to be used for classification can be chosen by the user. There is no specific method that can predict the ideal k for maximizing the accuracy and hence several values of K need to be tried. An unlabelled instance is assigned to a class which is most frequent among the k nearest training points to that example.
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.7\textwidth]{knnone.png}
 \caption{K-Nearest Neighbor Visualization}
 \end{figure}
-Notice in the image above that most of the time, similar data points are close to each other. The KNN algorithm hinges on this assumption being true enough for the algorithm to be useful. KNN captures the idea of similarity (sometimes called distance, proximity, or closeness) with some mathematics we might have learned in our childhood— calculating the distance between points on a graph. There are other ways of calculating distance, and one way might be preferable depending on the problem we are solving. However, the straight-line distance (also called the Euclidean distance) is a popular and familiar choice.
+\subsection{Advantages}
+\begin{itemize}
+\item Extremely easy to implement.
+\item Can be trained on a large set of data unlike other classifiers like SVM.
+\item KNN is an ideal choice for certain classification tasks like identification of children etc. involving similarity in different features.
+\item Training KNN is a very fast processes as only the training examples and their labels need to be stored.
+\end{itemize}
+
+\subsection{Disadvantages}
+\begin{itemize}
+\item Compared to other classifiers KNN is very naive.
+\item Classifications errors can occur when the data is skewed i.e when there are more examples of one class than another.
+\item KNNs need sufficient training data for classification with proper accuracy.
+\end{itemize}
+Notice in the image above that most of the time, more similar data points are closer. The KNN algorithm hinges on this assumption being true enough for the algorithm to be useful. KNN captures the idea of similarity (sometimes called distance, proximity, or closeness) with some mathematics we might have learned in our childhood— calculating the distance between points on a graph. There are other ways of calculating distance, and one way might be preferable depending on the problem we are solving. However, the straight-line distance (also called the Euclidean distance) is a popular and familiar choice.
 
 \subsection{Implementation}
 K-Nearest Neighbors  classifies a point to a class in which maximum of its closest neighbors belong to. Over a period of time, pixels belonging to the same classes tend to have similar features and hence they are closer. Thus, K-Nearest Neighbors can be a very accurate method to classify the pixels. The distance calculated here is the simple Euclidean Distance. Its formula is as follows:
@@ -667,10 +681,10 @@ CNN (U-Net architecture) & 95.06\% & 89.31\%\\
 \begin{figure}
 \begin{center}
 \begin{tabular}{cc}
-  \includegraphics[width=0.4\textwidth]{test_gt} &   \includegraphics[width=0.4\textwidth]{test_cnn} \\
-(a) Ground truth & (b) second \\[6pt]
- \includegraphics[width=0.4\textwidth]{test_cnn} &   \includegraphics[width=0.4\textwidth]{test_cnn} \\
-(c) third & (d) fourth \\[6pt]
+  \includegraphics[width=0.4\textwidth]{test_gt} &   \includegraphics[width=0.4\textwidth]{svmAhmedabad.png} \\
+(a) Ground truth & (b)Support Vector Machines \\[6pt]
+ \includegraphics[width=0.4\textwidth]{knnAhmedabad.png} &   \includegraphics[width=0.4\textwidth]{decisiontreeAhmedabad} \\
+(c) K-Nearest Neighbors & (d) Decision Tree \\[6pt]
 \multicolumn{2}{c}{\includegraphics[width=0.4\textwidth]{test_cnn} }\\
 \multicolumn{2}{c}{(e) U-Net}
 \end{tabular}
@@ -1105,7 +1119,60 @@ print(testPredictions(test_pred, test_y, test_shape, p['SIZE'], p['STRIDE']))
 
 \subsubsection*{Sample for code}
 \begin{minted}[breaklines=true, fontsize=\small]{python}
-# CODE GOES HERE, PLS COPY AND LEAVE HERE
+# Pre-processing 
+image = gdal.Open('/content/drive/My Drive/PS/data/Agra/NDVI_ahmeda_v2.tif')
+ndvi = image.ReadAsArray()image = gdal.Open('/content/drive/My Drive/PS/data/Agra/NDVI_ahmeda_v2.tif')
+ndvi = image.ReadAsArray()
+ndvi_flat = ndvi.reshape(ndvi.shape[0], ndvi.shape[1] * ndvi.shape[2]).T
+print(ndvi_flat.shape)
+image = gdal.Open('/content/drive/My Drive/PS/data/Ahmedabad/LC_ahmeda_v1_labels.tif')
+lc = image.ReadAsArray()
+lc = lc - 1
+lc_flat = lc.reshape(1, lc.shape[0] * lc.shape[1]).T
+a=np.arange(1,ndvi_flat.shape[0]+1)
+print(a)
+X=pd.DataFrame(data=ndvi_flat[0:,0:],    # values
+...              index=a,    # 1st column as index
+...              columns=np.array(["month1", "month2","month3","month4","month5","month6"]))
+X=preprocessing.scale(X)
+Y=pd.DataFrame(data=lc_flat[0:,0:],
+               index=a,
+               columns=np.array(["class"]))
+               sk_lda=LinearDiscriminantAnalysis()
+X_lda=sk_lda.fit_transform(X,Y)
+
+
+#SVM
+X_train, X_test, Y_train, Y_test=train_test_split(X_lda,Y, test_size=0.2,random_state=43)
+print(X_train.shape,X_lda.shape)
+clf=svm.SVC(C=1.0, class_weight='balanced', dual=True, fit_intercept=True,
+          loss='squared_hinge', max_iter=1000,
+          multi_class='ovo', penalty='l2', random_state=None, tol=0.0001,
+          verbose=0)
+          temp=clf.predict(X_lda)
+c=confusion_matrix(Y,temp)
+print(sum(c[i][i] for i in range(c.shape[0]))/X_lda.shape[0])
+final=temp.reshape(lc.shape[0],lc.shape[1])
+
+
+#Decision Tree          
+clf2=tree.DecisionTreeClassifier(ccp_alpha=0.0, class_weight=None, criterion='gini',
+                       max_depth=None, max_features=None, max_leaf_nodes=None,
+                       min_impurity_decrease=0.0, min_impurity_split=None,
+                       min_samples_leaf=1, min_samples_split=2,
+                       min_weight_fraction_leaf=0.0, presort='deprecated',
+                       random_state=None, splitter='best')    
+ clf2.fit(X_train,Y_train)\\
+
+
+#KNN
+clf3=KNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',
+                     metric_params=None, n_jobs=None, n_neighbors=9, p=2,
+                     weights='uniform')
+clf3.fit(X_train,Y_train)
+c=confusion_matrix(Y,temp)
+print(sum(c[i][i] for i in range(c.shape[0]))/X_lda.shape[0])
+final=temp.reshape(lc.shape[0],lc.shape[1])
 \end{minted}
 
 % ---------------------------------------
