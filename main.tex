@@ -269,35 +269,6 @@ The term "objects" represents meaningful semantic entities or scene components t
 \subsection{Semantic Approach}
 This aims to label each scene image with a specific semantic class. Here, a scene image refers to a local image patch manually extracted from large scale remote sensing images that contain explicit semantic classes.\cite{eyesky}
 
-\section{Supervised Machine Learning}
-Supervised learning is the machine learning task of learning a function that maps an input to an output on the basis of training data.\cite{supervisedlearningone, supervisedlearningtwo} The training data is the set of input-output example pairs used to train the classifier. If enough data is available then the trained model usually identifies the underlying data patterns and is then able to make predictions on previously unknown input. Supervised learning, however, faces the problem of overfitting when model is made very flexible in order to fit the underlying data and underfitting when the model is to rigid to fit the underlying data.
-\subsection{Support Vector Machines}
-A Support Vector Machine (SVM) is a discriminative classifier formally defined by a separating hyperplane. In other words, given labeled training data (supervised learning), the algorithm outputs an optimal hyperplane which categorizes new examples. In two dimensional space, this hyperplane is a line dividing a plane into two parts where in each class lay on either side.\cite{supportvectormachines}
-\subsection{Types of SVMs}
-There are two kinds of support vector machines: Hard Margin Support Vector Machines and Soft Margin Support Vector Machines.
-Hard Margin Support Vector machines do not allow misclassification of data points, tend to overfit the data and are thus sensitive to outliers. Soft margin support vector machines allow slight misclassification of data points and penalize for each misclassification.
-For this project, soft margin support vector machines have been used to classify the data points.
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.7\textwidth]{supportvectormachines.jpg}
-\caption{Support Vector Machine}
-\end{figure}
-\subsection{Advantages}
-The advantages of using support vector machines are:
-\begin{itemize}
-\item Support vectors can deal with high dimensional data easily with the help of kernel transformations.
-\item They are only dependent on some part of the training data known as the support vectors which makes them very memory efficient.
-\item Can be used for a variety of tasks due to availability of a large number of kernel functions for decision making.
-\item Fast and memory efficient implementations in various languages is available via different libraries.
-\end{itemize}
-\subsection{Disadvantages}
-The disadvantages of using support vector machines are:
-\begin{itemize}
-\item They do not take the spatial orientation of the pixels into account while learning.
-\item With wrong choice of kernel, support vector machines tend to to overfit the data.
-\item Hard margin support vector machines are very sensitive to outliers and hence proper care should be taken while using them.
-\end{itemize}
-
 \newpage
 \section{Deep Learning and Neural Networks}
 Application of traditional machine learning techniques requires handcrafted features, developing which demands a considerable amount of engineering skill and domain expertise. This, however, is not true for neural networks, which automatically learn these features from data using a general-purpose learning procedure.\cite{eyesky, cs231n} 
@@ -421,7 +392,28 @@ For training our classifiers, we will be using images of Agra, Mathura and the s
 \end{figure}
 
 \section{Data Preprocessing}
-\subsection{Linear Discriminant Analysis}
+\section{Linear Discriminant Analysis}
+\paragraph{} Linear discriminant analysis (LDA), normal discriminant analysis (NDA), or discriminant function analysis is a generalization of Fisher's linear discriminant, a method used in statistics, pattern recognition, and machine learning to find a linear combination of features that characterizes or separates two or more classes of objects or events.
+LDA is also closely related to principal component analysis (PCA) and factor analysis in that they both look for linear combinations of variables which best explain the data. LDA explicitly attempts to model the difference between the classes of data. PCA, in contrast, does not take into account any difference in class, and factor analysis builds the feature combinations based on differences rather than similarities. Discriminant analysis is also different from factor analysis in that it is not an interdependence technique: a distinction between independent variables and dependent variables (also called criterion variables) must be made.
+
+Consider a set of observations ${\vec {x}}$ (also called features, attributes, variables or measurements) for each sample of an object or event with known class $y$. This set of samples is called the training set. The classification problem is then to find a good predictor for the class$y$ of any sample of the same distribution (not necessarily from the training set) given only an observation ${\vec {x}}$.
+
+LDA instead makes the additional simplifying homoscedasticity assumption (i.e. that the class covariances are identical, so  $(\Sigma _{0}=\Sigma _{1}=\Sigma )$ and that the covariances have full rank. In this case, several terms cancel:
+
+${\vec {x}}^{T}\Sigma _{0}^{-1}{\vec {x}}={\vec {x}}^{T}\Sigma _{1}^{-1}{\vec {x}}$
+${\displaystyle {\vec {x}}^{T}{\Sigma _{i}}^{-1}{\vec {\mu }}_{i}={{\vec {\mu }}_{i}}^{T}{\Sigma _{i}}^{-1}{\vec {x}}}{\displaystyle {\vec {x}}^{T}{\Sigma _{i}}^{-1}{\vec {\mu }}_{i}={{\vec {\mu }}_{i}}^{T}{\Sigma _{i}}^{-1}{\vec {x}}}$ because ${\displaystyle \Sigma _{i}}\Sigma _{i}$ is Hermitian
+and the above decision criterion becomes a threshold on the dot product
+
+${\displaystyle {\vec {w}}\cdot {\vec {x}}>c}{\vec {w}}\cdot {\vec {x}}>c$
+for some threshold constant c, where
+
+${\displaystyle {\vec {w}}=\Sigma ^{-1}({\vec {\mu }}_{1}-{\vec {\mu }}_{0})}{\vec {w}}=\Sigma ^{-1}({\vec {\mu }}_{1}-{\vec {\mu }}_{0})$
+${\displaystyle c={\vec {w}}\cdot {\frac {1}{2}}({\vec {\mu }}_{1}+{\vec {\mu }}_{0})}{\displaystyle c={\vec {w}}\cdot {\frac {1}{2}}({\vec {\mu }}_{1}+{\vec {\mu }}_{0})}$
+This means that the criterion of an input ${\displaystyle {\vec {x}}}{\displaystyle {\vec {x}}}$ being in a class ${\displaystyle y}y$ is purely a function of this linear combination of the known observations.
+
+It is often useful to see this conclusion in geometrical terms: the criterion of an input$ {\displaystyle {\vec {x}}}{\displaystyle {\vec {x}}}$ being in a class ${\displaystyle y}y$ is purely a function of projection of multidimensional-space point$ {\displaystyle {\vec {x}}}{\displaystyle {\vec {x}}}$ onto vector ${\displaystyle {\vec {w}}}{\displaystyle {\vec {w}}}$ (thus, we only consider its direction). In other words, the observation belongs to ${\displaystyle y}y$ if corresponding ${\displaystyle {\vec {x}}}{\displaystyle {\vec {x}}}$ is located on a certain side of a hyperplane perpendicular to ${\displaystyle {\vec {w}}}{\displaystyle {\vec {w}}}$. The location of the plane is defined by the threshold c.
+
+\subsection{Project Specifics}
 \paragraph{}
  During the sowing season the agricultural land is mostly barren. Therefore, the classifier may tend to classify it as wasteland if the classification is made solely based on NDVI values. Similarly, in dry seasons, dry rivers might get classified as barren land too. To prevent this, we use a data preprocessing method- Linear Discriminant Analysis.
 \paragraph{}
@@ -429,11 +421,68 @@ Linear discriminant analysis also worked as a dimensionality reduction technique
 \section{Machine Learning Techniques}
 The project aims to achieve automatic land cover classification. To do so, it becomes extremely important to compare accuracy of different models and  consider the best out of them.
 \subsection{Support Vector Machines}
+\subsection{Overview}
+Supervised learning is the machine learning task of learning a function that maps an input to an output on the basis of training data.\cite{supervisedlearningone, supervisedlearningtwo} The training data is the set of input-output example pairs used to train the classifier. If enough data is available then the trained model usually identifies the underlying data patterns and is then able to make predictions on previously unknown input. Supervised learning, however, faces the problem of overfitting when model is made very flexible in order to fit the underlying data and underfitting when the model is to rigid to fit the underlying data.
+\subsection{Support Vector Machines}
+A Support Vector Machine (SVM) is a discriminative classifier formally defined by a separating hyperplane. In other words, given labeled training data (supervised learning), the algorithm outputs an optimal hyperplane which categorizes new examples. In two dimensional space, this hyperplane is a line dividing a plane into two parts where in each class lay on either side.\cite{supportvectormachines}
+\subsection{Types of SVMs}
+There are two kinds of support vector machines: Hard Margin Support Vector Machines and Soft Margin Support Vector Machines.
+Hard Margin Support Vector machines do not allow misclassification of data points, tend to overfit the data and are thus sensitive to outliers. Soft margin support vector machines allow slight misclassification of data points and penalize for each misclassification.
+For this project, soft margin support vector machines have been used to classify the data points.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{supportvectormachines.jpg}
+\caption{Support Vector Machine}
+\end{figure}
+\subsection{Advantages}
+The advantages of using support vector machines are:
+\begin{itemize}
+\item Support vectors can deal with high dimensional data easily with the help of kernel transformations.
+\item They are only dependent on some part of the training data known as the support vectors which makes them very memory efficient.
+\item Can be used for a variety of tasks due to availability of a large number of kernel functions for decision making.
+\item Fast and memory efficient implementations in various languages is available via different libraries.
+\end{itemize}
+\subsection{Disadvantages}
+The disadvantages of using support vector machines are:
+\begin{itemize}
+\item They do not take the spatial orientation of the pixels into account while learning.
+\item With wrong choice of kernel, support vector machines tend to to overfit the data.
+\item Hard margin support vector machines are very sensitive to outliers and hence proper care should be taken while using them.
+\end{itemize}
+\subsection{Project Specifics}
 \paragraph{}
 After maximizing the separation between classes and minimizing the variance within classes, we have used support vector machines to find hyper-planes separating different classes. Soft margin support vector machines were used for this project. While finding the dividing hyper-plane, soft margin support vector machines allowed some mis-classification with penalty for each mis-classification. 
 \paragraph{}
 Class weight were balanced for each class. This means that the penalty for mis-classification of an area like river is higher because its presence is lesser. One vs One method was used for multi-class classification therefore for classifying a point all the classes were taken into account- two at a time and then the point was classified to a class getting maximum votes. Linear Kernel was preferred after trying other kernels due to its higher accuracy. For internal calculations of maxima and minima, dual was used of Lagrange's Multipliers were used. The support vector machine was implemented from sci-kit learn library.
 \subsection {Decision Trees}
+\subsection{Overview}
+A decision tree is a decision support tool that uses a tree-like model of decisions and their possible consequences, including chance event outcomes, resource costs, and utility. It is one way to display an algorithm that only contains conditional control statements. Decision trees are commonly used in operations research, specifically in decision analysis, to help identify a strategy most likely to reach a goal, but are also a popular tool in machine learning.
+A decision tree is a flowchart-like structure in which each internal node represents a "test" on an attribute (e.g. whether a coin flip comes up heads or tails), each branch represents the outcome of the test, and each leaf node represents a class label (decision taken after computing all attributes). The paths from root to leaf represent classification rules.
+
+In decision analysis, a decision tree and the closely related influence diagram are used as a visual and analytical decision support tool, where the expected values (or expected utility) of competing alternatives are calculated.
+
+A decision tree consists of three types of nodes:
+
+Decision nodes – typically represented by squares
+Chance nodes – typically represented by circles
+End nodes – typically represented by triangles
+Decision trees are commonly used in operations research and operations management. If, in practice, decisions have to be taken online with no recall under incomplete knowledge, a decision tree should be paralleled by a probability model as a best choice model or online selection model algorithm. Another use of decision trees is as a descriptive means for calculating conditional probabilities.
+
+\subsection{Advantages}
+\begin{itemize}
+\item Are simple to understand and interpret. People are able to understand decision tree models after a brief explanation.
+\item Have value even with little hard data. Important insights can be generated based on experts describing a situation (its alternatives, probabilities, and costs) and their preferences for outcomes.
+\item Help determine worst, best and expected values for different scenarios.
+\item Use a white box model. If a given result is provided by a model.
+\end{itemize}
+
+\subsection{Disadvantages}
+\begin{itemize}
+\item They are unstable, meaning that a small change in the data can lead to a large change in the structure of the optimal decision tree.
+\item They are often relatively inaccurate. Many other predictors perform better with similar data. This can be remedied by replacing a single decision tree with a random forest of decision trees, but a random forest is not as easy to interpret as a single decision tree.
+\item For data including categorical variables with different number of levels, information gain in decision trees is biased in favor of those attributes with more levels.
+\end{itemize}
+\subsection{Project Specifics}
 NDVI values have different ranges for different classes, however when analysis is done over a period of time, things become complex. Due to such a range wise  underlying structure it decision trees can make a good model for classification as they also have an if else type structure. The criterion used for choosing the node to split data at every subsequent path is Gini. Gini is calculated as per the given formula:
 \begin{figure}[h]
 \centering
@@ -441,8 +490,19 @@ NDVI values have different ranges for different classes, however when analysis i
 \end{figure}
 Entropy is another impurity calculation method, however Gini was used as model based on Gini calculations gave higher accuracy.
 \subsection{K-Nearest Neighbors}
+\subsection{Overview}
+The KNN algorithm assumes that similar things exist in close proximity. In other words, similar things are near to each other.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\textwidth]{knnone.png}
+\caption{K-Nearest Neighbor Visualization}
+\end{figure}
+Notice in the image above that most of the time, similar data points are close to each other. The KNN algorithm hinges on this assumption being true enough for the algorithm to be useful. KNN captures the idea of similarity (sometimes called distance, proximity, or closeness) with some mathematics we might have learned in our childhood— calculating the distance between points on a graph. There are other ways of calculating distance, and one way might be preferable depending on the problem we are solving. However, the straight-line distance (also called the Euclidean distance) is a popular and familiar choice.
+
+\subsection{Project Specifics}
 K-Nearest Neighbors  classifies a point to a class in which maximum of its closest neighbors belong to. Over a period of time, pixels belonging to the same classes tend to have similar features and hence they are closer. Thus, K-Nearest Neighbors can be a very accurate method to classify the pixels. The distance calculated here is the simple Euclidean Distance. Its formula is as follows:
 The vote of each class point has uniform weight-age.
+
 
 
 \section{U-Net Architecture}
