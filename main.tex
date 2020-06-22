@@ -637,6 +637,24 @@ We first trained the network with typical values for hyper-parameters on a small
 
 % RESULTS
 \chapter{Results}
+\vspace{0.5cm}
+All four models described in the previous section were evaluated on the testing location - Ahmedabad and Gandhinagar, Gujarat. The region has sufficiently different characteristics from the training location to provide a good estimate of the quality of classification for any general region. Particularly, the seasonal river flow and large green areas in the cities make the region harder to classify correctly for any system. \textbf{Categorical accuracy} was chosen as the metric for evaluating the performance of the models as it is the natural choice for a multi-class classification problem.
+\begin{center}
+\begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
+\hline
+\textbf{Model} & \textbf{Training Accuracy} & \textbf{Testing Accuracy} \\
+\hline
+K-Nearest Neighbours & 93.52\% & 75.53\%\\
+\hline
+Decision Trees & 98.18\% & 82.71\%\\
+\hline
+Support Vector Machines & 89.63\% & 87.37\%\\
+\hline
+CNN (U-Net architecture) & 95.06\% & 89.31\%\\
+\hline
+\end{tabular} 
+\end{center}
+
 \begin{figure}
 \begin{center}
 \begin{tabular}{cc}
@@ -647,7 +665,7 @@ We first trained the network with typical values for hyper-parameters on a small
 \multicolumn{2}{c}{\includegraphics[width=0.45\textwidth]{train_cnn} }\\
 \multicolumn{2}{c}{(e) U-Net}
 \end{tabular}
-\caption{Ground truth and predictions for the training location - Agra and Mathura, Uttar Pradesh.}
+\caption{Ground truth and predictions for the \textbf{training location - Agra and Mathura, Uttar Pradesh}.}
 \end{center}
 \end{figure}
 \begin{figure}
@@ -660,7 +678,7 @@ We first trained the network with typical values for hyper-parameters on a small
 \multicolumn{2}{c}{\includegraphics[width=0.4\textwidth]{test_cnn} }\\
 \multicolumn{2}{c}{(e) U-Net}
 \end{tabular}
-\caption{Ground truth and predictions for the testing location - Ahmedabad and Gandhinagar, Gujarat.}
+\caption{Ground truth and predictions for the \textbf{testing location - Ahmedabad and Gandhinagar, Gujarat}.}
 \end{center}
 \end{figure}
 % --------------------------------------
