@@ -161,7 +161,7 @@ This project attempts automatic land cover classification of different parts of 
 	2018A7PS0254P & Nisarg Vora  & B.E. (Hons.) Computer Science \\
 	\end{tabular} 
 	\end{center}
-	\textbf{Title of project:} Automatic Land Cover Classification of Temporal Satellite Images\\''
+	\textbf{Title of project:} Automatic Land Cover Classification of Temporal Satellite Images\\
 	\vspace*{1cm}
 	Usefulness of the project to the on-campus courses of study in various disciplines. Project should be scrutinized keeping in view the following response options. Write Course No. and Course Name against the option under which the project comes.\\
 	\begin{center}
@@ -417,28 +417,31 @@ The land cover classes used are:
 \section{Data Preprocessing}
 
 \subsection{Linear Discriminant Analysis}
+<<<<<<< HEAD
 \paragraph{} Linear discriminant analysis (LDA) is a generalization of Fisher's linear discriminant( which can only be used for two class problems) ,and is widely used in statistics, pattern recognition, and machine learning to find a linear combination of features that  separates two or more classes of objects or events.
 LDA is also closely related to principal component analysis (PCA) and factor analysis in that they both look for linear combinations of variables which best explain the data. LDA explicitly attempts to model the difference between the classes of data. PCA, in contrast, does not take into account any difference in class, and factor analysis builds the feature combinations based on differences rather than similarities. Discriminant analysis is also different from factor analysis in that it is not an interdependence technique: a distinction between independent variables and dependent variables (also called criterion variables) must be made.
 
 Consider a set of observations ${\vec {x}}$ (also called features, attributes, variables or measurements) for each sample of an object or event with known class $y$. This set of samples is called the training set. The classification problem is then to find a good predictor for the class$y$ of any sample of the same distribution (not necessarily from the training set) given only an observation ${\vec {x}}$.
 $\left({\vec {\mu }}_{0},\Sigma _{0}\right)$ and$\left({\vec {\mu }}_{1},\Sigma _{1}\right)$ are mean and co-variance features , respectively. 
 
+=======
+Linear discriminant analysis (LDA), normal discriminant analysis (NDA), or discriminant function analysis is a generalization of Fisher's linear discriminant, a method used in statistics, pattern recognition, and machine learning to find a linear combination of features that characterizes or separates two or more classes of objects or events. LDA is also closely related to principal component analysis (PCA) and factor analysis in that they both look for linear combinations of variables which best explain the data. LDA explicitly attempts to model the difference between the classes of data. PCA, in contrast, does not take into account any difference in class, and factor analysis builds the feature combinations based on differences rather than similarities. Discriminant analysis is also different from factor analysis in that it is not an interdependence technique: a distinction between independent variables and dependent variables (also called criterion variables) must be made.
+\paragraph{}
+Consider a set of observations ${\vec {x}}$ (also called features, attributes, variables or measurements) for each sample of an object or event with known class $y$. This set of samples is called the training set. The classification problem is then to find a good predictor for the class$y$ of any sample of the same distribution (not necessarily from the training set) given only an observation ${\vec {x}}$.
+\paragraph{}
+>>>>>>> 49ff1eb884c2f54c54a7d3e0011e7b22073f8f18
 LDA instead makes the additional simplifying homoscedasticity assumption (i.e. that the class covariances are identical, so  $(\Sigma _{0}=\Sigma _{1}=\Sigma )$ and that the covariances have full rank. In this case, several terms cancel:
-
 $${\vec {x}}^{T}\Sigma _{0}^{-1}{\vec {x}}={\vec {x}}^{T}\Sigma _{1}^{-1}{\vec {x}}$$
 $${\displaystyle {\vec {x}}^{T}{\Sigma _{i}}^{-1}{\vec {\mu }}_{i}={{\vec {\mu }}_{i}}^{T}{\Sigma _{i}}^{-1}{\vec {x}}}$$ because $\Sigma _{i}$ is Hermitian
-and the above decision criterion becomes a threshold on the dot product
-
-${\vec {w}}\cdot {\vec {x}}>c$
-for some threshold constant c, where
-
-${\vec {w}}=\Sigma ^{-1}({\vec {\mu }}_{1}-{\vec {\mu }}_{0})$
-${\displaystyle c={\vec {w}}\cdot {\frac {1}{2}}({\vec {\mu }}_{1}+{\vec {\mu }}_{0})}$
+and the above decision criterion becomes a threshold on the dot product ${\vec {w}}\cdot {\vec {x}}>c$ for some threshold constant c, where
+$${\vec {w}}=\Sigma ^{-1}({\vec {\mu }}_{1}-{\vec {\mu }}_{0})$$
+$${\displaystyle c={\vec {w}}\cdot {\frac {1}{2}}({\vec {\mu }}_{1}+{\vec {\mu }}_{0})}$$
+\paragraph{}
 This means that the criterion of an input ${\displaystyle {\vec {x}}}$ being in a class ${\displaystyle y}y$ is purely a function of this linear combination of the known observations.
-
+\paragraph{}
 It is often useful to see this conclusion in geometrical terms: the criterion of an input${\displaystyle {\vec {x}}}$ being in a class $y$ is purely a function of projection of multidimensional-space point${\displaystyle {\vec {x}}}$ onto vector ${\displaystyle {\vec {w}}}$ (thus, we only consider its direction). In other words, the observation belongs to $y$ if corresponding ${\displaystyle {\vec {x}}}$ is located on a certain side of a hyperplane perpendicular to ${\displaystyle {\vec {w}}}$. The location of the plane is defined by the threshold c.
 
-\subsubsection{Project Specifics}
+\subsubsection{Application}
 \paragraph{}
  During the sowing season the agricultural land is mostly barren. Therefore, the classifier may tend to classify it as wasteland if the classification is made solely based on NDVI values. Similarly, in dry seasons, dry rivers might get classified as barren land too. To prevent this, we use a data preprocessing method- Linear Discriminant Analysis.
 \paragraph{}
@@ -449,14 +452,14 @@ Since, the neural network we implemented expects inputs to have dimensions of $2
 Deep neural networks typically require a large amount of training data. It may not be possible for the network to perform well unless the training data provides a representative sample of the distribution of different types of land cover in different areas. Therefore, to augment the size of the training dataset, every patch was rotated by $90\circ$ thrice. This allowed us to train the network on four times as much data. It is expected to have helped the network to deal with spatial variations better. Since, machine learning algorithms do not require as much data and consume flattened data in a tabular format, this augmentation was not done for those models.
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.7\textwidth]{dataaug.jpg}
+\includegraphics[width=0.5\textwidth]{dataaug.jpg}
 \caption{Patch generation and data augmentation.}
 \end{figure}
 
 
 \section{Machine Learning Techniques}
 The project aims to achieve automatic land cover classification. To do so, it becomes extremely important to compare accuracy of different models and  consider the best out of them.
-Supervised learning is the machine learning task of learning a function that maps an input to an output on the basis of training data.\cite{supervisedlearningone, supervisedlearningtwo} The training data is the set of input-output example pairs used to train the classifier. If enough data is available then the trained model usually identifies the underlying data patterns and is then able to make predictions on previously unknown input. Supervised learning, however, faces the problem of overfitting when model is made very flexible in order to fit the underlying data and underfitting when the model is to rigid to fit the underlying data.
+Supervised learning is the machine learning task of learning a function that maps an input to an output on the basis of training data.\cite{supervisedlearningone, supervisedlearningtwo} The training data is the set of input-output example pairs used to train the classifier. If enough data is available then the trained model usually identifies the underlying data patterns and is then able to make predictions on previously unknown input. Supervised learning, however, faces the problem of overfitting when model is made very flexible in order to fit the underlying data and underfitting when the model is too rigid to fit the underlying data.
 \section{Support Vector Machines}
 A Support Vector Machine (SVM) is a discriminative classifier formally defined by a separating hyperplane. In other words, given labeled training data (supervised learning), the algorithm outputs an optimal hyperplane which categorizes new examples. In two dimensional space, this hyperplane is a line dividing a plane into two parts where in each class lay on either side.\cite{supportvectormachines}
 \subsection{Types of SVMs}
@@ -489,6 +492,7 @@ After maximizing the separation between classes and minimizing the variance with
 \paragraph{}
 Class weight were balanced for each class. This means that the penalty for mis-classification of an area like river is higher because its presence is lesser. One vs One method was used for multi-class classification therefore for classifying a point all the classes were taken into account- two at a time and then the point was classified to a class getting maximum votes. Linear Kernel was preferred after trying other kernels due to its higher accuracy. For internal calculations of maxima and minima, dual was used of Lagrange's Multipliers were used. The support vector machine was implemented from sci-kit learn library.
 \section{Decision Trees}
+
 A decision tree is a decision support tool that uses a tree-like model of decisions and their possible consequences, including chance event outcomes, resource costs, and utility. It is one way to display an algorithm that only contains conditional control statements. Decision trees are commonly used in operations research, specifically in decision analysis, to help identify a strategy most likely to reach a goal, but are also a popular tool in machine learning. 
 A decision tree is a flowchart-like structure in which each internal node represents a "test" on an attribute (e.g. whether a coin flip comes up heads or tails), each branch represents the outcome of the test, and each leaf node represents a class label (decision taken after computing all attributes). The paths from root to leaf represent classification rules. Decision trees can also be used for calculating conditional probabilities.
 
@@ -507,10 +511,9 @@ A decision tree is a flowchart-like structure in which each internal node repres
 \end{itemize}
 \subsection{Implementation}
 NDVI values have different ranges for different classes, however when analysis is done over a period of time, things become complex. Due to such a range wise  underlying structure it decision trees can make a good model for classification as they also have an if else type structure. The criterion used for choosing the node to split data at every subsequent path is Gini. Gini is calculated as per the given formula:
-\begin{figure}[h]
-\centering
-\includegraphics[width=\textwidth]{giniformula.png}
-\end{figure}
+\begin{displaymath}
+Gini=1-\sum_{i=1}^{C}(p_i)^2
+\end{displaymath}
 Entropy is another impurity calculation method, however Gini was used as model based on Gini calculations gave higher accuracy.
 \section{K-Nearest Neighbors}
 \subsection{Overview}
@@ -524,9 +527,10 @@ Notice in the image above that most of the time, similar data points are close t
 
 \subsection{Implementation}
 K-Nearest Neighbors  classifies a point to a class in which maximum of its closest neighbors belong to. Over a period of time, pixels belonging to the same classes tend to have similar features and hence they are closer. Thus, K-Nearest Neighbors can be a very accurate method to classify the pixels. The distance calculated here is the simple Euclidean Distance. Its formula is as follows:
+\begin{displaymath}
+d(p, q)=d(q, p)=\sqrt{(q_1-p_1)^2+(q_2-p_2)^2+\cdots+(q_n-p_n)^2}=\sqrt{\sum_{i=1}^{n}(q_i-p_i)^2}
+\end{displaymath}
 The vote of each class point has uniform weight-age.
-
-
 
 \section{U-Net Architecture}
 Proposed by \textit{Ronneberger et al.}\cite{unet}, the U-Net architecture builds upon and extends the FCN architecture for more precise segmentation using a smaller training dataset. While the architecture was designed particularly for bio-medical segmentation applications, it has shown to work well for other domains too.
@@ -629,10 +633,14 @@ We first trained the network with typical values for hyper-parameters on a small
 % RESULTS
 \chapter{Results}
 \vspace{0.5cm}
-All four models described in the previous section were evaluated on the testing location - Ahmedabad and Gandhinagar, Gujarat. The region has sufficiently different characteristics from the training location to provide a good estimate of the quality of classification for any general region. Particularly, the seasonal river flow and large green areas in the cities make the region harder to classify correctly for any system. \textbf{Categorical accuracy} was chosen as the metric for evaluating the performance of the models as it is the natural choice for a multi-class classification problem.\\
-Compared to other classifiers, Support Vector Machines were better at identifying forest areas. Certain urban areas like Fatehpur Sikri, Achhnera and Kiraoli were prominent in Support Vector Machines but missing in most of the other classifiers. Support Vector Machines however mis-classified the small villages and towns as agricultral areas. \\
-Convolutional Neural Networks were best at identifying Keethal lake which was missed by other classifiers. Among all the classifiers Convolutional Neural Networks had the highest test accuracy. Hence we can conclude that out of all the classifiers, convolutional neural networks were best suited for the task of automatic land cover classification from temporal satellite images.\\
-Decision Trees had very high training accuracy however they had lower accuracy during testing and hence over-fit data. K-Nearest Neighbors had the lowest testing accuracy among all the classifiers. This might be mainly because they use a very naive approach of comparing the distance among the pixels for classification. K-Nearest Neighbors also mis-classified the seasonal river in the Ahmedabad District as urban area leading to lesser accuracy.
+All four models described in the previous section were evaluated on the testing location - Ahmedabad and Gandhinagar, Gujarat. The region has sufficiently different characteristics from the training location to provide a good estimate of the quality of classification for any general region. Particularly, the seasonal river flow and large green areas in the cities make the region harder to classify correctly for any system. \textbf{Categorical accuracy} was chosen as the metric for evaluating the performance of the models as it is the natural choice for a multi-class classification problem.
+\paragraph{}
+Compared to other classifiers, support vector machines were found to be better at identifying forest areas. Certain urban areas like Fatehpur Sikri, Achhnera and Kiraoli were also very prominent in the output in case of SVM, but were found to be missing in most of the other classifiers. Support vector machines, however, mis-classified the small villages and towns as agricultral areas. 
+\paragraph{}
+Decision trees had very high training accuracy. However, they were found to have lower accuracy on the testing dataset, which indicates overfitting. K-nearest neighbors had the lowest testing accuracy among all the classifiers. This might be mainly because this model uses a very naive approach of comparing the distance among the pixels for classification. K-nearest neighbors also mis-classified the seasonal river in the Ahmedabad District as urban area leading to lower accuracy.
+\paragraph{}
+Convolutional neural networks were best at identifying Keethal lake which was missed by other classifiers. Among all the classifiers, convolutional neural networks had the highest test accuracy and produced a much smoother output. This can be attributed to the fact that they take spatial variations directly into account, as opposed to the pixel-wise classification scheme used by the other models. Hence, we can conclude that out of all the classifiers, convolutional neural networks were best suited for the task of automatic land cover classification from temporal satellite images.
+
 \begin{center}
 \begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
 \hline
@@ -683,11 +691,15 @@ CNN (U-Net architecture) & 95.06\% & 89.31\%\\
 \paragraph{}
 Information of land cover classification is very crucial for applications like natural resource management, wildlife habitat protection, urban expansion, damage delineation, target land detection etc. With developments in technology, conventional method of field survey which is both inaccurate and time consuming has been replaced by remotely sensed imagery analysis which is highly accurate and covers wider range. Indian Space Research Organisation (ISRO) and Indian Institute of Remote Sensing (IIRS), Dehradun play an important role in providing information for these applications. Modern statistical and computing techniques like machine learning and deep learning minimize the human intervention in the task of analysis and classification, thus making the outcome very accurate and the process very agile.
 \paragraph{}
-The project seeks to compare the applicability of machine learning and deep learning techniques to the problem of land cover classification. Support Vector Machines are traditional machine learning models that provide a method for pixel-wise classification based on learning from the temporal variations in the NDVI time series. On the other hand, Convolutional Neural Networks - a class of deep neural networks, use the spatial variations in the infrared and visible bands of the satellite image for segmentation. The two, hence represent very different approaches for solving the problem. However, the project is still at a very nascent stage, and any comment regarding the comparative performance of these two approaches cannot be made yet.
+The project completed herewith explores the applicability of machine learning and deep learning techniques to the problem of land cover classification and lays out the advantages and disadvantages of different approaches. Traditional machine learning models like support vector machines, decision trees, etc. provide a method for pixel-wise classification based on learning from the temporal variations in the NDVI time series. On the other hand, Convolutional neural networks, as implemented in our project, make use of both spatial and temporal variations for segmentation. However, they also tend to require considerably more training data to produce good results. The U-Net architecture resolves this problem to a considerable extent, especially when trained with some custom  modifications on an augmented dataset. The high accuracy attained with limited training is a testament to the success of skip-connection based architectures for semantic segmentation. Meanwhile, traditional machine learning techniques were also found to produce good results, highlighting their relevance to image classification tasks.
 
 \section{Future Scope}
-The model has currently been trained only on the Agra District data-set. Thus, the model has currently learnt the seasonal and crop variations in the Agra District area only. With proper training of seasonal and crop variations of an area, the model would be able to classify at other test locations as well with higher accuracy. \\
-The classification task consisted of only 4 classes- urban, rural, forest and water-bodies. Models can also be extended to classify areas into other classes like wasteland, arid-land, rural areas etc.\\
+The model has currently been trained on a small dataset consisting of satellite images of Agra and Mathura. Thus, the model has currently learnt the seasonal and crop variations in the Agra District area only. With proper training of seasonal and crop variations of an area, the model would be able to classify at other test locations as well with higher accuracy. 
+\paragraph{}
+The classification task consisted of only four classes- urban, rural, forest and water-bodies. Models can also be extended to classify areas into other classes like wasteland, arid-land, rural areas etc. Since these classes cannot be reliably accommodated in any of the existing four classes considered for the project, they increase the intra-class variablilty making the classification difficult and error-prone. Expanding the scope of the project to more land cover classes should, hence, help improve performance.
+\paragraph{}
+In case of convolutional neural networks, the classification was found to be particularly noisy and erroneous close to the boundaries of the image. This can be attributed to the lack of context at the corners and edges, due to less surrounding pixels. Some pre-processing techniques may be useful for artificially increasing the extent of the images to solve this problem.
+\paragraph{}
 If the above changes further increase the  accuracy of the model then, the classification data can be extremely useful in tasks like natural resource management, urban expansion etc. This will also help in reducing the overheads in field survey method which is still being used in many parts of India.
 
 % ----------------------------------------
