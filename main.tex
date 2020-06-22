@@ -639,7 +639,10 @@ We first trained the network with typical values for hyper-parameters on a small
 % RESULTS
 \chapter{Results}
 \vspace{0.5cm}
-All four models described in the previous section were evaluated on the testing location - Ahmedabad and Gandhinagar, Gujarat. The region has sufficiently different characteristics from the training location to provide a good estimate of the quality of classification for any general region. Particularly, the seasonal river flow and large green areas in the cities make the region harder to classify correctly for any system. \textbf{Categorical accuracy} was chosen as the metric for evaluating the performance of the models as it is the natural choice for a multi-class classification problem.
+All four models described in the previous section were evaluated on the testing location - Ahmedabad and Gandhinagar, Gujarat. The region has sufficiently different characteristics from the training location to provide a good estimate of the quality of classification for any general region. Particularly, the seasonal river flow and large green areas in the cities make the region harder to classify correctly for any system. \textbf{Categorical accuracy} was chosen as the metric for evaluating the performance of the models as it is the natural choice for a multi-class classification problem.\\
+Compared to other classifiers, Support Vector Machines were better at identifying forest areas. Certain urban areas like Fatehpur Sikri, Achhnera and Kiraoli were prominent in Support Vector Machines but missing in most of the other classifiers. Support Vector Machines however mis-classified the small villages and towns as agricultral areas. \\
+Convolutional Neural Networks were best at identifying Keethal lake which was missed by other classifiers. Among all the classifiers Convolutional Neural Networks had the highest test accuracy. Hence we can conclude that out of all the classifiers, convolutional neural networks were best suited for the task of automatic land cover classification from temporal satellite images.\\
+Decision Trees had very high training accuracy however they had lower accuracy during testing and hence over-fit data. K-Nearest Neighbors had the lowest testing accuracy among all the classifiers. This might be mainly because they use a very naive approach of comparing the distance among the pixels for classification. K-Nearest Neighbors also mis-classified the seasonal river in the Ahmedabad District as urban area leading to lesser accuracy.
 \begin{center}
 \begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
 \hline
@@ -693,6 +696,9 @@ Information of land cover classification is very crucial for applications like n
 The project seeks to compare the applicability of machine learning and deep learning techniques to the problem of land cover classification. Support Vector Machines are traditional machine learning models that provide a method for pixel-wise classification based on learning from the temporal variations in the NDVI time series. On the other hand, Convolutional Neural Networks - a class of deep neural networks, use the spatial variations in the infrared and visible bands of the satellite image for segmentation. The two, hence represent very different approaches for solving the problem. However, the project is still at a very nascent stage, and any comment regarding the comparative performance of these two approaches cannot be made yet.
 
 \section{Future Scope}
+The model has currently been trained only on the Agra District data-set. Thus, the model has currently learnt the seasonal and crop variations in the Agra District area only. With proper training of seasonal and crop variations of an area, the model would be able to classify at other test locations as well with higher accuracy. \\
+The classification task consisted of only 4 classes- urban, rural, forest and water-bodies. Models can also be extended to classify areas into other classes like wasteland, arid-land, rural areas etc.\\
+If the above changes further increase the  accuracy of the model then, the classification data can be extremely useful in tasks like natural resource management, urban expansion etc. This will also help in reducing the overheads in field survey method which is still being used in many parts of India.
 
 % ----------------------------------------
 
