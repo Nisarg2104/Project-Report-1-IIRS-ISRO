@@ -417,10 +417,11 @@ The land cover classes used are:
 \section{Data Preprocessing}
 
 \subsection{Linear Discriminant Analysis}
-\paragraph{} Linear discriminant analysis (LDA), normal discriminant analysis (NDA), or discriminant function analysis is a generalization of Fisher's linear discriminant, a method used in statistics, pattern recognition, and machine learning to find a linear combination of features that characterizes or separates two or more classes of objects or events.
+\paragraph{} Linear discriminant analysis (LDA) is a generalization of Fisher's linear discriminant( which can only be used for two class problems) ,and is widely used in statistics, pattern recognition, and machine learning to find a linear combination of features that  separates two or more classes of objects or events.
 LDA is also closely related to principal component analysis (PCA) and factor analysis in that they both look for linear combinations of variables which best explain the data. LDA explicitly attempts to model the difference between the classes of data. PCA, in contrast, does not take into account any difference in class, and factor analysis builds the feature combinations based on differences rather than similarities. Discriminant analysis is also different from factor analysis in that it is not an interdependence technique: a distinction between independent variables and dependent variables (also called criterion variables) must be made.
 
 Consider a set of observations ${\vec {x}}$ (also called features, attributes, variables or measurements) for each sample of an object or event with known class $y$. This set of samples is called the training set. The classification problem is then to find a good predictor for the class$y$ of any sample of the same distribution (not necessarily from the training set) given only an observation ${\vec {x}}$.
+$\left({\vec {\mu }}_{0},\Sigma _{0}\right)$ and$\left({\vec {\mu }}_{1},\Sigma _{1}\right)$ are mean and co-variance features , respectively. 
 
 LDA instead makes the additional simplifying homoscedasticity assumption (i.e. that the class covariances are identical, so  $(\Sigma _{0}=\Sigma _{1}=\Sigma )$ and that the covariances have full rank. In this case, several terms cancel:
 
@@ -488,32 +489,21 @@ After maximizing the separation between classes and minimizing the variance with
 \paragraph{}
 Class weight were balanced for each class. This means that the penalty for mis-classification of an area like river is higher because its presence is lesser. One vs One method was used for multi-class classification therefore for classifying a point all the classes were taken into account- two at a time and then the point was classified to a class getting maximum votes. Linear Kernel was preferred after trying other kernels due to its higher accuracy. For internal calculations of maxima and minima, dual was used of Lagrange's Multipliers were used. The support vector machine was implemented from sci-kit learn library.
 \section{Decision Trees}
-\subsection{Overview}
-A decision tree is a decision support tool that uses a tree-like model of decisions and their possible consequences, including chance event outcomes, resource costs, and utility. It is one way to display an algorithm that only contains conditional control statements. Decision trees are commonly used in operations research, specifically in decision analysis, to help identify a strategy most likely to reach a goal, but are also a popular tool in machine learning.
-A decision tree is a flowchart-like structure in which each internal node represents a "test" on an attribute (e.g. whether a coin flip comes up heads or tails), each branch represents the outcome of the test, and each leaf node represents a class label (decision taken after computing all attributes). The paths from root to leaf represent classification rules.
-
-In decision analysis, a decision tree and the closely related influence diagram are used as a visual and analytical decision support tool, where the expected values (or expected utility) of competing alternatives are calculated.
-
-A decision tree consists of three types of nodes:
-
-Decision nodes – typically represented by squares
-Chance nodes – typically represented by circles
-End nodes – typically represented by triangles
-Decision trees are commonly used in operations research and operations management. If, in practice, decisions have to be taken online with no recall under incomplete knowledge, a decision tree should be paralleled by a probability model as a best choice model or online selection model algorithm. Another use of decision trees is as a descriptive means for calculating conditional probabilities.
+A decision tree is a decision support tool that uses a tree-like model of decisions and their possible consequences, including chance event outcomes, resource costs, and utility. It is one way to display an algorithm that only contains conditional control statements. Decision trees are commonly used in operations research, specifically in decision analysis, to help identify a strategy most likely to reach a goal, but are also a popular tool in machine learning. 
+A decision tree is a flowchart-like structure in which each internal node represents a "test" on an attribute (e.g. whether a coin flip comes up heads or tails), each branch represents the outcome of the test, and each leaf node represents a class label (decision taken after computing all attributes). The paths from root to leaf represent classification rules. Decision trees can also be used for calculating conditional probabilities.
 
 \subsection{Advantages}
 \begin{itemize}
-\item Are simple to understand and interpret. People are able to understand decision tree models after a brief explanation.
-\item Have value even with little hard data. Important insights can be generated based on experts describing a situation (its alternatives, probabilities, and costs) and their preferences for outcomes.
-\item Help determine worst, best and expected values for different scenarios.
-\item Use a white box model. If a given result is provided by a model.
+\item Since decision trees are very intuitive and are frequently used in real life they are easy to understand.
+\item Decision trees can provide important insights like costs, probabilities and alternatives.
+\item Worst and best case values can easily be identified from the leaves of decision trees.
 \end{itemize}
 
 \subsection{Disadvantages}
 \begin{itemize}
-\item They are unstable, meaning that a small change in the data can lead to a large change in the structure of the optimal decision tree.
-\item They are often relatively inaccurate. Many other predictors perform better with similar data. This can be remedied by replacing a single decision tree with a random forest of decision trees, but a random forest is not as easy to interpret as a single decision tree.
-\item For data including categorical variables with different number of levels, information gain in decision trees is biased in favor of those attributes with more levels.
+\item Decision trees are not very stable and can not be used with frequently changing data as a small change in data can lead to very large changes in the decision tree structure.
+\item The simple learning technique used by decision trees can sometimes be really inaccurate and hence random forests are used instead. However, random forests become very complex to understand as compared to decision trees.
+\item Information gain in decision trees is biased. More levels generally imply more information gain. 
 \end{itemize}
 \subsection{Implementation}
 NDVI values have different ranges for different classes, however when analysis is done over a period of time, things become complex. Due to such a range wise  underlying structure it decision trees can make a good model for classification as they also have an if else type structure. The criterion used for choosing the node to split data at every subsequent path is Gini. Gini is calculated as per the given formula:
