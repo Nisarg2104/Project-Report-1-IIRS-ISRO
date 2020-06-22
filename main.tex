@@ -437,6 +437,43 @@ It is often useful to see this conclusion in geometrical terms: the criterion of
  During the sowing season the agricultural land is mostly barren. Therefore, the classifier may tend to classify it as wasteland if the classification is made solely based on NDVI values. Similarly, in dry seasons, dry rivers might get classified as barren land too. To prevent this, we use a data preprocessing method- Linear Discriminant Analysis.
 \paragraph{}
 Linear discriminant analysis also worked as a dimensionality reduction technique for this project which drastically reduced the processing time and made results more accurate. The accuracy of the results increased from 78 per cent without LDA to almost 97 per cent after preprocessing with LDA method. Since NDVI values were calculated bi-monthly, the data initially had 6 features i.e. 6 dimensional. As the data points were classified into 4 different classes, LDA reduced the number of features to 3 i.e. 3 dimensional.
+	\begin{center}
+	\begin{table}
+	\centering
+	\renewcommand{\arraystretch}{1.5}
+	\begin{tabular}{|p{1.65cm}|p{1.75cm}|p{1.85cm}|p{1.85cm}|p{1.75cm}|p{1.75cm}|p{1.80cm}|}
+	\hline
+	~ & \textbf{Jan-Feb} & \textbf{Mar-Apr}& \textbf{May-Jun} & \textbf{Jul-Aug} & \textbf{Sep-Oct} & \textbf{Nov-Dec}  \\
+	\hline
+	Pixel 1 & 0.38634 & 0.23694 & 0.14535 & 0.27368 & 0.45237 & 0.15393 \\
+	\hline
+	Pixel 2 & 0.42746 & 0.25465 & 0.15213 & 0.28335 & 0.42710 & 0.12429 \\
+	\hline
+	Pixel 3 & 0.41443 & 0.25145 & 0.15098 & 0.28209 & 0.42312 & 0.12484 \\
+	\hline
+
+	\end{tabular} 
+	\caption{Pixel-wise bi-monthly data before applying Linear Discriminant Analysis}
+	\end{table}
+	\end{center}
+	\begin{center}
+	\begin{table}
+	\centering
+	\renewcommand{\arraystretch}{1.5}
+	\begin{tabular}{|p{2cm}|p{2cm}|p{2cm}|p{2cm}|}
+	\hline
+	~ & \textbf{LDA1} & \textbf{LDA2}& \textbf{LDA3} \\
+	\hline
+	Pixel 1 & 0.30820489 & 0.19799044 & 0.10593896 \\
+	\hline
+	Pixel 2 & 0.10530831 & 0.31693233 & 0.2344135 \\
+	\hline
+	Pixel 3 & 0.21845982 & 0.30482929 & 0.5671233 \\
+	\hline
+	\end{tabular} 
+	\caption{Pixel-wise bi-monthly data after applying Linear Discriminant Analysis}
+	\end{table}
+	\end{center}
 \subsection{Patch generation}
 Since, the neural network we implemented expects inputs to have dimensions of $256 \times 256$, the satellite images extracted cannot be used directly. To this end, a patch generation system was implemented. The system takes images of any width and height as input and produces cropped image patches of the required dimensions using a given stride. The patches obtained cover the input image completely, irrespective of its dimensions. A stride smaller than the size can also be used to produce overlapping patches. A reconstruction system was also implemented to restitch the patches produces as output by the neural network, with a provision for handling overlapping patches.
 \subsection{Data Augmentation}
@@ -597,10 +634,10 @@ A convolutional neural network based on the above architecture was implemented u
 \item As a neural network is trained, the distribution of each layer's inputs changes continuously, as the parameters of previous layers change. This slows down learning and necessitates careful parameter initialization. This problem of internal covariate shift can be addressed by normalizing layer inputs to a learnable mean and variance, stabilizing the distribution of the activations. \textbf{Batch Normalization} allows us to use higher learning rates and makes the network more robust to the choice of hyper-parameters. Additionally, it also has a regularizing effect and helps prevent overfitting.
 \item The shape of image accepted as input by the network was fixed to $256 \times 256$. A patch size of 256 was found to provide sufficient spatial context to the network and fit well with the computational constraints.
 \end{enumerate}
-The model implemented has 31,051,332 parameters, of which, 31,039,556 are trainable. The arrangement of different layers and shapes of output volumes can be seen in the figure below. A more detailed plot can be found in the Appendix.
+The model implemented has 31,051,332 parameters, of which, 31,039,556 are trainable. The arrangement of different layers and shapes of output volumes can be seen in the figure below.
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{cnn_implement.jpg}
+\includegraphics[width=0.9\textwidth]{cnn_implement.jpg}
 \end{figure}
 \subsection{Training}
 \subsubsection{Loss Function}
@@ -626,7 +663,7 @@ Adam reduces the oscillations in gradients associated with mini-batch gradient d
 We first trained the network with typical values for hyper-parameters on a small training set. A variance problem was observed as the accuracy for testing set was low. Regularization was not found to improve performance. However, providing the network with more data through augmentation was found to help considerably. Batch normalization makes the network robust to the choice of hyper-parameters and so produced significant performance gains. On the whole, training the network for 70 epochs with a learning rate of 0.005 and default values for the other hyper-parameters was found to produce the best results.
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.6\textwidth]{train_history.jpg}
+\includegraphics[width=0.7\textwidth]{train_history.jpg}
 \caption{Curves for loss and accuracy against number of epochs.}
 \end{figure}
 
