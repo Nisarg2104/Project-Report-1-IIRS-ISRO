@@ -531,8 +531,31 @@ The model implemented has 31,051,332 parameters, of which, 31,039,556 are traina
 \end{figure}
 \subsection{Training}
 \subsubsection{Loss Function}
+Since the neural network implemented by us uses softmax activation in the output layer, \textbf{categorical cross entropy} was used as the loss function. This is the natural choice for any multi-class classification problem where the target labels are one-hot encoded.\cite{crossentr} The original paper by \textit{Ronneberger et al.}\cite{unet} proposes the use of a pixel-wise loss weight to achieve better biomedical segmentation. However, this particular scheme was found to be irrelevant for the current project domain. The categorical cross entropy loss is computed as follows:
+\begin{displaymath}
+CE=-\lg{\frac{\exp{s_p}}{\sum_{j}^{C}\exp{s_j}}}
+\end{displaymath}
 \subsubsection{Optimizer}
+\textbf{Adam} (Adaptive Moment Estimation) is an optimization algorithm designed specifically for deep neural networks that uses adaptive learning rates for each parameter.\cite{adam_web} It computes exponentially weighted averages of gradients and squared gradients. 
+\begin{displaymath}
+m_t=\beta_1m_{t-1}+(1-\beta_1)g_t
+\end{displaymath}
+\begin{displaymath}
+v_t=\beta_2v_{t-1}+(1-\beta_2)g_t^2
+\end{displaymath}
+where $m_0$ and $v_0$ are zero-initialized and $g_t$ represents the gradient of the cost function with respect to parameter $\theta$ at step $t$.
+These are used for updating the parameters after every step of back-propagation.
+\begin{displaymath}
+\theta_{t+1}=\theta_{t}-\frac{\eta}{\sqrt{v_t}+\epsilon}m_t
+\end{displaymath}
+Adam reduces the oscillations in gradients associated with mini-batch gradient descent. The smoother loss curve allows for a larger learning rate and hence, quicker convergence. In limited experiments, Adam was found to produce better results for our network as compared to other optimizers such as stochastic gradient descent.
 \subsubsection{Hyper-parameters}
+We first trained the network with typical values for hyper-parameters on a small training set. A variance problem was observed as the accuracy for testing set was low. Regularization was not found to improve performance. However, providing the network with more data through augmentation was found to help considerably. Batch normalization makes the network robust to the choice of hyper-parameters and so produced significant performance gains. On the whole, training the network for 70 epochs with a learning rate of 0.005 and default values for the other hyper-parameters was found to produce the best results.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\textwidth]{train_history.jpg}
+\caption{Curves for loss and accuracy against number of epochs.}
+\end{figure}
 \subsection{Advantages}
 The U-Net architecture presented above has several features which lend it better performance than the FCN architecture.
 \begin{itemize}
@@ -589,7 +612,7 @@ tensorflow & 2.2.0\\
 \section*{Code snippets}
 \addcontentsline{toc}{section}{Code snippets} 
 \subsection*{Data Preparation}
-\subsubsection*{Preparing NDVI time series data}
+\subsubsection*{NDVI time series data}
 \begin{minted}[breaklines=true]{js}
 // Bounds of training and testing locations, marked using GEE Explorer
 var agraReg = ee.Geometry.Polygon(
@@ -602,7 +625,6 @@ var ahmeda = ee.Geometry.Polygon(
           [72.35056899794004, 22.801931268739057],
           [72.81062148817442, 22.801931268739057],
           [72.81062148817442, 23.29854363055665]]], null, false);
-
 // Import dataset, filter by region
 var dataset = ee.ImageCollection('LANDSAT/LC08/C01/T1_8DAY_NDVI')
               .filterBounds(agraReg);
@@ -615,10 +637,8 @@ image = image.addBands(dataset.filterDate('2015-03-01', '2015-04-30').median().r
              .addBands(dataset.filterDate('2015-08-01', '2015-10-31').median().rename('n4'))
              .addBands(dataset.filterDate('2015-09-01', '2015-10-31').median().rename('n5'))
              .addBands(dataset.filterDate('2015-11-01', '2015-12-31').median().rename('n6'));
-
 // Visualize image by displaying on map
 Map.addLayer(image, {min:0.0, max:1.0}, 'NDVI');
-
 // Export image to Google Drive
 Export.image.toDrive({
   image:image,
@@ -629,7 +649,7 @@ Export.image.toDrive({
 });
 \end{minted}
 
-\subsubsection*{NDVI time series data}
+\subsubsection*{Ground truth land cover data}
 \begin{minted}[breaklines=true]{js}
 function genClasses(image) {
   // select relevant bands
@@ -664,14 +684,11 @@ function genClasses(image) {
 var lc = ee.ImageCollection("COPERNICUS/Landcover/100m/Proba-V/Global")
            .filterBounds(agraReg)
            .first();
-
 // Generate classes
 lc = genClasses(lc);
-
 // Visualize image by displaying on map
 var visParams = {min:0, max:4, bands:['classes'], palette:['white', 'red', 'lawngreen', 'blue', 'black']};
 Map.addLayer(lc, visParams, "LC");
-
 // Export one hot encoded image to Google Drive
 Export.image.toDrive({
   image:lc.select(['built', 'agro', 'water', 'forest']),
@@ -1019,7 +1036,6 @@ def iou(preds, labels):
     for c in range(num_classes):
         intersection_c = np.sum((np.logical_and(preds[c] == 1, labels[c] == 1)))
         intersection.append(intersection_c)
-
     for c in range(num_classes):
         union_c = np.sum((np.logical_or(preds[c] == 1, labels[c] == 1)))
         union.append(union_c)
@@ -1088,8 +1104,9 @@ print(testPredictions(test_pred, test_y, test_shape, p['SIZE'], p['STRIDE']))
 \section*{Glossary}
 \addcontentsline{toc}{chapter}{Glossary}  
 \vspace*{0.5cm}
-\textbf{Chlorophyll} Green photosynthetic pigment found in plants\\
+\textbf{Chlorophyll} green photosynthetic pigment found in plants\\
 \textbf{Convolution} mathematical way of combining two signals to form a third signal\\
+\textbf{Epoch} one complete pass through the entire training set\\
 \textbf{Kernel} Kernel functions.\\
 \textbf{Pixel} a minute area of illumination on a display screen, one of many from which an image is composed.\\
 \textbf{Pooling} process of extracting features from image output of a convolution layer\\
