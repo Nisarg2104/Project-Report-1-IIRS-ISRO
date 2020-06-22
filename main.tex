@@ -45,8 +45,10 @@
 \begin{titlepage}
 \begin{doublespace}
 \vspace*{0.2cm}
-\begin{center} \textbf{A REPORT\\ON} \end{center}
+\begin{center} \textbf{A REPORT} \end{center}
+\begin{center} \textbf{ON} \end{center}
 \begin{center} \textbf{{\Large AUTOMATIC LAND COVER CLASSIFICATION OF TEMPORAL SATELLITE IMAGES}} \end{center}
+\vspace{3cm}
 \begin{center} \textbf{BY} \end{center}
 \begin{center} 
 {\Large 
@@ -56,7 +58,7 @@
 	\end{tabular}
 }
 \end{center}
-\vspace{6cm}
+\vspace{3cm}
 \begin{center} \textbf{AT} \end{center}
 \begin{center} {\Large Indian Institute of Remote Sensing, Dehradun} \end{center}
 \begin{center} \textbf{A Practice School - I station of} \end{center}
@@ -123,7 +125,7 @@ Practice School Division}
 \textbf{Centre:} Dehradun\\
 \textbf{Duration:} 3 weeks\\
 \textbf{Date of start:} 18th May, 2020 \\
-\textbf{Date of submission:} 6th June, 2020 \\
+\textbf{Date of submission:} 22nd June, 2020 \\
 \textbf{Title of project:} Automatic Land Cover Classification of Temporal Satellite Images
 \begin{center}
 \begin{tabular}{c c c}
@@ -132,8 +134,8 @@ Practice School Division}
 2018A7PS0254P & Nisarg Vora  & B.E. (Hons.) Computer Science \\
 \end{tabular} 
 \end{center}
-\textbf{Name of guide:} Dr. Hari Shanker Srivastava \\
-\textbf{Designation:} Scientist/Engineer - SG. Group Head, Programme Planning and Evaluation Group (PPEG). \\
+\textbf{Name of mentor:} Dr. Hari Shanker Srivastava \\
+\textbf{Designation of mentor:} Scientist/Engineer - SG. Group Head, Programme Planning and Evaluation Group (PPEG). \\
 \textbf{Name of PS faculty:} Rekha A. \\
 \textbf{Key Words:} Semantic Segmentation, Support Vector Machines, Convolutional Neural Networks, U-Net Architecture\\
 \textbf{Project Areas:} Remote Sensing, Machine Learning, Deep Learning
@@ -162,7 +164,7 @@ This project attempts automatic land cover classification of different parts of 
 	\end{tabular} 
 	\end{center}
 	\textbf{Title of project:} Automatic Land Cover Classification of Temporal Satellite Images\\
-	\vspace*{1cm}
+	\paragraph{}
 	Usefulness of the project to the on-campus courses of study in various disciplines. Project should be scrutinized keeping in view the following response options. Write Course No. and Course Name against the option under which the project comes.\\
 	\begin{center}
 	\begin{tabular}{|p{1cm}|p{10cm}|p{3cm}|}
@@ -368,7 +370,7 @@ Semantic segmentation faces an inherent tension between semantics and location. 
 \end{figure}
 % ----------------------------------
 
-% METHODOLOGY & IMPLEMENTATION
+% METHODOLOGY 1
 \chapter{Methodology and Implementation}
 
 \section{Software Overview}
@@ -487,7 +489,6 @@ Deep neural networks typically require a large amount of training data. It may n
 \caption{Patch generation and data augmentation.}
 \end{figure}
 
-
 \section{Machine Learning Techniques}
 The project aims to achieve automatic land cover classification. To do so, it becomes extremely important to compare accuracy of different models and  consider the best out of them.
 Supervised learning is the machine learning task of learning a function that maps an input to an output on the basis of training data.\cite{supervisedlearningone, supervisedlearningtwo} The training data is the set of input-output example pairs used to train the classifier. If enough data is available then the trained model usually identifies the underlying data patterns and is then able to make predictions on previously unknown input. Supervised learning, however, faces the problem of overfitting when model is made very flexible in order to fit the underlying data and underfitting when the model is too rigid to fit the underlying data.
@@ -576,7 +577,7 @@ K-Nearest Neighbors  classifies a point to a class in which maximum of its close
 d(p, q)=d(q, p)=\sqrt{(q_1-p_1)^2+(q_2-p_2)^2+\cdots+(q_n-p_n)^2}=\sqrt{\sum_{i=1}^{n}(q_i-p_i)^2}
 \end{displaymath}
 The vote of each class point has uniform weight-age.
-
+\newpage
 \section{U-Net Architecture}
 Proposed by \textit{Ronneberger et al.}\cite{unet}, the U-Net architecture builds upon and extends the FCN architecture for more precise segmentation using a smaller training dataset. While the architecture was designed particularly for bio-medical segmentation applications, it has shown to work well for other domains too.
 \begin{figure}[h]
@@ -733,7 +734,6 @@ CNN (U-Net architecture) & 95.06\% & 89.31\%\\
 % CONCLUSION
 \chapter{Conclusion}
 
-\paragraph{}
 Information of land cover classification is very crucial for applications like natural resource management, wildlife habitat protection, urban expansion, damage delineation, target land detection etc. With developments in technology, conventional method of field survey which is both inaccurate and time consuming has been replaced by remotely sensed imagery analysis which is highly accurate and covers wider range. Indian Space Research Organisation (ISRO) and Indian Institute of Remote Sensing (IIRS), Dehradun play an important role in providing information for these applications. Modern statistical and computing techniques like machine learning and deep learning minimize the human intervention in the task of analysis and classification, thus making the outcome very accurate and the process very agile.
 \paragraph{}
 The project completed herewith explores the applicability of machine learning and deep learning techniques to the problem of land cover classification and lays out the advantages and disadvantages of different approaches. Traditional machine learning models like support vector machines, decision trees, etc. provide a method for pixel-wise classification based on learning from the temporal variations in the NDVI time series. On the other hand, Convolutional neural networks, as implemented in our project, make use of both spatial and temporal variations for segmentation. However, they also tend to require considerably more training data to produce good results. The U-Net architecture resolves this problem to a considerable extent, especially when trained with some custom  modifications on an augmented dataset. The high accuracy attained with limited training is a testament to the success of skip-connection based architectures for semantic segmentation. Meanwhile, traditional machine learning techniques were also found to produce good results, highlighting their relevance to image classification tasks.
@@ -837,6 +837,64 @@ function genClasses(image) {
               .addBands(forest)
               .addBands(classes);
 }
+\end{minted}
+
+\subsection*{Machine Learning techniques}
+\subsubsection*{Data Pre-processing}
+\begin{minted}[breaklines=true, fontsize=\small]{python}
+image = gdal.Open('/content/drive/My Drive/PS/data/Agra/NDVI_ahmeda_v2.tif')
+ndvi = image.ReadAsArray()image = gdal.Open('/content/drive/My Drive/PS/data/Agra/NDVI_ahmeda_v2.tif')
+ndvi = image.ReadAsArray()
+ndvi_flat = ndvi.reshape(ndvi.shape[0], ndvi.shape[1] * ndvi.shape[2]).T
+print(ndvi_flat.shape)
+image = gdal.Open('/content/drive/My Drive/PS/data/Ahmedabad/LC_ahmeda_v1_labels.tif')
+lc = image.ReadAsArray()
+lc = lc - 1
+lc_flat = lc.reshape(1, lc.shape[0] * lc.shape[1]).T
+a=np.arange(1,ndvi_flat.shape[0]+1)
+print(a)
+X=pd.DataFrame(data=ndvi_flat[0:,0:],    # values
+...              index=a,    # 1st column as index
+...              columns=np.array(["month1", "month2","month3","month4","month5","month6"]))
+X=preprocessing.scale(X)
+Y=pd.DataFrame(data=lc_flat[0:,0:],
+               index=a,
+               columns=np.array(["class"]))
+               sk_lda=LinearDiscriminantAnalysis()
+X_lda=sk_lda.fit_transform(X,Y)
+\end{minted}
+\subsubsection*{Support Vector Machines}
+\begin{minted}[breaklines=true, fontsize=\small]{python}
+X_train, X_test, Y_train, Y_test=train_test_split(X_lda,Y, test_size=0.2,random_state=43)
+print(X_train.shape,X_lda.shape)
+clf=svm.SVC(C=1.0, class_weight='balanced', dual=True, fit_intercept=True,
+          loss='squared_hinge', max_iter=1000,
+          multi_class='ovo', penalty='l2', random_state=None, tol=0.0001,
+          verbose=0)
+          temp=clf.predict(X_lda)
+c=confusion_matrix(Y,temp)
+print(sum(c[i][i] for i in range(c.shape[0]))/X_lda.shape[0])
+final=temp.reshape(lc.shape[0],lc.shape[1])
+\end{minted}
+\subsubsection*{Decision Tree Classifier}
+\begin{minted}[breaklines=true, fontsize=\small]{python}
+clf2=tree.DecisionTreeClassifier(ccp_alpha=0.0, class_weight=None, criterion='gini',
+                       max_depth=None, max_features=None, max_leaf_nodes=None,
+                       min_impurity_decrease=0.0, min_impurity_split=None,
+                       min_samples_leaf=1, min_samples_split=2,
+                       min_weight_fraction_leaf=0.0, presort='deprecated',
+                       random_state=None, splitter='best')    
+ clf2.fit(X_train,Y_train)\\
+\end{minted}
+\subsubsection*{K-Nearest Neighbours Classifier}
+\begin{minted}[breaklines=true, fontsize=\small]{python}
+clf3=KNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',
+                     metric_params=None, n_jobs=None, n_neighbors=9, p=2,
+                     weights='uniform')
+clf3.fit(X_train,Y_train)
+c=confusion_matrix(Y,temp)
+print(sum(c[i][i] for i in range(c.shape[0]))/X_lda.shape[0])
+final=temp.reshape(lc.shape[0],lc.shape[1])
 \end{minted}
 
 \subsection*{Convolutional Neural Network: U-Net Architecture}
@@ -1154,63 +1212,6 @@ test_y = np.array(test_y.ReadAsArray())
 print(testPredictions(test_pred, test_y, test_shape, p['SIZE'], p['STRIDE']))
 \end{minted}
 
-\subsubsection*{Sample for code}
-\begin{minted}[breaklines=true, fontsize=\small]{python}
-# Pre-processing 
-image = gdal.Open('/content/drive/My Drive/PS/data/Agra/NDVI_ahmeda_v2.tif')
-ndvi = image.ReadAsArray()image = gdal.Open('/content/drive/My Drive/PS/data/Agra/NDVI_ahmeda_v2.tif')
-ndvi = image.ReadAsArray()
-ndvi_flat = ndvi.reshape(ndvi.shape[0], ndvi.shape[1] * ndvi.shape[2]).T
-print(ndvi_flat.shape)
-image = gdal.Open('/content/drive/My Drive/PS/data/Ahmedabad/LC_ahmeda_v1_labels.tif')
-lc = image.ReadAsArray()
-lc = lc - 1
-lc_flat = lc.reshape(1, lc.shape[0] * lc.shape[1]).T
-a=np.arange(1,ndvi_flat.shape[0]+1)
-print(a)
-X=pd.DataFrame(data=ndvi_flat[0:,0:],    # values
-...              index=a,    # 1st column as index
-...              columns=np.array(["month1", "month2","month3","month4","month5","month6"]))
-X=preprocessing.scale(X)
-Y=pd.DataFrame(data=lc_flat[0:,0:],
-               index=a,
-               columns=np.array(["class"]))
-               sk_lda=LinearDiscriminantAnalysis()
-X_lda=sk_lda.fit_transform(X,Y)
-
-
-#SVM
-X_train, X_test, Y_train, Y_test=train_test_split(X_lda,Y, test_size=0.2,random_state=43)
-print(X_train.shape,X_lda.shape)
-clf=svm.SVC(C=1.0, class_weight='balanced', dual=True, fit_intercept=True,
-          loss='squared_hinge', max_iter=1000,
-          multi_class='ovo', penalty='l2', random_state=None, tol=0.0001,
-          verbose=0)
-          temp=clf.predict(X_lda)
-c=confusion_matrix(Y,temp)
-print(sum(c[i][i] for i in range(c.shape[0]))/X_lda.shape[0])
-final=temp.reshape(lc.shape[0],lc.shape[1])
-
-
-#Decision Tree          
-clf2=tree.DecisionTreeClassifier(ccp_alpha=0.0, class_weight=None, criterion='gini',
-                       max_depth=None, max_features=None, max_leaf_nodes=None,
-                       min_impurity_decrease=0.0, min_impurity_split=None,
-                       min_samples_leaf=1, min_samples_split=2,
-                       min_weight_fraction_leaf=0.0, presort='deprecated',
-                       random_state=None, splitter='best')    
- clf2.fit(X_train,Y_train)\\
-
-
-#KNN
-clf3=KNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',
-                     metric_params=None, n_jobs=None, n_neighbors=9, p=2,
-                     weights='uniform')
-clf3.fit(X_train,Y_train)
-c=confusion_matrix(Y,temp)
-print(sum(c[i][i] for i in range(c.shape[0]))/X_lda.shape[0])
-final=temp.reshape(lc.shape[0],lc.shape[1])
-\end{minted}
 
 % ---------------------------------------
 
@@ -1232,6 +1233,7 @@ final=temp.reshape(lc.shape[0],lc.shape[1])
 \textbf{NIR} & Near InfraRed\\
 \textbf{NN} & Neural Networks.\\
 \textbf{SVM} & Support Vector Machines\\
+\textbf{KNN} & K-Nearest Neighbours\\
 \end{tabular}
 \vspace*{1cm}
 
